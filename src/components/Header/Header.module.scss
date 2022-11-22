@@ -1,0 +1,117 @@
+.header {
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 0;
+  }
+  &__logo {
+    width: 50px;
+  }
+  &__list {
+    display: flex;
+  }
+
+  &__listItem {
+    margin-left: 15px;
+  }
+  &__listLink {
+    font-size: 20px;
+    border-bottom: 1px solid transparent;
+    transition: all ease 0.2s;
+
+    &:hover {
+      color: #807171;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #807171;
+    }
+  }
+  &__listActive {
+    color: #807171;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #807171;
+  }
+}
+
+.menuBtn {
+  display: none;
+  width: 40px;
+  height: 40px;
+  z-index: 5;
+  border-radius: 50%;
+  padding: 20px;
+  background-color: #fff;
+  position: relative;
+  overflow: hidden;
+  span {
+    width: 30px;
+    height: 3px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #000;
+    transition: all ease 0.3s;
+
+    &:nth-of-type(2) {
+      top: calc(50% - 6px);
+    }
+    &:nth-of-type(3) {
+      top: calc(50% + 6px);
+    }
+  }
+
+  &.active span {
+    &:first-of-type {
+      opacity: 0;
+    }
+    &:nth-of-type(2) {
+      top: 50%;
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+    &:nth-of-type(3) {
+      top: 50%;
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+  }
+}
+
+@media (max-width: 450px) {
+  .header {
+    &__list {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(47, 41, 51, 1);
+      z-index: 4;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transform: translateY(-100%);
+      transition: transform 0.5s;
+
+      &.active {
+        transform: translateX(0);
+      }
+    }
+    &__listItem {
+      margin-left: 0;
+      margin-bottom: 10px;
+      padding: 20px;
+      border-bottom: 1px solid #fff;
+    }
+    &__listLink {
+      font-size: 30px;
+      color: #fff;
+      &:hover {
+        border-bottom: 0px solid transparent;
+      }
+    }
+  }
+  .menu-btn {
+    display: block;
+  }
+}

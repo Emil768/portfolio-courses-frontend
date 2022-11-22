@@ -1,0 +1,29 @@
+.popup {
+  position: absolute;
+  right: 0;
+  top: 10px;
+  margin-top: 15px;
+  background: #fff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.09);
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 10px 0;
+  width: 180px;
+  display: none;
+  &__active {
+    display: block;
+  }
+
+  &__list {
+  }
+
+  &__item {
+    font-size: 16px;
+    padding: 12px 20px;
+    &:hover {
+      background: #40b0ee26;
+      color: #40b0ee;
+      cursor: pointer;
+    }
+  }
+}

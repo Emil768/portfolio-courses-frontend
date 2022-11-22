@@ -1,0 +1,30 @@
+.answers {
+  &__block {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-bottom: 10px;
+    transition: all ease 0.2s;
+
+    input:checked + label {
+      color: #fff;
+      background-image: linear-gradient(to bottom, #79b3f8, #4999f8);
+    }
+    input {
+      position: absolute;
+      left: 18px;
+      background-color: #fff;
+      height: 30px;
+      width: 4%;
+    }
+    label {
+      padding: 20px 20px 20px 56px;
+      border-radius: 20px;
+      font-size: 20px;
+      width: 100%;
+      display: inline-block;
+      box-shadow: 0 7px 17px -4px rgb(0 0 0 / 8%);
+      cursor: pointer;
+    }
+  }
+}

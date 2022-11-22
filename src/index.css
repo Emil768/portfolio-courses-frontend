@@ -1,0 +1,27 @@
+@import-normalize;
+
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "RobotoR", sans-serif;
+  background-color: #f5dfff;
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
