@@ -128,7 +128,7 @@ export const FullTest = ({}: FullTestProps) => {
               </div>
             </div>
             <div className={styles.questions__buttons}>
-              <div
+              {/* <div
                 className={
                   currentQuestion <= 0
                     ? styles.fullTest__buttonHide
@@ -137,7 +137,7 @@ export const FullTest = ({}: FullTestProps) => {
                 onClick={handlerAnswerPrevClick}
               >
                 Вернуться
-              </div>
+              </div> */}
               <div
                 className={styles.fullTest__button}
                 onClick={handlerAnswerNextClick}
