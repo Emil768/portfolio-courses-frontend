@@ -1,0 +1,16 @@
+.addNote {
+  &__questionsAnswer {
+    background-color: transparent;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  &__answers {
+    display: flex;
+    align-items: center;
+    // align-items: center;
+    // margin-bottom: 20px;
+  }
+}

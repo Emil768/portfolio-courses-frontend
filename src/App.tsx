@@ -2,6 +2,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import { Container } from "./components/Container";
 import { Header } from "./components/Header";
 import {
+  AddTest,
   Category,
   FullTest,
   Home,
@@ -18,6 +19,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/tests" element={<Tests />} />
+        <Route path="/add-test" element={<AddTest />} />
         <Route path="/tests/:id" element={<FullTest />} />
         <Route path="/category/:name" element={<Category />} />
         <Route path="/auth/login" element={<Login />} />
