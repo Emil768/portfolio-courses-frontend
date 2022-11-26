@@ -3,8 +3,10 @@ import styles from "./ShowScore.module.scss";
 
 import { useState } from "react";
 import { ScoreBlock } from "../ScoreBlock";
+
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import { ResultList } from "../ResultList";
 
 interface ShowScoreProps {
   score: number;
@@ -13,7 +15,7 @@ interface ShowScoreProps {
 export const ShowScore = ({ score }: ShowScoreProps) => {
   const testObj: TestProps[] = [
     {
-      id: 1,
+      _id: 1,
       title: "Video zone: The giant chocolate chip cookie – 1",
       text: "Choose the correct option to complete the sentences.",
       category: "Тесты",
@@ -72,8 +74,11 @@ export const ShowScore = ({ score }: ShowScoreProps) => {
     <div className={styles.score}>
       {/* <span className={styles.score__title}>{score} 👏</span> */}
 
-      <div className={styles.score__progressbar}>
-        <CircularProgressbar value={resultScore} text={`${resultScore}%`} />
+      <div className={styles.score__statistics}>
+        <div className={styles.score__progressbar}>
+          <CircularProgressbar value={resultScore} text={`${resultScore}%`} />
+        </div>
+        <ResultList />
       </div>
       {testObj[0].ques.map((item, index) => {
         return <ScoreBlock {...item} key={index} id={index} />;

@@ -50,6 +50,12 @@ export const UserInfo = ({}: UserInfoProps) => {
               </Link>
             </div>
             <div className={styles.user__history}>
+              Не понравился тест
+              <Link className={styles.user__testTitle} to={"/tests/2"}>
+                Video zone: The giant chocolate chip cookie – 1
+              </Link>
+            </div>
+            <div className={styles.user__history}>
               Прокомментировал тест
               <Link className={styles.user__testTitle} to={"/tests/2"}>
                 Video zone: The giant chocolate chip cookie – 1

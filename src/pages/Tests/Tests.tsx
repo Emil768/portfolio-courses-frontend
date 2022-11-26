@@ -5,83 +5,30 @@ import styles from "./Tests.module.scss";
 
 import { ReactComponent as ArrowDownIcon } from "../../img/arrow-down.svg";
 import { Popup } from "../../components/Popup";
-import { useState } from "react";
+import axios from "../../axios";
+
+import { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { fetchTests } from "../../redux/slices/tests/tests";
+import { ClipLoader } from "react-spinners";
 
 interface TestsProps {}
 
 export const Tests = ({}: TestsProps) => {
   const [activePopup, setActivePopup] = useState(false);
 
-  const testObj: TestProps[] = [
-    {
-      id: 1,
-      title: "Video zone: The giant chocolate chip cookie – 1",
-      text: "Choose the correct option to complete the sentences.",
-      category: "Тесты",
-      backgroundImage:
-        "https://media.tenor.com/A_fe9hvgrY8AAAAC/chainsaw-man-power.gif",
-      viewsCount: 0,
-      ques: [
-        {
-          title: "Video zone: The giant chocolate chip cookie – 1",
-          answers: [
-            {
-              answer: "dasda",
-              correct: false,
-            },
-            {
-              answer: "dasda",
-              correct: true,
-            },
-            {
-              answer: "dasda",
-              correct: false,
-            },
-          ],
-        },
-      ],
-      user: {
-        fullName: "Emil",
-        avatarUrl: {
-          url: "https://i.gifer.com/origin/6a/6aafe99617311e701baf720627980a98_w200.gif",
-        },
-      },
-    },
-    {
-      id: 2,
-      title: "Video zone: The giant chocolate chip cookie – 1",
-      text: "Choose the correct option to complete the sentences.",
-      category: "Тесты",
-      backgroundImage:
-        "https://64.media.tumblr.com/50ca8821ecaa6a5b428046257cbbae48/57155c6195c10f27-7b/s540x810/6562f12bdedc8fbd693f884c4cc091fb45bc41e3.gif",
-      viewsCount: 0,
-      ques: [
-        {
-          title: "Video zone: The giant chocolate chip cookie – 1",
-          answers: [
-            {
-              answer: "dasda",
-              correct: false,
-            },
-            {
-              answer: "dasda",
-              correct: true,
-            },
-            {
-              answer: "dasda",
-              correct: false,
-            },
-          ],
-        },
-      ],
-      user: {
-        fullName: "Emil",
-        avatarUrl: {
-          url: "https://i.gifer.com/origin/6a/6aafe99617311e701baf720627980a98_w200.gif",
-        },
-      },
-    },
-  ];
+  const dispatch = useAppDispatch();
+  const { tests, status } = useAppSelector((state) => state.tests);
+
+  const isTestsLoading = status === "loading";
+  const isTestsError = status === "error";
+
+  console.log(tests);
+
+  useEffect(() => {
+    dispatch(fetchTests());
+  }, []);
+
   return (
     <main className={styles.notes}>
       <div className={styles.notes__top}>
@@ -106,9 +53,21 @@ export const Tests = ({}: TestsProps) => {
         </div>
       </div>
       <div className={styles.notes__content}>
-        {testObj.map((item) => (
-          <Test {...item} key={item.id} />
-        ))}
+        {!isTestsError ? (
+          (isTestsLoading ? [...Array(1)] : tests).map((item, index) =>
+            isTestsLoading ? (
+              <ClipLoader
+                loading={isTestsLoading}
+                color="#39ca81"
+                key={index}
+              />
+            ) : (
+              <Test {...item} key={item._id} />
+            )
+          )
+        ) : (
+          <div>Error</div>
+        )}
       </div>
     </main>
   );

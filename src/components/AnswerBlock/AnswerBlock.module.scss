@@ -3,12 +3,13 @@
     display: flex;
     align-items: center;
     position: relative;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     transition: all ease 0.2s;
 
     input:checked + label {
       color: #fff;
       background-image: linear-gradient(to bottom, #79b3f8, #4999f8);
+      box-shadow: 0 2px 13px 0 rgb(25 25 25 / 13%);
     }
     input {
       position: absolute;
@@ -18,13 +19,18 @@
       width: 4%;
     }
     label {
-      padding: 20px 20px 20px 56px;
-      border-radius: 20px;
+      padding: 20px 20px 20px 65px;
+      border-radius: 10px;
       font-size: 20px;
       width: 100%;
       display: inline-block;
-      box-shadow: 0 7px 17px -4px rgb(0 0 0 / 8%);
+      box-shadow: 0 2px 13px 0 rgb(25 25 25 / 6%);
+      transition: all ease 0.1s;
       cursor: pointer;
+
+      &:hover {
+        box-shadow: 0 2px 13px 0 rgb(25 25 25 / 13%);
+      }
     }
   }
 }

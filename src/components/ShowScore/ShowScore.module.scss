@@ -1,12 +1,13 @@
 .score {
-  // height: 400px;
-  // overflow-y: scroll;
-
   &__percent {
     font-size: 70px;
   }
   &__progressbar {
     width: 20%;
     margin: 60px auto;
+  }
+  &__statistics {
+    display: flex;
+    align-items: center;
   }
 }

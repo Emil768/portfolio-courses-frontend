@@ -11,7 +11,7 @@ export type AnswersProps = {
 };
 
 export interface TestProps {
-  id: number;
+  _id: number;
   title: string;
   text: string;
   category: string;

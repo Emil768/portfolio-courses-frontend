@@ -41,14 +41,10 @@ export const InfoPanel = ({ category, viewsCount, user }: InfoPanelProps) => {
         {/* {date.toLocaleDateString("ru-RU", options )} */}
         {String(date.toLocaleString("ru-RU"))}
       </span>
-      <span className={styles.author}>
-        <img
-          src={`${user.avatarUrl.url}`}
-          alt=""
-          className={styles.author__avatar}
-        />
+      <Link to={`/user/${123}`} className={styles.author}>
+        <img src={""} alt="" className={styles.author__avatar} />
         <span className={styles.author__name}>{user.fullName}</span>
-      </span>
+      </Link>
     </div>
   );
 };
