@@ -1,9 +1,7 @@
 import { Link } from "react-router-dom";
 import { Test } from "../../components/Test";
-import { TestProps } from "../../propTypes";
 import styles from "./Tests.module.scss";
 
-import { ReactComponent as ArrowDownIcon } from "../../img/arrow-down.svg";
 import { Popup } from "../../components/Popup";
 import axios from "../../axios";
 
@@ -11,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { fetchTests } from "../../redux/slices/tests/tests";
 import { ClipLoader } from "react-spinners";
+import { PopupItems } from "../../propTypes/popupProps";
 
 interface TestsProps {}
 
@@ -23,7 +22,11 @@ export const Tests = ({}: TestsProps) => {
   const isTestsLoading = status === "loading";
   const isTestsError = status === "error";
 
-  console.log(tests);
+  const sortNames: PopupItems[] = [
+    { name: "Дате добавления", link: "date" },
+    { name: "По лайкам", link: "like" },
+    { name: "По дизлайкам", link: "dislike" },
+  ];
 
   useEffect(() => {
     dispatch(fetchTests());
@@ -49,10 +52,16 @@ export const Tests = ({}: TestsProps) => {
             {" "}
             по лайкам
           </span>
-          <Popup active={activePopup} />
+          <Popup active={activePopup} items={sortNames} />
         </div>
       </div>
-      <div className={styles.notes__content}>
+      <div
+        className={
+          isTestsLoading
+            ? [styles.notes__content, styles.notes__contentLoading].join(" ")
+            : styles.notes__content
+        }
+      >
         {!isTestsError ? (
           (isTestsLoading ? [...Array(1)] : tests).map((item, index) =>
             isTestsLoading ? (

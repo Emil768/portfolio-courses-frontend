@@ -6,14 +6,18 @@
     padding: 15px 0;
   }
   &__logo {
-    width: 50px;
+    width: 100px;
   }
   &__list {
     display: flex;
+    align-items: center;
   }
 
   &__listItem {
-    margin-left: 15px;
+    margin-right: 15px;
+    &:last-child {
+      margin-right: 0;
+    }
   }
   &__listLink {
     font-size: 20px;

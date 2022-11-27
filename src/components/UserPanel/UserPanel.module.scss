@@ -1,0 +1,19 @@
+@import "../InfoPanel/InfoPanel.module.scss";
+
+.user {
+  &__panel {
+    position: relative;
+    margin-left: 20px;
+  }
+  &__panelArrow {
+    margin-left: 10px;
+  }
+}
+
+.author {
+  cursor: pointer;
+  &__avatar {
+    width: 45px;
+    height: 45px;
+  }
+}

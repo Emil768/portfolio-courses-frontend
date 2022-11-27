@@ -42,15 +42,20 @@
     fill: #7a7171;
   }
 
-  input {
+  input,
+  button {
+    font-family: "RobotoR", sans-serif;
     border: 1px solid transparent;
-    border-radius: 32px;
+    border-radius: 30px;
+    transition: all ease 0.2s;
+    box-shadow: 0 4px 17px 0px rgb(0 0 0 / 7%);
+    outline: none;
+  }
+
+  input {
     padding: 16px 8px 16px 45px;
     color: #7a7171;
     width: 100%;
-    outline: none;
-    box-shadow: 0 4px 17px 0px rgb(0 0 0 / 7%);
-    transition: all ease 0.3s;
 
     &:focus {
       border-color: #40b0ee;
@@ -66,15 +71,9 @@
     }
   }
   button {
-    border: 1px solid transparent;
     background-color: #fff;
     padding: 13px 35px;
-    border-radius: 30px;
-    transition: all ease 0.2s;
-    box-shadow: 0 4px 17px 0px rgb(0 0 0 / 7%);
     margin-bottom: 20px;
-
-    outline: none;
     cursor: pointer;
 
     &:active {

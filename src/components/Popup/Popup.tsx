@@ -1,10 +1,7 @@
+import { PopupProps } from "../../propTypes/popupProps";
 import styles from "./Popup.module.scss";
 
-interface PopupProps {
-  active: boolean;
-}
-
-export const Popup = ({ active }: PopupProps) => (
+export const Popup = ({ active, items }: PopupProps) => (
   <div
     className={
       active ? [styles.popup, styles.popup__active].join(" ") : styles.popup
@@ -12,9 +9,15 @@ export const Popup = ({ active }: PopupProps) => (
     data-testid="Popup"
   >
     <ul className={styles.popup__List}>
-      <li className={styles.popup__item}>Дате добавления</li>
-      <li className={styles.popup__item}>По лайкам</li>
-      <li className={styles.popup__item}>По дизлайкам</li>
+      {items.map((item, index) => (
+        <li
+          className={styles.popup__item}
+          key={index}
+          onClick={item.onClickPopup && item.onClickPopup}
+        >
+          {item.name}
+        </li>
+      ))}
     </ul>
   </div>
 );
