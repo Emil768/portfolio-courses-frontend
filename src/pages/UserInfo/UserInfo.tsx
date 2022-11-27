@@ -11,6 +11,7 @@ export const UserInfo = ({}: UserInfoProps) => {
   const user: UserProps = {
     fullName: "EmilkaAdminka228",
     avatarUrl: {
+      public_id: "1231231",
       url: "https://i.gifer.com/origin/6a/6aafe99617311e701baf720627980a98_w200.gif",
     },
     email: "test@mail.ru",

@@ -10,6 +10,7 @@ import { LoginProps } from "../../propTypes/authProps";
 
 export const Login = () => {
   const dispatch = useAppDispatch();
+
   const isAuth = useAppSelector((state) => Boolean(state.auth.data));
 
   const {
@@ -25,8 +26,15 @@ export const Login = () => {
     mode: "onChange",
   });
 
-  const onSubmit = (values: LoginProps) => {
-    dispatch(fetchAuth(values));
+  const onSubmit = async (values: LoginProps) => {
+    const data = await dispatch(fetchAuth(values));
+    if (!data.payload) {
+      return window.alert("Пользователь не найден!");
+    }
+
+    if ("token" in data.payload) {
+      window.localStorage.setItem("token", data.payload.token!);
+    }
   };
 
   if (isAuth) {

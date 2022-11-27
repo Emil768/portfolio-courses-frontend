@@ -1,16 +1,37 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
-import { UserProps } from "../../../propTypes";
+import { AvatarProps, UserProps } from "../../../propTypes";
 
 import axios from "../../../axios";
 import { AuthState } from "./types";
 import { LoginProps } from "../../../propTypes/authProps";
 
-export const fetchAuth = createAsyncThunk(
-  "auth/fetchAuth",
-  async (params: LoginProps) => {
-    const { data } = await axios.post("/auth/login", params);
-    return data as UserProps;
+export const fetchAuth = createAsyncThunk<
+  UserProps,
+  LoginProps,
+  { rejectValue: UserProps }
+>("auth/fetchAuth", async (params) => {
+  const { data } = await axios.post("/auth/login", params);
+
+  return data;
+});
+
+//Регистрация
+export const fethAuthRegister = createAsyncThunk<
+  UserProps,
+  UserProps,
+  { rejectValue: UserProps }
+>("auth/fetchAuthRegister", async (params) => {
+  const { data } = await axios.post("/auth/register", params);
+  return data as UserProps;
+});
+
+//Загрузка аватарки
+export const fethAuthUpload = createAsyncThunk(
+  "auth/fethAuthUpload",
+  async (params: object) => {
+    const { data } = await axios.post("/uploads", params);
+    return data;
   }
 );
 
@@ -28,6 +49,8 @@ const authSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    //login
+
     builder
       .addCase(fetchAuth.pending, (state) => {
         state.data = null;
@@ -38,6 +61,38 @@ const authSlice = createSlice({
         state.status = "loaded";
       })
       .addCase(fetchAuth.rejected, (state) => {
+        state.data = null;
+        state.status = "error";
+      });
+
+    //register
+
+    builder
+      .addCase(fethAuthRegister.pending, (state) => {
+        state.data = null;
+        state.status = "loading";
+      })
+      .addCase(fethAuthRegister.fulfilled, (state, action) => {
+        state.data = action.payload;
+        state.status = "loaded";
+      })
+      .addCase(fethAuthRegister.rejected, (state) => {
+        state.data = null;
+        state.status = "error";
+      });
+
+    //upload
+
+    builder
+      .addCase(fethAuthUpload.pending, (state) => {
+        state.data = null;
+        state.status = "loading";
+      })
+      .addCase(fethAuthUpload.fulfilled, (state, action) => {
+        state.data = action.payload;
+        state.status = "loaded";
+      })
+      .addCase(fethAuthUpload.rejected, (state) => {
         state.data = null;
         state.status = "error";
       });

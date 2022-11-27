@@ -62,6 +62,7 @@ export const ShowScore = ({ score }: ShowScoreProps) => {
       user: {
         fullName: "Emil",
         avatarUrl: {
+          public_id: "asdas",
           url: "https://i.gifer.com/origin/6a/6aafe99617311e701baf720627980a98_w200.gif",
         },
       },

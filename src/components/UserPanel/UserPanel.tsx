@@ -3,7 +3,7 @@ import { PopupItems } from "../../propTypes/popupProps";
 import { Popup } from "../Popup";
 import { ReactComponent as ArrowDownIcon } from "../../img/arrow-down.svg";
 import styles from "./UserPanel.module.scss";
-import { useAppDispatch } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { logout } from "../../redux/slices/auth/auth";
 
 interface UserPanelProps {}
@@ -11,6 +11,8 @@ interface UserPanelProps {}
 export const UserPanel = ({}: UserPanelProps) => {
   const [userState, setUserState] = useState(false);
   const dispath = useAppDispatch();
+
+  const { data } = useAppSelector((state) => state.auth);
 
   const userSettings: PopupItems[] = [
     {
@@ -30,7 +32,7 @@ export const UserPanel = ({}: UserPanelProps) => {
     <div className={styles.user__panel} data-testid="UserPanel">
       <div className={styles.author} onClick={() => setUserState(!userState)}>
         <img
-          src={"https://thumbs.gfycat.com/WealthyBelovedGreatdane-max-1mb.gif"}
+          src={data?.avatarUrl.url}
           alt=""
           className={styles.author__avatar}
         />
