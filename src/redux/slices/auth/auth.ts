@@ -6,6 +6,8 @@ import axios from "../../../axios";
 import { AuthState } from "./types";
 import { LoginProps } from "../../../propTypes/authProps";
 
+//login
+
 export const fetchAuth = createAsyncThunk<
   UserProps,
   LoginProps,
@@ -26,14 +28,11 @@ export const fethAuthRegister = createAsyncThunk<
   return data as UserProps;
 });
 
-//Загрузка аватарки
-export const fethAuthUpload = createAsyncThunk(
-  "auth/fethAuthUpload",
-  async (params: object) => {
-    const { data } = await axios.post("/uploads", params);
-    return data;
-  }
-);
+//Получение пользователя
+export const fethAuthMe = createAsyncThunk("auth/fethAuthMe", async () => {
+  const { data } = await axios.get("/auth/me");
+  return data;
+});
 
 const initialState: AuthState = {
   data: null,
@@ -81,25 +80,23 @@ const authSlice = createSlice({
         state.status = "error";
       });
 
-    //upload
+    //fetchMe
 
     builder
-      .addCase(fethAuthUpload.pending, (state) => {
+      .addCase(fethAuthMe.pending, (state) => {
         state.data = null;
         state.status = "loading";
       })
-      .addCase(fethAuthUpload.fulfilled, (state, action) => {
+      .addCase(fethAuthMe.fulfilled, (state, action) => {
         state.data = action.payload;
         state.status = "loaded";
       })
-      .addCase(fethAuthUpload.rejected, (state) => {
+      .addCase(fethAuthMe.rejected, (state) => {
         state.data = null;
         state.status = "error";
       });
   },
 });
-
-// export const selectIsAuth = (state:AuthState)=>Boolean(state.data)
 
 export const authReducer = authSlice.reducer;
 

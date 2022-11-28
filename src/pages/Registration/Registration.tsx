@@ -4,13 +4,14 @@ import { ReactComponent as PasswordIcon } from "../../img/folder.svg";
 import { ReactComponent as UserIcon } from "../../img/user.svg";
 import { ReactComponent as ImageIcon } from "../../img/image.svg";
 
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { UserProps } from "../../propTypes";
-import { fethAuthRegister, fethAuthUpload } from "../../redux/slices/auth/auth";
+import { fethAuthRegister } from "../../redux/slices/auth/auth";
 import { ClipLoader } from "react-spinners";
+import axios from "../../axios";
 
 interface RegistrationProps {}
 
@@ -19,6 +20,8 @@ export const Registration = ({}: RegistrationProps) => {
   const { data, status } = useAppSelector((state) => state.auth);
 
   const isLoading = Boolean(status === "loading");
+
+  const navigate = useNavigate();
 
   const {
     register,
@@ -36,31 +39,31 @@ export const Registration = ({}: RegistrationProps) => {
   });
 
   const onSubmit = async ({ fullName, email, password, avatarUrl }: any) => {
-    console.log(fullName, email, password, avatarUrl);
     try {
       const formData = new FormData();
       formData.append("image", avatarUrl[0]);
 
-      const newAvatarUrl = await dispatch(fethAuthUpload(formData));
+      const newAvatarUrl = await axios.post("/uploads", formData);
+      const { secure_url, public_id } = newAvatarUrl.data;
 
       const fields: UserProps = {
         fullName,
         email,
         password,
         avatarUrl: {
-          public_id: newAvatarUrl.payload.public_id,
-          url: newAvatarUrl.payload.secure_url,
+          public_id: public_id,
+          url: secure_url,
         },
       };
-      const user = await dispatch(fethAuthRegister(fields));
 
-      console.log(user.payload);
+      const user = await dispatch(fethAuthRegister(fields));
 
       if (!user.payload) {
         return window.alert("Не удалось зарегистрироваться!");
       }
       if ("token" in user.payload) {
         window.localStorage.setItem("token", user.payload.token!);
+        navigate("/");
       }
     } catch (err) {
       console.log(err);
@@ -69,7 +72,7 @@ export const Registration = ({}: RegistrationProps) => {
   };
 
   if (data) {
-    <Navigate to={"/"} />;
+    return <Navigate to={"/"} />;
   }
 
   return (

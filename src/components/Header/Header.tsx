@@ -50,7 +50,7 @@ export const Header = ({}: HeaderProps) => {
               Тесты
             </NavLink>
           </li>
-          {isAuth && <UserPanel />}
+          {isAuth ? <UserPanel /> : null}
         </ul>
       </div>
     </header>

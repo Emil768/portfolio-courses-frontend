@@ -16,14 +16,20 @@ export const UserPanel = ({}: UserPanelProps) => {
 
   const userSettings: PopupItems[] = [
     {
+      name: "Профиль",
+      link: "/user/232",
+    },
+    {
       name: "Добавить тест",
-      link: "sadasd",
+      link: "/add-test",
     },
     {
       name: "Выйти",
-      link: "adada",
       onClickPopup() {
         dispath(logout());
+        if (window.confirm("Вы действительно хотите выйти?")) {
+          window.localStorage.removeItem("token");
+        }
       },
     },
   ];

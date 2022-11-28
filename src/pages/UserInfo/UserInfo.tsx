@@ -4,31 +4,26 @@ import { ReactComponent as DateIcon } from "../../img/date.svg";
 import { ReactComponent as ChartIcon } from "../../img/chart.svg";
 import { ReactComponent as EmailIcon } from "../../img/email.svg";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "../../redux/hooks";
 
 interface UserInfoProps {}
 
 export const UserInfo = ({}: UserInfoProps) => {
-  const user: UserProps = {
-    fullName: "EmilkaAdminka228",
-    avatarUrl: {
-      public_id: "1231231",
-      url: "https://i.gifer.com/origin/6a/6aafe99617311e701baf720627980a98_w200.gif",
-    },
-    email: "test@mail.ru",
-  };
+  const { data } = useAppSelector((state) => state.auth);
+
   return (
     <div className={styles.user} data-testid="UserInfo">
       <div className={styles.user__content}>
         <div className={styles.user__avatar}>
-          <img src={user.avatarUrl.url} alt="avatar icon" />
-          <h3 className={styles.user__name}>@{user.fullName}</h3>
+          <img src={data?.avatarUrl.url} alt="avatar icon" />
+          <h3 className={styles.user__name}>@{data?.fullName}</h3>
           <div className={styles.user__email}>
             <EmailIcon width={16} />
-            {user.email}
+            {data?.email}
           </div>
           <div className={styles.user__date}>
             <DateIcon width={16} />
-            23.11.2022
+            {data?.createdAt}
           </div>
         </div>
         <div className={styles.user__statistics}>

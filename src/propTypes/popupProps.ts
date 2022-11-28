@@ -5,6 +5,6 @@ export interface PopupProps {
 
 export type PopupItems = {
   name: String;
-  link: String;
+  link?: String;
   onClickPopup?: () => void;
 };

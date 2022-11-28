@@ -17,6 +17,7 @@ export interface TestProps {
   category: string;
   backgroundImage: string;
   viewsCount: number;
+  createdAt?: string;
   ques: QuesProps[];
   user: UserProps;
 }

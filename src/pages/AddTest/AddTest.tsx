@@ -1,24 +1,36 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import styles from "./AddTest.module.scss";
 
 import { ReactComponent as PlusIcon } from "../../img/plus.svg";
 import { AnswersProps, QuesProps } from "../../propTypes";
 import { AnswerInfo } from "../../components/AnswerInfo";
+import { useAppSelector } from "../../redux/hooks";
+import { QuestionBlock } from "../../components/QuestionBlock";
+
+import axios from "../../axios";
 
 interface AddTestProps {}
 
 export const AddTest = ({}: AddTestProps) => {
+  const isAuth = useAppSelector((state) => Boolean(state.auth.data));
+
+  const [titleQues, setTitleQues] = useState("");
+  const [category, setCategory] = useState("");
+  const [bgImage, setBgImage] = useState("");
+  const [textQues, setTextQues] = useState("");
   const [questions, setQuestions] = useState<QuesProps[]>([
     {
-      title: "Тестовый текст",
+      title: "",
       answers: [
-        { answer: "asd", correct: false },
-        { answer: "d", correct: false },
-        { answer: "asd", correct: false },
+        { answer: "", correct: false },
+        { answer: "", correct: false },
+        { answer: "", correct: false },
       ],
     },
   ]);
+
+  const navigate = useNavigate();
 
   const handlerAddAnswer = (index: number) => {
     const newAnswerObj: AnswersProps = { answer: "", correct: false };
@@ -36,8 +48,6 @@ export const AddTest = ({}: AddTestProps) => {
     setQuestions(nextState);
   };
 
-  console.log(questions);
-
   const handlerAddQuestion = () => {
     setQuestions((prev) => [
       ...prev,
@@ -45,68 +55,95 @@ export const AddTest = ({}: AddTestProps) => {
     ]);
   };
 
-  const handlerToggleAnswer = (id: number, correct: boolean) => {
-    console.log(correct);
-    setQuestions(
-      questions.filter((item) => (item.answers[id].correct = correct))
-    );
-  };
-
-  const handlerRemoveAnswer = (id: number) => {
-    const newState = questions.map((item) => {
-      item.answers.filter((asnwer, index) => {
-        return index !== id;
-      });
+  const handlerGetAnswers = (
+    indexQues: number,
+    titleAnswer: string,
+    indexAnswer: number,
+    { answer, correct }: AnswersProps
+  ) => {
+    const nextState: QuesProps[] = questions.map((item: QuesProps, i) => {
+      if (i == indexQues) {
+        if (item.answers[indexAnswer]) {
+          const newAnswerObj: AnswersProps = { answer, correct };
+          item.answers[indexAnswer] = newAnswerObj;
+          return {
+            title: titleAnswer,
+            answers: [...item.answers],
+          };
+        }
+      }
       return item;
     });
 
-    setQuestions(newState);
+    setQuestions(nextState);
   };
 
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const fields = {
+      title: titleQues,
+      text: textQues,
+      category,
+      backgroundImage: bgImage,
+      ques: questions,
+    };
+
+    try {
+      const { data } = await axios.post("/tests", fields);
+
+      navigate(`/tests/${data._id}`);
+    } catch (err) {
+      alert("Не удалось создать тест");
+    }
+  };
+
+  if (!window.localStorage.getItem("token") && !isAuth) {
+    return <Navigate to={"/"} />;
+  }
+
   return (
-    <form className={styles.addNote} onSubmit={(e) => e.preventDefault()}>
+    <form className={styles.addNote} onSubmit={onSubmit}>
       <div className={styles.addNote__content}>
         <input
           type="text"
           className={styles.addNote__title}
           placeholder="Название"
-          // defaultValue={data && data.title}
-          // onChange={(e) => setTitle(e.target.value)}
+          onChange={(e) => setTitleQues(e.target.value)}
         />
+
         <input
           type="text"
           className={styles.addNote__category}
           placeholder="Категория"
-          // defaultValue={data && data.category}
-          // onChange={(e) => setCategory(e.target.value)}
+          onChange={(e) => setCategory(e.target.value)}
         />
         <input
           type="text"
           className={styles.addNote__category}
-          placeholder="Ссылка на картинку"
-          // defaultValue={data && data.category}
-          // onChange={(e) => setCategory(e.target.value)}
-        />{" "}
+          placeholder="Ссылка на превью"
+          onChange={(e) => setBgImage(e.target.value)}
+        />
+
+        <textarea
+          className={styles.addNote__text}
+          placeholder="Краткое описание"
+          name="message"
+          cols={30}
+          rows={4}
+          required
+          onChange={(e) => setTextQues(e.target.value)}
+        ></textarea>
+
         <div className={styles.addNote__tests}>
           {questions.map((item, index) => {
             return (
-              <div className={styles.addNote__questions} key={index}>
-                <input
-                  type="text"
-                  defaultValue={item.title}
-                  className={styles.addNote__questionsTitle}
-                  placeholder="Введите название вопроса"
+              <div className={styles.addNote__questionBlock} key={index}>
+                <QuestionBlock
+                  {...item}
+                  id={index}
+                  getQuesData={handlerGetAnswers}
                 />
-
-                {item.answers.map((item, index) => (
-                  <AnswerInfo
-                    {...item}
-                    id={index}
-                    key={index}
-                    onToggle={handlerToggleAnswer}
-                    onRemove={handlerRemoveAnswer}
-                  />
-                ))}
                 <span
                   className={styles.addNote__answersAdd}
                   onClick={() => handlerAddAnswer(index)}
@@ -125,7 +162,7 @@ export const AddTest = ({}: AddTestProps) => {
             {/* {isEditable ? "Сохранить" : "Опубликовать"} */}
             Добавить вопрос
           </button>
-          <button className={styles.addNote__confirm}>
+          <button className={styles.addNote__confirm} type="submit">
             {/* {isEditable ? "Сохранить" : "Опубликовать"} */}
             Опубликовать
           </button>

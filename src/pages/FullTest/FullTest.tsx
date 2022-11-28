@@ -7,7 +7,11 @@ import { AnswersProps, TestProps } from "../../propTypes";
 import { ClipLoader } from "react-spinners";
 import styles from "./FullTest.module.scss";
 
+import { ReactComponent as RemoveIcon } from "../../img/remove.svg";
+import { ReactComponent as EditIcon } from "../../img/edit.svg";
+
 import axios from "../../axios";
+import { useAppSelector } from "../../redux/hooks";
 
 interface FullTestProps {}
 
@@ -22,6 +26,7 @@ export const FullTest = ({}: FullTestProps) => {
   const [score, setScore] = useState(0);
   const [showScore, setShowScore] = useState(false);
 
+  const { data } = useAppSelector((state) => state.auth);
   const { id } = useParams();
 
   useEffect(() => {
@@ -31,7 +36,7 @@ export const FullTest = ({}: FullTestProps) => {
     });
   }, []);
 
-  console.log(testData);
+  const isEditable = data && data._id === testData?.user._id;
 
   const handlerAnswerNextClick = () => {
     if (currentAnswer.correct) {
@@ -68,6 +73,12 @@ export const FullTest = ({}: FullTestProps) => {
         ) : (
           <>
             <h1 className={styles.fullTest__title}>{testData?.title}</h1>
+            {isEditable ? (
+              <div className={styles.fullTest__editable}>
+                <EditIcon width={20} />
+                <RemoveIcon width={20} />
+              </div>
+            ) : null}
             <InfoPanel {...testData!} />
             {/* <div className={styles.fullTest__text}>{testObj[0].text}</div> */}
             {showScore ? (

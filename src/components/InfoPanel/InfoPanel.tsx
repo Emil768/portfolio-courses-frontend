@@ -4,7 +4,12 @@ import styles from "./InfoPanel.module.scss";
 
 interface InfoPanelProps extends TestProps {}
 
-export const InfoPanel = ({ category, viewsCount, user }: InfoPanelProps) => {
+export const InfoPanel = ({
+  category,
+  viewsCount,
+  user,
+  createdAt,
+}: InfoPanelProps) => {
   const date: Date = new Date();
   const options = {
     year: "numeric",
@@ -42,7 +47,11 @@ export const InfoPanel = ({ category, viewsCount, user }: InfoPanelProps) => {
         {String(date.toLocaleString("ru-RU"))}
       </span>
       <Link to={`/user/${123}`} className={styles.author}>
-        <img src={""} alt="" className={styles.author__avatar} />
+        <img
+          src={`${user.avatarUrl.url}`}
+          alt=""
+          className={styles.author__avatar}
+        />
         <span className={styles.author__name}>{user.fullName}</span>
       </Link>
     </div>

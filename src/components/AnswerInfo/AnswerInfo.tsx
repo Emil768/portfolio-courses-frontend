@@ -1,31 +1,21 @@
-import { useState } from "react";
+import { useState, useMemo, useEffect } from "react";
 import styles from "./AnswerInfo.module.scss";
 import { ReactComponent as RemoveIcon } from "../../img/close.svg";
 import ReactSwitch from "react-switch";
-import { AnswersProps } from "../../propTypes";
+import { AnswersProps, AvatarProps } from "../../propTypes";
 
 interface AnswerInfoProps extends AnswersProps {
   id: number;
-  onToggle: (index: number, correct: boolean) => void;
-  onRemove: (index: number) => void;
+  getAnswer: (index: number, { answer, correct }: AnswersProps) => void;
 }
 
-export const AnswerInfo = ({
-  correct,
-  onToggle,
-  onRemove,
-  id,
-}: AnswerInfoProps) => {
+export const AnswerInfo = ({ id, getAnswer }: AnswerInfoProps) => {
+  const [answerTitle, setAnswerTitle] = useState("");
   const [switchTrue, setSwithTrue] = useState(false);
 
-  const onSwitchTrue = () => {
-    onToggle(id, !switchTrue);
-    setSwithTrue(!switchTrue);
-  };
-
-  const onRemoveItem = () => {
-    onRemove(id);
-  };
+  useEffect(() => {
+    getAnswer(id, { answer: answerTitle, correct: switchTrue });
+  }, [answerTitle, switchTrue]);
 
   return (
     <div className={styles.addNote__answers}>
@@ -33,9 +23,10 @@ export const AnswerInfo = ({
         type="text"
         className={styles.addNote__questionsAnswer}
         placeholder="Введите ответ"
+        onChange={(e) => setAnswerTitle(e.target.value)}
       />
-      <ReactSwitch onChange={onSwitchTrue} checked={switchTrue} />
-      <RemoveIcon width={50} onClick={onRemoveItem} />
+      <ReactSwitch onChange={setSwithTrue} checked={switchTrue} />
+      <RemoveIcon width={40} />
     </div>
   );
 };

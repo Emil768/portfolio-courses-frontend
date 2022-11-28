@@ -31,6 +31,22 @@
     margin: 0 0 20px;
   }
 
+  &__editable {
+    position: absolute;
+    right: 26px;
+    top: 20px;
+    z-index: 1;
+    svg {
+      display: inline-block;
+      margin-left: 10px;
+      cursor: pointer;
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+
   &__popup {
     position: absolute;
     display: flex;

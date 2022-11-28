@@ -5,8 +5,8 @@
   &__content {
     display: flex;
     flex-direction: column;
-    flex: 0 0 80%;
-    padding: 30px;
+    flex: 0 0 85%;
+    padding: 40px;
     background: #ffffff;
     box-shadow: 5px 15px 40px rgba(30, 35, 66, 0.15);
     border-radius: 15px;
@@ -25,6 +25,7 @@
     font-size: 35px;
     border: none;
     border-bottom: 1px solid #cccc;
+    padding-bottom: 10px;
     margin-bottom: 20px;
   }
 
@@ -35,6 +36,18 @@
     &:last-of-type {
       margin-bottom: 40px;
     }
+  }
+  &__text {
+    width: 100%;
+
+    border: none;
+    border-bottom: 1px solid #cccc;
+    outline: none;
+    transition: all ease 0.3s;
+    resize: none;
+    font-family: inherit;
+    padding-bottom: 20px;
+    margin-bottom: 40px;
   }
 
   &__tests {
@@ -63,6 +76,10 @@
     }
   }
 
+  &__questionBlock {
+    margin-bottom: 40px;
+  }
+
   &__confirm {
     background-color: #007bfe;
     &:hover {
@@ -75,22 +92,6 @@
     &:hover {
       background-color: #ae434d;
     }
-  }
-
-  &__questions {
-    margin-bottom: 40px;
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-
-  &__questionsTitle {
-    font-size: 22px;
-    border: none;
-    background-color: transparent;
-    border-bottom: 1px solid #cccc;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
   }
 
   &__answersAdd {
