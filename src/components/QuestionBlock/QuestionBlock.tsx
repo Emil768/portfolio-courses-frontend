@@ -12,6 +12,7 @@ interface QuestionBlockProps extends QuesProps {
     indexAnswer: number,
     { answer, correct }: AnswersProps
   ) => void;
+  removeQuesData: (indexQues: number, indexAnswer: number) => void;
 }
 
 export const QuestionBlock = ({
@@ -19,11 +20,16 @@ export const QuestionBlock = ({
   title,
   answers,
   getQuesData,
+  removeQuesData,
 }: QuestionBlockProps) => {
   const [titleAnswer, setTitleAnswer] = useState("");
 
-  const getAnswer = (index: number, { answer, correct }: AnswersProps) =>
+  const getAnswer = (index: number, { answer, correct }: AnswersProps) => {
+    console.log(titleAnswer, { answer, correct });
     getQuesData(id, titleAnswer, index, { answer, correct });
+  };
+
+  const removeAnswer = (indexAnswer: number) => removeQuesData(id, indexAnswer);
 
   return (
     <div className={styles.addNote__questions}>
@@ -33,10 +39,17 @@ export const QuestionBlock = ({
         className={styles.addNote__questionsTitle}
         placeholder="Введите название вопроса"
         onChange={(e) => setTitleAnswer(e.target.value)}
+        required
       />
 
       {answers.map((item, index) => (
-        <AnswerInfo {...item} id={index} key={index} getAnswer={getAnswer} />
+        <AnswerInfo
+          {...item}
+          id={index}
+          key={index}
+          getAnswer={getAnswer}
+          removeAnswer={removeAnswer}
+        />
       ))}
     </div>
   );

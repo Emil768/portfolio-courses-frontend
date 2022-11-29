@@ -7,11 +7,19 @@ import { AnswersProps, AvatarProps } from "../../propTypes";
 interface AnswerInfoProps extends AnswersProps {
   id: number;
   getAnswer: (index: number, { answer, correct }: AnswersProps) => void;
+  removeAnswer: (indexAnswer: number) => void;
 }
 
-export const AnswerInfo = ({ id, getAnswer }: AnswerInfoProps) => {
+export const AnswerInfo = ({
+  id,
+  answer,
+  getAnswer,
+  removeAnswer,
+}: AnswerInfoProps) => {
   const [answerTitle, setAnswerTitle] = useState("");
   const [switchTrue, setSwithTrue] = useState(false);
+
+  console.log({ answerTitle, switchTrue });
 
   useEffect(() => {
     getAnswer(id, { answer: answerTitle, correct: switchTrue });
@@ -24,9 +32,15 @@ export const AnswerInfo = ({ id, getAnswer }: AnswerInfoProps) => {
         className={styles.addNote__questionsAnswer}
         placeholder="Введите ответ"
         onChange={(e) => setAnswerTitle(e.target.value)}
+        defaultValue={answer}
+        required
       />
       <ReactSwitch onChange={setSwithTrue} checked={switchTrue} />
-      <RemoveIcon width={40} />
+      <RemoveIcon
+        width={40}
+        className={styles.addNote__remove}
+        onClick={() => removeAnswer(id)}
+      />
     </div>
   );
 };

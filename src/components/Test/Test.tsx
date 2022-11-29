@@ -13,7 +13,6 @@ export const Test = ({
   user,
   backgroundImage,
 }: TestProps) => {
-  console.log(_id);
   return (
     <div className={styles.note}>
       <img

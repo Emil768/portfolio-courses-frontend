@@ -46,7 +46,7 @@ export const InfoPanel = ({
         {/* {date.toLocaleDateString("ru-RU", options )} */}
         {String(date.toLocaleString("ru-RU"))}
       </span>
-      <Link to={`/user/${123}`} className={styles.author}>
+      <Link to={`/user/${user._id}`} className={styles.author}>
         <img
           src={`${user.avatarUrl.url}`}
           alt=""

@@ -5,10 +5,22 @@ import { TestState } from "./types";
 
 import axios from "../../../axios";
 
-export const fetchTests = createAsyncThunk("tests/fetchTests", async () => {
+//Получить тесты
+export const fetchTests = createAsyncThunk<
+  TestProps[],
+  void,
+  { rejectValue: TestProps }
+>("tests/fetchTests", async () => {
   const { data } = await axios.get("/tests");
-  return data as TestProps[];
+  return data;
 });
+
+//Удалить тест
+export const fetchRemoveTest = createAsyncThunk<
+  string,
+  string,
+  { rejectValue: string }
+>("tests/fetchRemoveTest", async (id) => await axios.delete(`/tests/${id}`));
 
 const initialState: TestState = {
   tests: [],
@@ -30,6 +42,21 @@ const testSlice = createSlice({
       })
       .addCase(fetchTests.rejected, (state) => {
         state.tests = [];
+        state.status = "error";
+      })
+
+      //Удаление
+
+      .addCase(fetchRemoveTest.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchRemoveTest.fulfilled, (state, action) => {
+        state.tests = state.tests.filter(
+          (test) => test._id !== action.meta.arg
+        );
+        state.status = "loaded";
+      })
+      .addCase(fetchRemoveTest.rejected, (state) => {
         state.status = "error";
       });
   },

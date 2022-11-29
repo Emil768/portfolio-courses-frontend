@@ -3,27 +3,35 @@ import styles from "./UserInfo.module.scss";
 import { ReactComponent as DateIcon } from "../../img/date.svg";
 import { ReactComponent as ChartIcon } from "../../img/chart.svg";
 import { ReactComponent as EmailIcon } from "../../img/email.svg";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import { useAppSelector } from "../../redux/hooks";
+import { useEffect, useState } from "react";
+import axios from "../../axios";
 
 interface UserInfoProps {}
 
 export const UserInfo = ({}: UserInfoProps) => {
-  const { data } = useAppSelector((state) => state.auth);
+  const [user, setUser] = useState<UserProps>();
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    axios.get(`/auth/me/${id}`).then((res) => setUser(res.data));
+  }, [id]);
 
   return (
     <div className={styles.user} data-testid="UserInfo">
       <div className={styles.user__content}>
         <div className={styles.user__avatar}>
-          <img src={data?.avatarUrl.url} alt="avatar icon" />
-          <h3 className={styles.user__name}>@{data?.fullName}</h3>
+          <img src={user?.avatarUrl.url} alt="avatar icon" />
+          <h3 className={styles.user__name}>@{user?.fullName}</h3>
           <div className={styles.user__email}>
             <EmailIcon width={16} />
-            {data?.email}
+            {user?.email}
           </div>
           <div className={styles.user__date}>
             <DateIcon width={16} />
-            {data?.createdAt}
+            {user?.createdAt}
           </div>
         </div>
         <div className={styles.user__statistics}>

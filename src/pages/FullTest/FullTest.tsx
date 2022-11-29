@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { AnswerBlock } from "../../components/AnswerBlock";
 import { InfoPanel } from "../../components/InfoPanel";
 import { ShowScore } from "../../components/ShowScore";
@@ -11,7 +11,8 @@ import { ReactComponent as RemoveIcon } from "../../img/remove.svg";
 import { ReactComponent as EditIcon } from "../../img/edit.svg";
 
 import axios from "../../axios";
-import { useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { fetchRemoveTest } from "../../redux/slices/tests/tests";
 
 interface FullTestProps {}
 
@@ -26,8 +27,11 @@ export const FullTest = ({}: FullTestProps) => {
   const [score, setScore] = useState(0);
   const [showScore, setShowScore] = useState(false);
 
-  const { data } = useAppSelector((state) => state.auth);
+  const { data, status } = useAppSelector((state) => state.auth);
   const { id } = useParams();
+
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get(`/tests/${id}`).then((res) => {
@@ -56,6 +60,13 @@ export const FullTest = ({}: FullTestProps) => {
     setCurrentAnswer({ ...item });
   };
 
+  const onRemoveTest = async () => {
+    if (window.confirm("Вы действительно хотите удалить тест?")) {
+      await axios.delete(`/tests/${id}`);
+      navigate("/");
+    }
+  };
+
   return (
     <main className={styles.fullTest} data-testid="FullTest">
       {/* <img
@@ -75,8 +86,10 @@ export const FullTest = ({}: FullTestProps) => {
             <h1 className={styles.fullTest__title}>{testData?.title}</h1>
             {isEditable ? (
               <div className={styles.fullTest__editable}>
-                <EditIcon width={20} />
-                <RemoveIcon width={20} />
+                <Link to={`/edit/${id}`}>
+                  <EditIcon width={20} />
+                </Link>
+                <RemoveIcon width={20} onClick={onRemoveTest} />
               </div>
             ) : null}
             <InfoPanel {...testData!} />

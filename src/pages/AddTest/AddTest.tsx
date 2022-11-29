@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import styles from "./AddTest.module.scss";
 
 import { ReactComponent as PlusIcon } from "../../img/plus.svg";
@@ -14,7 +14,6 @@ interface AddTestProps {}
 
 export const AddTest = ({}: AddTestProps) => {
   const isAuth = useAppSelector((state) => Boolean(state.auth.data));
-
   const [titleQues, setTitleQues] = useState("");
   const [category, setCategory] = useState("");
   const [bgImage, setBgImage] = useState("");
@@ -30,7 +29,22 @@ export const AddTest = ({}: AddTestProps) => {
     },
   ]);
 
+  const { id } = useParams();
   const navigate = useNavigate();
+
+  const isEditable = Boolean(id);
+
+  useEffect(() => {
+    if (id) {
+      axios.get(`/tests/${id}`).then(({ data }) => {
+        setTitleQues(data.title);
+        setTextQues(data.text);
+        setCategory(data.category);
+        setBgImage(data.backgroundImage);
+        setQuestions(data.ques);
+      });
+    }
+  }, []);
 
   const handlerAddAnswer = (index: number) => {
     const newAnswerObj: AnswersProps = { answer: "", correct: false };
@@ -78,6 +92,24 @@ export const AddTest = ({}: AddTestProps) => {
     setQuestions(nextState);
   };
 
+  const handlerRemoveAnswer = (indexQues: number, indexAnswer: number) => {
+    const nextState: QuesProps[] = questions.map((item: QuesProps, i) => {
+      if (i == indexQues) {
+        if (item.answers.length !== 1) {
+          item.answers.splice(indexAnswer, 1);
+          return {
+            title: item.title,
+            answers: [...item.answers],
+          };
+        }
+      }
+
+      return item;
+    });
+
+    setQuestions(nextState);
+  };
+
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -90,9 +122,13 @@ export const AddTest = ({}: AddTestProps) => {
     };
 
     try {
-      const { data } = await axios.post("/tests", fields);
+      const { data } = isEditable
+        ? await axios.patch(`/tests/${id}`, fields)
+        : await axios.post("/tests", fields);
 
-      navigate(`/tests/${data._id}`);
+      const _id = isEditable ? id : data._id;
+
+      navigate(`/tests/${_id}`);
     } catch (err) {
       alert("Не удалось создать тест");
     }
@@ -110,6 +146,8 @@ export const AddTest = ({}: AddTestProps) => {
           className={styles.addNote__title}
           placeholder="Название"
           onChange={(e) => setTitleQues(e.target.value)}
+          defaultValue={titleQues}
+          required
         />
 
         <input
@@ -117,12 +155,16 @@ export const AddTest = ({}: AddTestProps) => {
           className={styles.addNote__category}
           placeholder="Категория"
           onChange={(e) => setCategory(e.target.value)}
+          defaultValue={category}
+          required
         />
         <input
           type="text"
           className={styles.addNote__category}
           placeholder="Ссылка на превью"
           onChange={(e) => setBgImage(e.target.value)}
+          defaultValue={bgImage}
+          required
         />
 
         <textarea
@@ -133,6 +175,7 @@ export const AddTest = ({}: AddTestProps) => {
           rows={4}
           required
           onChange={(e) => setTextQues(e.target.value)}
+          defaultValue={textQues}
         ></textarea>
 
         <div className={styles.addNote__tests}>
@@ -143,6 +186,7 @@ export const AddTest = ({}: AddTestProps) => {
                   {...item}
                   id={index}
                   getQuesData={handlerGetAnswers}
+                  removeQuesData={handlerRemoveAnswer}
                 />
                 <span
                   className={styles.addNote__answersAdd}
@@ -155,16 +199,12 @@ export const AddTest = ({}: AddTestProps) => {
           })}
         </div>
         <div className={styles.addNote__buttons}>
-          <button
-            className={styles.addNote__confirm}
-            onClick={handlerAddQuestion}
-          >
+          <div className={styles.addNote__confirm} onClick={handlerAddQuestion}>
             {/* {isEditable ? "Сохранить" : "Опубликовать"} */}
             Добавить вопрос
-          </button>
+          </div>
           <button className={styles.addNote__confirm} type="submit">
-            {/* {isEditable ? "Сохранить" : "Опубликовать"} */}
-            Опубликовать
+            {isEditable ? "Сохранить" : "Опубликовать"}
           </button>
           {/* <Link
         to={isEditable ? `/notes/${id}` : "/"}

@@ -15,7 +15,7 @@ interface ShowScoreProps {
 export const ShowScore = ({ score }: ShowScoreProps) => {
   const testObj: TestProps[] = [
     {
-      _id: 1,
+      _id: "21332",
       title: "Video zone: The giant chocolate chip cookie – 1",
       text: "Choose the correct option to complete the sentences.",
       category: "Тесты",

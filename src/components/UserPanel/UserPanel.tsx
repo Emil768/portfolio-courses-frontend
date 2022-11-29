@@ -5,6 +5,7 @@ import { ReactComponent as ArrowDownIcon } from "../../img/arrow-down.svg";
 import styles from "./UserPanel.module.scss";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { logout } from "../../redux/slices/auth/auth";
+import axios from "axios";
 
 interface UserPanelProps {}
 
@@ -17,7 +18,7 @@ export const UserPanel = ({}: UserPanelProps) => {
   const userSettings: PopupItems[] = [
     {
       name: "Профиль",
-      link: "/user/232",
+      link: `/user/${data?._id}`,
     },
     {
       name: "Добавить тест",

@@ -62,11 +62,10 @@ const authSlice = createSlice({
       .addCase(fetchAuth.rejected, (state) => {
         state.data = null;
         state.status = "error";
-      });
+      })
 
-    //register
+      //register
 
-    builder
       .addCase(fethAuthRegister.pending, (state) => {
         state.data = null;
         state.status = "loading";
@@ -78,11 +77,10 @@ const authSlice = createSlice({
       .addCase(fethAuthRegister.rejected, (state) => {
         state.data = null;
         state.status = "error";
-      });
+      })
 
-    //fetchMe
+      //fetchMe
 
-    builder
       .addCase(fethAuthMe.pending, (state) => {
         state.data = null;
         state.status = "loading";
