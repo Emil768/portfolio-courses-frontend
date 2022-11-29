@@ -27,8 +27,8 @@ export const UserPanel = ({}: UserPanelProps) => {
     {
       name: "Выйти",
       onClickPopup() {
-        dispath(logout());
         if (window.confirm("Вы действительно хотите выйти?")) {
+          dispath(logout());
           window.localStorage.removeItem("token");
         }
       },

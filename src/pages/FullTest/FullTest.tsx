@@ -12,7 +12,6 @@ import { ReactComponent as EditIcon } from "../../img/edit.svg";
 
 import axios from "../../axios";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { fetchRemoveTest } from "../../redux/slices/tests/tests";
 
 interface FullTestProps {}
 

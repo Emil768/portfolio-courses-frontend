@@ -19,8 +19,6 @@ export const AnswerInfo = ({
   const [answerTitle, setAnswerTitle] = useState("");
   const [switchTrue, setSwithTrue] = useState(false);
 
-  console.log({ answerTitle, switchTrue });
-
   useEffect(() => {
     getAnswer(id, { answer: answerTitle, correct: switchTrue });
   }, [answerTitle, switchTrue]);

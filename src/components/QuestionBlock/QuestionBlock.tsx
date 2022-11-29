@@ -25,7 +25,6 @@ export const QuestionBlock = ({
   const [titleAnswer, setTitleAnswer] = useState("");
 
   const getAnswer = (index: number, { answer, correct }: AnswersProps) => {
-    console.log(titleAnswer, { answer, correct });
     getQuesData(id, titleAnswer, index, { answer, correct });
   };
 

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink, useParams } from "react-router-dom";
 import { Test } from "../../components/Test";
 import styles from "./Tests.module.scss";
 
@@ -7,7 +7,7 @@ import axios from "../../axios";
 
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { fetchTests } from "../../redux/slices/tests/tests";
+import { fetchCategory, fetchTests } from "../../redux/slices/tests/tests";
 import { ClipLoader } from "react-spinners";
 import { PopupItems } from "../../propTypes/popupProps";
 
@@ -15,6 +15,8 @@ interface TestsProps {}
 
 export const Tests = ({}: TestsProps) => {
   const [activePopup, setActivePopup] = useState(false);
+
+  const { title } = useParams();
 
   const dispatch = useAppDispatch();
   const { tests, status } = useAppSelector((state) => state.tests);
@@ -29,19 +31,26 @@ export const Tests = ({}: TestsProps) => {
   ];
 
   useEffect(() => {
+    if (title) {
+      dispatch(fetchCategory(title));
+    }
+
     dispatch(fetchTests());
-  }, []);
+  }, [title]);
+
+  const getCategory = (title: string) => dispatch(fetchCategory(title));
 
   return (
     <main className={styles.notes}>
       <div className={styles.notes__top}>
         <div className={styles.notes__categories}>
-          <Link to={`/category/${"test"}`} className={styles.notes__link}>
+          <span
+            className={styles.notes__link}
+            onClick={() => getCategory("Тесты")}
+          >
             Тесты
-          </Link>
-          <Link to={`/category/${"words"}`} className={styles.notes__link}>
-            Подстановка слов
-          </Link>
+          </span>
+          {/* <span className={styles.notes__link}>Подставновка слов</span> */}
         </div>
         <div className={styles.notes__sorted}>
           Сортировка по:{" "}

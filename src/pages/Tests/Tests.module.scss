@@ -37,6 +37,7 @@
     transition: all ease 0.2s;
     box-shadow: 0 4px 17px 0px rgb(0 0 0 / 17%);
     margin-right: 20px;
+    cursor: pointer;
     &:hover {
       background-color: #000;
       color: #fff;
@@ -44,6 +45,10 @@
     &:last-child {
       margin-right: 0;
     }
+  }
+  &__linkActive {
+    background-color: #000;
+    color: #fff;
   }
 
   &__sorted {

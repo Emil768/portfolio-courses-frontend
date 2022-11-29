@@ -4,7 +4,6 @@ import { Container } from "./components/Container";
 import { Header } from "./components/Header";
 import {
   AddTest,
-  Category,
   FullTest,
   Home,
   Login,
@@ -31,7 +30,7 @@ function App() {
         <Route path="/add-test" element={<AddTest />} />
         <Route path="/edit/:id" element={<AddTest />} />
         <Route path="/tests/:id" element={<FullTest />} />
-        <Route path="/category/:name" element={<Category />} />
+        <Route path="/category/:title" element={<Tests />} />
         <Route path="/auth/login" element={<Login />} />
         <Route path="/auth/register" element={<Registration />} />
         <Route path="/user/:id" element={<UserInfo />} />

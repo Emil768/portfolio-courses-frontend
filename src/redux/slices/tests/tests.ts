@@ -15,12 +15,15 @@ export const fetchTests = createAsyncThunk<
   return data;
 });
 
-//Удалить тест
-export const fetchRemoveTest = createAsyncThunk<
+//Получить категорию
+export const fetchCategory = createAsyncThunk<
+  TestProps[],
   string,
-  string,
-  { rejectValue: string }
->("tests/fetchRemoveTest", async (id) => await axios.delete(`/tests/${id}`));
+  { rejectValue: TestProps }
+>("tests/fetchCategory", async (title) => {
+  const { data } = await axios.get(`/category/${title}`);
+  return data;
+});
 
 const initialState: TestState = {
   tests: [],
@@ -45,18 +48,15 @@ const testSlice = createSlice({
         state.status = "error";
       })
 
-      //Удаление
-
-      .addCase(fetchRemoveTest.pending, (state) => {
+      .addCase(fetchCategory.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(fetchRemoveTest.fulfilled, (state, action) => {
-        state.tests = state.tests.filter(
-          (test) => test._id !== action.meta.arg
-        );
+      .addCase(fetchCategory.fulfilled, (state, action) => {
+        state.tests = action.payload;
         state.status = "loaded";
       })
-      .addCase(fetchRemoveTest.rejected, (state) => {
+      .addCase(fetchCategory.rejected, (state) => {
+        state.tests = [];
         state.status = "error";
       });
   },

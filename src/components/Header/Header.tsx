@@ -11,7 +11,7 @@ export const Header = ({}: HeaderProps) => {
   return (
     <header className={styles.header}>
       <div className={styles.header__content}>
-        <Link to={"/"}>
+        <Link to={"/tests"}>
           <img className={styles.header__logo} src={logoIcon} alt="" />
         </Link>
         <div className={styles.menuBtn}>
