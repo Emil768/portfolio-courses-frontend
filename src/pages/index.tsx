@@ -1,4 +1,3 @@
-export * from "./Category/Category";
 export * from "./FullTest/FullTest";
 export * from "./Login/Login";
 export * from "./Registration/Registration";

@@ -32,6 +32,7 @@ export const ScoreBlock = ({ title, answers, id }: ScoreBlockProps) => {
       >
         {answers.map((item, index) => (
           <div
+            key={index}
             className={
               item.correct
                 ? [styles.score__answerBlock, styles.score__answerCorrect].join(

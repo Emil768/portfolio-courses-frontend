@@ -46,12 +46,13 @@ export const FullTest = ({}: FullTestProps) => {
       setScore(score + 1);
     }
 
-    const nextQuestion = currentQuestion + 1;
-    if (nextQuestion < testData!.ques!.length) {
-      console.log(true);
-      setCurrentQuestion(nextQuestion);
-    } else {
-      setShowScore(true);
+    if (currentAnswer.answer !== "") {
+      const nextQuestion = currentQuestion + 1;
+      if (nextQuestion < testData!.ques!.length) {
+        setCurrentQuestion(nextQuestion);
+      } else {
+        setShowScore(true);
+      }
     }
   };
 
@@ -94,7 +95,7 @@ export const FullTest = ({}: FullTestProps) => {
             <InfoPanel {...testData!} />
             {/* <div className={styles.fullTest__text}>{testObj[0].text}</div> */}
             {showScore ? (
-              <ShowScore score={score} />
+              <ShowScore score={score} dataTest={testData!} />
             ) : (
               <>
                 <div className={styles.questions}>

@@ -16,7 +16,7 @@ export const AnswerBlock = ({
     className={styles.answers__block}
     onClick={() => setAnswers({ answer, correct })}
   >
-    <input type="radio" name="answer" id={`${id}`} />
+    <input type="radio" name="answer" id={`${id}`} key={id} />
     <label htmlFor={`${id}`}>{answer}</label>
   </div>
 );
