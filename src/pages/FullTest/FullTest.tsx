@@ -12,12 +12,12 @@ import { ReactComponent as EditIcon } from "../../img/edit.svg";
 
 import axios from "../../axios";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { fetchTest } from "../../redux/slices/tests/tests";
 
 interface FullTestProps {}
 
 export const FullTest = ({}: FullTestProps) => {
   const [testData, setTestData] = useState<TestProps>();
-  const [isLoading, setIsLoading] = useState(true);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [currentAnswer, setCurrentAnswer] = useState<AnswersProps>({
     answer: "",
@@ -26,18 +26,18 @@ export const FullTest = ({}: FullTestProps) => {
   const [score, setScore] = useState(0);
   const [showScore, setShowScore] = useState(false);
 
-  const { data, status } = useAppSelector((state) => state.auth);
+  const { data } = useAppSelector((state) => state.auth);
+  const { quiz, status } = useAppSelector((state) => state.tests);
   const { id } = useParams();
+
+  const isLoading = Boolean(status === "loading");
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`/tests/${id}`).then((res) => {
-      setTestData(res.data);
-      setIsLoading(false);
-    });
-  }, []);
+    dispatch(fetchTest(id!));
+  }, [id]);
 
   const isEditable = data && data._id === testData?.user._id;
 
@@ -83,7 +83,7 @@ export const FullTest = ({}: FullTestProps) => {
           />
         ) : (
           <>
-            <h1 className={styles.fullTest__title}>{testData?.title}</h1>
+            <h1 className={styles.fullTest__title}>{quiz?.title}</h1>
             {isEditable ? (
               <div className={styles.fullTest__editable}>
                 <Link to={`/edit/${id}`}>
@@ -92,7 +92,7 @@ export const FullTest = ({}: FullTestProps) => {
                 <RemoveIcon width={20} onClick={onRemoveTest} />
               </div>
             ) : null}
-            <InfoPanel {...testData!} />
+            <InfoPanel {...quiz!} />
             {/* <div className={styles.fullTest__text}>{testObj[0].text}</div> */}
             {showScore ? (
               <ShowScore score={score} dataTest={testData!} />
@@ -100,20 +100,17 @@ export const FullTest = ({}: FullTestProps) => {
               <>
                 <div className={styles.questions}>
                   <div className={styles.questions__title}>
-                    <span>{currentQuestion + 1}.</span>{" "}
-                    {testData?.ques[currentQuestion].title}
+                    <span>{currentQuestion + 1}.</span> {quiz?.title}
                   </div>
                   <div className={styles.answers}>
-                    {testData?.ques[currentQuestion].answers.map(
-                      (item, index) => (
-                        <AnswerBlock
-                          {...item}
-                          key={index}
-                          id={index}
-                          setAnswers={handlerSetAnswer}
-                        />
-                      )
-                    )}
+                    {quiz?.ques[currentQuestion].answers.map((item, index) => (
+                      <AnswerBlock
+                        {...item}
+                        key={index}
+                        id={index}
+                        setAnswers={handlerSetAnswer}
+                      />
+                    ))}
                   </div>
                 </div>
                 <div className={styles.questions__buttons}>
