@@ -8,15 +8,15 @@ import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { ResultList } from "../ResultList";
 import { ProgressProvider } from "../ProgressProvider";
+import { useAppSelector } from "../../redux/hooks";
 
-interface ShowScoreProps {
-  dataTest: TestProps;
-  score: number;
-}
+interface ShowScoreProps {}
 
-export const ShowScore = ({ score, dataTest }: ShowScoreProps) => {
-  const resultScore = (score / dataTest.ques.length) * 100;
-  const testResult = dataTest.ques.reduce(
+export const ShowScore = () => {
+  const { score, quiz } = useAppSelector((state) => state.quiz);
+
+  const resultScore = (score / quiz!.ques.length) * 100;
+  const testResult = quiz!.ques.reduce(
     (acc, { answers }) => acc + answers.filter(({ correct }) => correct).length,
     0
   );
@@ -41,7 +41,7 @@ export const ShowScore = ({ score, dataTest }: ShowScoreProps) => {
           resultEmoji={hightResult}
         />
       </div>
-      {dataTest.ques.map((item, index) => (
+      {quiz!.ques.map((item, index) => (
         <ScoreBlock {...item} key={index} id={index} />
       ))}
     </div>

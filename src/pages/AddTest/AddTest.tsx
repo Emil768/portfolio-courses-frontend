@@ -14,20 +14,23 @@ interface AddTestProps {}
 
 export const AddTest = ({}: AddTestProps) => {
   const isAuth = useAppSelector((state) => Boolean(state.auth.data));
-  const [titleQues, setTitleQues] = useState("");
-  const [category, setCategory] = useState("");
-  const [bgImage, setBgImage] = useState("");
-  const [textQues, setTextQues] = useState("");
-  const [questions, setQuestions] = useState<QuesProps[]>([
-    {
-      title: "",
-      answers: [
-        { answer: "", correct: false },
-        { answer: "", correct: false },
-        { answer: "", correct: false },
-      ],
-    },
-  ]);
+
+  const [data, setData] = useState({
+    titleQues: "",
+    category: "",
+    bgImage: "",
+    textQues: "",
+    questions: [
+      {
+        title: "",
+        answers: [
+          { answer: "", correct: false },
+          { answer: "", correct: false },
+          { answer: "", correct: false },
+        ],
+      },
+    ],
+  });
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -37,18 +40,20 @@ export const AddTest = ({}: AddTestProps) => {
   useEffect(() => {
     if (id) {
       axios.get(`/tests/${id}`).then(({ data }) => {
-        setTitleQues(data.title);
-        setTextQues(data.text);
-        setCategory(data.category);
-        setBgImage(data.backgroundImage);
-        setQuestions(data.ques);
+        setData({
+          titleQues: data.title,
+          textQues: data.text,
+          category: data.category,
+          bgImage: data.backgroundImage,
+          questions: data.ques,
+        });
       });
     }
   }, []);
 
   const handlerAddAnswer = (index: number) => {
     const newAnswerObj: AnswersProps = { answer: "", correct: false };
-    const nextState = questions.map((item, i) => {
+    const nextState = data.questions.map((item, i) => {
       if (i == index) {
         return {
           title: item.title,
@@ -59,14 +64,17 @@ export const AddTest = ({}: AddTestProps) => {
       }
     });
 
-    setQuestions(nextState);
+    setData({ ...data, questions: nextState });
   };
 
   const handlerAddQuestion = () => {
-    setQuestions((prev) => [
-      ...prev,
-      { title: "", answers: [{ answer: "", correct: false }] },
-    ]);
+    setData({
+      ...data,
+      questions: [
+        ...data.questions,
+        { title: "", answers: [{ answer: "", correct: false }] },
+      ],
+    });
   };
 
   const handlerGetAnswers = (
@@ -75,7 +83,7 @@ export const AddTest = ({}: AddTestProps) => {
     indexAnswer: number,
     { answer, correct }: AnswersProps
   ) => {
-    const nextState: QuesProps[] = questions.map((item: QuesProps, i) => {
+    const nextState: QuesProps[] = data.questions.map((item: QuesProps, i) => {
       if (i == indexQues) {
         if (item.answers[indexAnswer]) {
           const newAnswerObj: AnswersProps = { answer, correct };
@@ -89,11 +97,11 @@ export const AddTest = ({}: AddTestProps) => {
       return item;
     });
 
-    setQuestions(nextState);
+    setData({ ...data, questions: nextState });
   };
 
   const handlerRemoveAnswer = (indexQues: number, indexAnswer: number) => {
-    const nextState: QuesProps[] = questions.map((item: QuesProps, i) => {
+    const nextState: QuesProps[] = data.questions.map((item: QuesProps, i) => {
       if (i == indexQues) {
         if (item.answers.length !== 1) {
           item.answers.splice(indexAnswer, 1);
@@ -107,18 +115,18 @@ export const AddTest = ({}: AddTestProps) => {
       return item;
     });
 
-    setQuestions(nextState);
+    setData({ ...data, questions: nextState });
   };
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const fields = {
-      title: titleQues,
-      text: textQues,
-      category,
-      backgroundImage: bgImage,
-      ques: questions,
+      title: data.titleQues,
+      text: data.textQues,
+      category: data.category,
+      backgroundImage: data.bgImage,
+      ques: data.questions,
     };
 
     try {
@@ -138,6 +146,8 @@ export const AddTest = ({}: AddTestProps) => {
     return <Navigate to={"/"} />;
   }
 
+  console.log(data);
+
   return (
     <form className={styles.addNote} onSubmit={onSubmit}>
       <div className={styles.addNote__content}>
@@ -145,8 +155,8 @@ export const AddTest = ({}: AddTestProps) => {
           type="text"
           className={styles.addNote__title}
           placeholder="Название"
-          onChange={(e) => setTitleQues(e.target.value)}
-          defaultValue={titleQues}
+          onChange={(e) => setData({ ...data, titleQues: e.target.value })}
+          defaultValue={data?.titleQues}
           required
         />
 
@@ -154,16 +164,16 @@ export const AddTest = ({}: AddTestProps) => {
           type="text"
           className={styles.addNote__category}
           placeholder="Категория"
-          onChange={(e) => setCategory(e.target.value)}
-          defaultValue={category}
+          onChange={(e) => setData({ ...data, category: e.target.value })}
+          defaultValue={data?.category}
           required
         />
         <input
           type="text"
           className={styles.addNote__category}
           placeholder="Ссылка на превью"
-          onChange={(e) => setBgImage(e.target.value)}
-          defaultValue={bgImage}
+          onChange={(e) => setData({ ...data, bgImage: e.target.value })}
+          defaultValue={data?.bgImage}
           required
         />
 
@@ -174,12 +184,12 @@ export const AddTest = ({}: AddTestProps) => {
           cols={30}
           rows={4}
           required
-          onChange={(e) => setTextQues(e.target.value)}
-          defaultValue={textQues}
+          onChange={(e) => setData({ ...data, textQues: e.target.value })}
+          defaultValue={data?.textQues}
         ></textarea>
 
         <div className={styles.addNote__tests}>
-          {questions.map((item, index) => {
+          {data?.questions.map((item, index) => {
             return (
               <div className={styles.addNote__questionBlock} key={index}>
                 <QuestionBlock
@@ -200,18 +210,17 @@ export const AddTest = ({}: AddTestProps) => {
         </div>
         <div className={styles.addNote__buttons}>
           <div className={styles.addNote__confirm} onClick={handlerAddQuestion}>
-            {/* {isEditable ? "Сохранить" : "Опубликовать"} */}
             Добавить вопрос
           </div>
           <button className={styles.addNote__confirm} type="submit">
             {isEditable ? "Сохранить" : "Опубликовать"}
           </button>
-          {/* <Link
-        to={isEditable ? `/notes/${id}` : "/"}
-        className={styles.addNote__cancel}
-      >
-        Отмена
-      </Link> */}
+          <Link
+            to={isEditable ? `/tests/${id}` : "/"}
+            className={styles.addNote__cancel}
+          >
+            Отмена
+          </Link>
         </div>
       </div>
     </form>

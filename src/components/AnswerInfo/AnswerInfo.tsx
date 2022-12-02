@@ -13,6 +13,7 @@ interface AnswerInfoProps extends AnswersProps {
 export const AnswerInfo = ({
   id,
   answer,
+  correct,
   getAnswer,
   removeAnswer,
 }: AnswerInfoProps) => {
@@ -22,6 +23,8 @@ export const AnswerInfo = ({
   useEffect(() => {
     getAnswer(id, { answer: answerTitle, correct: switchTrue });
   }, [answerTitle, switchTrue]);
+
+  console.log(correct);
 
   return (
     <div className={styles.addNote__answers}>
@@ -33,7 +36,7 @@ export const AnswerInfo = ({
         defaultValue={answer}
         required
       />
-      <ReactSwitch onChange={setSwithTrue} checked={switchTrue} />
+      <ReactSwitch onChange={setSwithTrue} checked={correct} />
       <RemoveIcon
         width={40}
         className={styles.addNote__remove}

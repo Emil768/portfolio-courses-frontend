@@ -10,6 +10,10 @@ export type AnswersProps = {
   correct: boolean;
 };
 
+export type CurrentAnswerProps = {
+  id: number;
+} & AnswersProps;
+
 export interface TestProps {
   _id: string;
   title: string;

@@ -1,8 +1,8 @@
-import { AnswersProps } from "../../propTypes";
+import { AnswersProps, CurrentAnswerProps } from "../../propTypes";
 import styles from "./AnswerBlock.module.scss";
 
 interface AnswerBlockProps extends AnswersProps {
-  setAnswers: (item: AnswersProps) => void;
+  setAnswer: ({ id, answer, correct }: CurrentAnswerProps) => void;
   id: number;
 }
 
@@ -10,13 +10,12 @@ export const AnswerBlock = ({
   answer,
   correct,
   id,
-  setAnswers,
+  setAnswer,
 }: AnswerBlockProps) => (
-  <div
-    className={styles.answers__block}
-    onClick={() => setAnswers({ answer, correct })}
-  >
+  <div className={styles.answers__block}>
     <input type="radio" name="answer" id={`${id}`} key={id} />
-    <label htmlFor={`${id}`}>{answer}</label>
+    <label htmlFor={`${id}`} onClick={() => setAnswer({ id, answer, correct })}>
+      {answer}
+    </label>
   </div>
 );

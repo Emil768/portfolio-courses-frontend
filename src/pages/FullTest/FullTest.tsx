@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { AnswerBlock } from "../../components/AnswerBlock";
 import { InfoPanel } from "../../components/InfoPanel";
 import { ShowScore } from "../../components/ShowScore";
-import { AnswersProps, TestProps } from "../../propTypes";
+import { AnswersProps, CurrentAnswerProps, TestProps } from "../../propTypes";
 import { ClipLoader } from "react-spinners";
 import styles from "./FullTest.module.scss";
 
@@ -12,58 +12,55 @@ import { ReactComponent as EditIcon } from "../../img/edit.svg";
 
 import axios from "../../axios";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { fetchTest } from "../../redux/slices/tests/tests";
+import {
+  fetchTest,
+  setAnswerQuestion,
+  setShowScore,
+} from "../../redux/slices/quiz/quiz";
 
 interface FullTestProps {}
 
 export const FullTest = ({}: FullTestProps) => {
-  const [testData, setTestData] = useState<TestProps>();
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [currentAnswer, setCurrentAnswer] = useState<AnswersProps>({
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { data } = useAppSelector((state) => state.auth);
+  const { quiz, status, currentQuesIndex, showScore, score } = useAppSelector(
+    (state) => state.quiz
+  );
+
+  const [currentAnswer, setCurrentAnswer] = useState({
+    id: 0,
     answer: "",
     correct: false,
   });
-  const [score, setScore] = useState(0);
-  const [showScore, setShowScore] = useState(false);
-
-  const { data } = useAppSelector((state) => state.auth);
-  const { quiz, status } = useAppSelector((state) => state.tests);
-  const { id } = useParams();
 
   const isLoading = Boolean(status === "loading");
-
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  const isEditable = data && data._id === quiz?.user._id;
 
   useEffect(() => {
     dispatch(fetchTest(id!));
   }, [id]);
 
-  const isEditable = data && data._id === testData?.user._id;
-
-  const handlerAnswerNextClick = () => {
-    if (currentAnswer.correct) {
-      setScore(score + 1);
-    }
-
-    if (currentAnswer.answer !== "") {
-      const nextQuestion = currentQuestion + 1;
-      if (nextQuestion < testData!.ques!.length) {
-        setCurrentQuestion(nextQuestion);
-      } else {
-        setShowScore(true);
-      }
-    }
-  };
-
-  const handlerSetAnswer = (item: AnswersProps) => {
-    setCurrentAnswer({ ...item });
-  };
-
   const onRemoveTest = async () => {
     if (window.confirm("Вы действительно хотите удалить тест?")) {
       await axios.delete(`/tests/${id}`);
       navigate("/");
+    }
+  };
+
+  const getCurrentAnswer = ({ id, answer, correct }: CurrentAnswerProps) =>
+    setCurrentAnswer({ id, answer, correct });
+
+  const handlerNextQuiestion = () => {
+    if (currentAnswer.answer !== "") {
+      const nextQuestion = currentQuesIndex + 1;
+
+      if (nextQuestion < quiz!.ques.length) {
+        dispatch(setAnswerQuestion(currentAnswer));
+      } else {
+        dispatch(setShowScore());
+      }
     }
   };
 
@@ -83,7 +80,7 @@ export const FullTest = ({}: FullTestProps) => {
           />
         ) : (
           <>
-            <h1 className={styles.fullTest__title}>{quiz?.title}</h1>
+            <h1 className={styles.fullTest__title}>{quiz!.title}</h1>
             {isEditable ? (
               <div className={styles.fullTest__editable}>
                 <Link to={`/edit/${id}`}>
@@ -92,23 +89,22 @@ export const FullTest = ({}: FullTestProps) => {
                 <RemoveIcon width={20} onClick={onRemoveTest} />
               </div>
             ) : null}
-            <InfoPanel {...quiz!} />
-            {/* <div className={styles.fullTest__text}>{testObj[0].text}</div> */}
+            <InfoPanel />
             {showScore ? (
-              <ShowScore score={score} dataTest={testData!} />
+              <ShowScore />
             ) : (
               <>
                 <div className={styles.questions}>
                   <div className={styles.questions__title}>
-                    <span>{currentQuestion + 1}.</span> {quiz?.title}
+                    <span>{currentQuesIndex + 1}.</span> {quiz!.title}
                   </div>
                   <div className={styles.answers}>
-                    {quiz?.ques[currentQuestion].answers.map((item, index) => (
+                    {quiz!.ques[currentQuesIndex].answers.map((item, index) => (
                       <AnswerBlock
                         {...item}
-                        key={index}
                         id={index}
-                        setAnswers={handlerSetAnswer}
+                        key={index}
+                        setAnswer={getCurrentAnswer}
                       />
                     ))}
                   </div>
@@ -116,7 +112,7 @@ export const FullTest = ({}: FullTestProps) => {
                 <div className={styles.questions__buttons}>
                   <div
                     className={styles.fullTest__button}
-                    onClick={handlerAnswerNextClick}
+                    onClick={handlerNextQuiestion}
                   >
                     Далее
                   </div>

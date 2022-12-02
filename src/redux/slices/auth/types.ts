@@ -2,5 +2,5 @@ import { UserProps } from "../../../propTypes";
 
 export type AuthState = {
   data: UserProps | null;
-  status: String;
+  status: "loading" | "loaded" | "error";
 };

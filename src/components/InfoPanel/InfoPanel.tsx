@@ -1,34 +1,23 @@
 import { Link } from "react-router-dom";
 import { TestProps } from "../../propTypes";
+import { useAppSelector } from "../../redux/hooks";
 import styles from "./InfoPanel.module.scss";
 
-interface InfoPanelProps extends TestProps {}
+interface InfoPanelProps {}
 
-export const InfoPanel = ({
-  category,
-  viewsCount,
-  user,
-  createdAt,
-}: InfoPanelProps) => {
+export const InfoPanel = () => {
+  const { quiz } = useAppSelector((state) => state.quiz);
   const date: Date = new Date();
-  const options = {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour24: true,
-  };
 
   return (
     <div className={styles.fullTest__info}>
       <span>
         <i className={styles.circle}></i>{" "}
         <Link
-          to={`/category/${category}`}
+          to={`/category/${quiz?.category}`}
           className={styles.fullTest__category}
         >
-          {category}
+          {quiz?.category}
         </Link>
       </span>
       <span className={styles.fullTest__icon}>
@@ -40,19 +29,19 @@ export const InfoPanel = ({
         >
           <path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z" />
         </svg>
-        {viewsCount}
+        {quiz?.viewsCount}
       </span>
       <span className={styles.fullTest__date}>
         {/* {date.toLocaleDateString("ru-RU", options )} */}
         {String(date.toLocaleString("ru-RU"))}
       </span>
-      <Link to={`/user/${user._id}`} className={styles.author}>
+      <Link to={`/user/${quiz?.user._id}`} className={styles.author}>
         <img
-          src={`${user.avatarUrl.url}`}
+          src={`${quiz?.user.avatarUrl.url}`}
           alt=""
           className={styles.author__avatar}
         />
-        <span className={styles.author__name}>{user.fullName}</span>
+        <span className={styles.author__name}>{quiz?.user.fullName}</span>
       </Link>
     </div>
   );
