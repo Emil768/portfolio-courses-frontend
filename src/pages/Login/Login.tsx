@@ -1,12 +1,11 @@
 import { Link, Navigate } from "react-router-dom";
 import styles from "./Login.module.scss";
-import { ReactComponent as EmailIcon } from "../../img/email.svg";
-import { ReactComponent as PasswordIcon } from "../../img/folder.svg";
+import { EmailIcon, FolderIcon } from "@images";
 
 import { useForm } from "react-hook-form";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { fetchAuth } from "../../redux/slices/auth/auth";
-import { LoginProps } from "../../propTypes/authProps";
+import { useAppDispatch, useAppSelector } from "@redux/hooks";
+import { fetchAuth } from "@redux/slices";
+import { LoginProps } from "@proptypes";
 
 export const Login = () => {
   const dispatch = useAppDispatch();
@@ -61,7 +60,7 @@ export const Login = () => {
                 placeholder="Введите пароль"
                 {...register("password", { required: "Укажите пароль" })}
               />
-              <PasswordIcon className={styles.form__password} />
+              <FolderIcon className={styles.form__password} />
             </div>
           </div>
           <div className={styles.form__buttons}>

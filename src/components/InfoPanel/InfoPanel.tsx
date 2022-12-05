@@ -1,9 +1,6 @@
 import { Link } from "react-router-dom";
-import { TestProps } from "../../propTypes";
-import { useAppSelector } from "../../redux/hooks";
+import { useAppSelector } from "@redux/hooks";
 import styles from "./InfoPanel.module.scss";
-
-interface InfoPanelProps {}
 
 export const InfoPanel = () => {
   const { quiz } = useAppSelector((state) => state.quiz);

@@ -1,14 +1,11 @@
-import { TestProps } from "../../propTypes";
 import styles from "./ShowScore.module.scss";
 
 import { useState } from "react";
-import { ScoreBlock } from "../ScoreBlock";
+import { useAppSelector } from "@redux/hooks";
 
+import { ResultList, ProgressProvider, ScoreBlock } from "@components";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { ResultList } from "../ResultList";
-import { ProgressProvider } from "../ProgressProvider";
-import { useAppSelector } from "../../redux/hooks";
 
 interface ShowScoreProps {}
 

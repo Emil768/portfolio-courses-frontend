@@ -1,0 +1,71 @@
+.addNote {
+  &__text {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #c0c0c0;
+    transition: all ease 0.3s;
+    resize: none;
+    font-size: 18px;
+    padding: 10px 5px 20px;
+    margin-bottom: 60px;
+    &:focus {
+      border-bottom: 1px solid #ccc;
+    }
+  }
+
+  &__buttons {
+    align-self: flex-end;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    div,
+    button,
+    a {
+      font-size: 16px;
+      font-family: inherit;
+      margin-left: 15px;
+      border: none;
+      outline: none;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px 20px;
+      transition: all ease 0.1s;
+      color: #ffff;
+      cursor: pointer;
+    }
+  }
+}
+.inputField {
+  input,
+  textarea {
+    outline: none;
+    border: none;
+    width: 100%;
+    font-family: inherit;
+    &:placeholder-shown:focus {
+      opacity: 0.7;
+    }
+  }
+  &__title {
+    font-size: 18px;
+    display: inline-block;
+    opacity: 0.9;
+    margin-bottom: 20px;
+  }
+
+  &__field {
+    font-size: 18px;
+    border-bottom: 1px solid #cccc;
+    padding-bottom: 10px;
+    margin-bottom: 40px;
+  }
+
+  &__category {
+    padding: 10px 5px;
+    font-size: 16px;
+    margin-bottom: 40px;
+    &:last-of-type {
+      margin-bottom: 40px;
+    }
+  }
+}

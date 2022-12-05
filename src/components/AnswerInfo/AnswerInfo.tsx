@@ -1,30 +1,28 @@
 import { useState, useMemo, useEffect } from "react";
 import styles from "./AnswerInfo.module.scss";
-import { ReactComponent as RemoveIcon } from "../../img/close.svg";
 import ReactSwitch from "react-switch";
-import { AnswersProps, AvatarProps } from "../../propTypes";
+import { CloseIcon } from "@images";
+import { AnswersProps, AvatarProps } from "@proptypes";
 
 interface AnswerInfoProps extends AnswersProps {
   id: number;
-  getAnswer: (index: number, { answer, correct }: AnswersProps) => void;
-  removeAnswer: (indexAnswer: number) => void;
+  onGetAnswer: (idAnswer: number, { answer, correct }: AnswersProps) => void;
+  onRemoveAnswer: (idAnswer: number) => void;
 }
 
 export const AnswerInfo = ({
   id,
   answer,
   correct,
-  getAnswer,
-  removeAnswer,
+  onGetAnswer,
+  onRemoveAnswer,
 }: AnswerInfoProps) => {
   const [answerTitle, setAnswerTitle] = useState("");
   const [switchTrue, setSwithTrue] = useState(false);
 
   useEffect(() => {
-    getAnswer(id, { answer: answerTitle, correct: switchTrue });
+    onGetAnswer(id, { answer: answerTitle, correct: switchTrue });
   }, [answerTitle, switchTrue]);
-
-  console.log(correct);
 
   return (
     <div className={styles.addNote__answers}>
@@ -36,11 +34,11 @@ export const AnswerInfo = ({
         defaultValue={answer}
         required
       />
-      <ReactSwitch onChange={setSwithTrue} checked={correct} />
-      <RemoveIcon
+      <ReactSwitch onChange={setSwithTrue} checked={switchTrue} />
+      <CloseIcon
         width={40}
         className={styles.addNote__remove}
-        onClick={() => removeAnswer(id)}
+        onClick={() => onRemoveAnswer(id)}
       />
     </div>
   );

@@ -1,43 +1,43 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useContext, useMemo, useEffect } from "react";
 
-import { AnswersProps, QuesProps } from "../../propTypes";
-import { AnswerInfo } from "../AnswerInfo";
+import { AddTestContextType, AnswersProps, QuesProps } from "@proptypes";
+import { AnswerInfo } from "@components";
+
+import { TestContext } from "@pages";
+
 import styles from "./QuestionBlock.module.scss";
 
 interface QuestionBlockProps extends QuesProps {
   id: number;
-  getQuesData: (
-    indexQues: number,
-    titleAnswer: string,
-    indexAnswer: number,
-    { answer, correct }: AnswersProps
-  ) => void;
-  removeQuesData: (indexQues: number, indexAnswer: number) => void;
 }
 
-export const QuestionBlock = ({
-  id,
-  title,
-  answers,
-  getQuesData,
-  removeQuesData,
-}: QuestionBlockProps) => {
+export const QuestionBlock = ({ id, title, answers }: QuestionBlockProps) => {
   const [titleAnswer, setTitleAnswer] = useState("");
+  const { handlerGetAnswers, handlerRemoveAnswer } = useContext(
+    TestContext
+  ) as AddTestContextType;
 
-  const getAnswer = (index: number, { answer, correct }: AnswersProps) => {
-    getQuesData(id, titleAnswer, index, { answer, correct });
+  const onGetAnswer = (idAnswer: number, { answer, correct }: AnswersProps) => {
+    handlerGetAnswers(id, titleAnswer, idAnswer, { answer, correct });
   };
 
-  const removeAnswer = (indexAnswer: number) => removeQuesData(id, indexAnswer);
+  const onRemoveAnswer = (idAnswer: number) =>
+    handlerRemoveAnswer(id, idAnswer);
 
   return (
     <div className={styles.addNote__questions}>
       <input
         type="text"
-        defaultValue={title}
         className={styles.addNote__questionsTitle}
         placeholder="Введите название вопроса"
         onChange={(e) => setTitleAnswer(e.target.value)}
+        required
+      />
+
+      <input
+        type="file"
+        className={styles.addNote__questionsTitle}
+        placeholder="Изображение"
         required
       />
 
@@ -46,8 +46,8 @@ export const QuestionBlock = ({
           {...item}
           id={index}
           key={index}
-          getAnswer={getAnswer}
-          removeAnswer={removeAnswer}
+          onGetAnswer={onGetAnswer}
+          onRemoveAnswer={onRemoveAnswer}
         />
       ))}
     </div>

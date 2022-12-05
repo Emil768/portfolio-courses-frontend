@@ -1,12 +1,11 @@
-import { UserProps } from "../../propTypes";
+import { UserProps } from "@proptypes";
 import styles from "./UserInfo.module.scss";
-import { ReactComponent as DateIcon } from "../../img/date.svg";
-import { ReactComponent as ChartIcon } from "../../img/chart.svg";
-import { ReactComponent as EmailIcon } from "../../img/email.svg";
 import { Link, Navigate, useParams } from "react-router-dom";
-import { useAppSelector } from "../../redux/hooks";
 import { useEffect, useState } from "react";
-import axios from "../../axios";
+
+import { DateIcon, ChartIcon, EmailIcon } from "@images";
+
+import axios from "@axios";
 
 interface UserInfoProps {}
 
@@ -16,7 +15,7 @@ export const UserInfo = ({}: UserInfoProps) => {
   const { id } = useParams();
 
   useEffect(() => {
-    axios.get(`/auth/me/${id}`).then((res) => setUser(res.data));
+    axios.get(`/auth/me/${id}`).then((res: UserProps) => setUser({ ...res }));
   }, [id]);
 
   return (

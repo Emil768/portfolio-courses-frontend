@@ -1,6 +1,6 @@
 import styles from "./ScoreBlock.module.scss";
-import { ReactComponent as ArrowDownIcon } from "../../img/arrow-down.svg";
-import { QuesProps } from "../../propTypes";
+import { ArrowIcon } from "@images";
+import { QuesProps } from "@proptypes";
 import { useState } from "react";
 
 interface ScoreBlockProps extends QuesProps {
@@ -18,7 +18,7 @@ export const ScoreBlock = ({ title, answers, id }: ScoreBlockProps) => {
         <span>
           {id + 1}. {title}
         </span>
-        <ArrowDownIcon
+        <ArrowIcon
           className={
             showAnswer
               ? [styles.arrow, styles.arrowDrop].join(" ")

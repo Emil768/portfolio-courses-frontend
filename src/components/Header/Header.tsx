@@ -1,8 +1,9 @@
 import styles from "./Header.module.scss";
-import logoIcon from "../../img/logo.png";
 import { Link, NavLink } from "react-router-dom";
-import { UserPanel } from "../UserPanel";
-import { useAppSelector } from "../../redux/hooks";
+import { UserPanel } from "@components";
+import { useAppSelector } from "@redux/hooks";
+
+import LogoIcon from "../../img/logo.png";
 
 interface HeaderProps {}
 
@@ -12,7 +13,7 @@ export const Header = ({}: HeaderProps) => {
     <header className={styles.header}>
       <div className={styles.header__content}>
         <Link to={"/tests"}>
-          <img className={styles.header__logo} src={logoIcon} alt="" />
+          <img src={LogoIcon} className={styles.header__logo} alt="logo" />
         </Link>
         <div className={styles.menuBtn}>
           <span></span>

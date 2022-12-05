@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { PopupItems } from "../../propTypes/popupProps";
-import { Popup } from "../Popup";
-import { ReactComponent as ArrowDownIcon } from "../../img/arrow-down.svg";
 import styles from "./UserPanel.module.scss";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { logout } from "../../redux/slices/auth/auth";
-import axios from "axios";
+import { useAppDispatch, useAppSelector } from "@redux/hooks";
+import { logout } from "@redux/slices";
+
+import { PopupItems } from "@proptypes";
+import { Popup } from "@components";
+
+import { ArrowIcon } from "@images";
 
 interface UserPanelProps {}
 
@@ -43,7 +44,7 @@ export const UserPanel = ({}: UserPanelProps) => {
           alt=""
           className={styles.author__avatar}
         />
-        <ArrowDownIcon className={styles.user__panelArrow} width={10} />
+        <ArrowIcon className={styles.user__panelArrow} width={10} />
       </div>
       <Popup active={userState} items={userSettings} />
     </div>

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
-import { Container } from "./components/Container";
-import { Header } from "./components/Header";
+import { Container, Header } from "./components";
+
 import {
   AddTest,
   FullTest,
@@ -11,6 +11,7 @@ import {
   Tests,
   UserInfo,
 } from "./pages";
+
 import { useAppDispatch } from "./redux/hooks";
 import { fethAuthMe } from "./redux/slices/auth/auth";
 

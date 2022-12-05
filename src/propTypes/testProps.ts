@@ -25,3 +25,29 @@ export interface TestProps {
   ques: QuesProps[];
   user: UserProps;
 }
+
+export type MainAddTestProps = {
+  title: string;
+  category: string;
+  text: string;
+  bgImage: string;
+  questions: QuesProps[];
+};
+
+export type AddTestContextType = {
+  data: MainAddTestProps;
+  onGetMainProps: ({
+    title,
+    category,
+    text,
+    bgImage,
+  }: MainAddTestProps) => void;
+  handlerAddAnswer: (id: number) => void;
+  handlerGetAnswers: (
+    id: number,
+    title: string,
+    idAnswer: number,
+    { answer, correct }: AnswersProps
+  ) => void;
+  handlerRemoveAnswer: (id: number, idAnswer: number) => void;
+};

@@ -1,22 +1,18 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { AnswerBlock } from "../../components/AnswerBlock";
-import { InfoPanel } from "../../components/InfoPanel";
-import { ShowScore } from "../../components/ShowScore";
-import { AnswersProps, CurrentAnswerProps, TestProps } from "../../propTypes";
+
+import { AnswerBlock, InfoPanel, ShowScore } from "@components";
+
+import { CurrentAnswerProps } from "@proptypes";
 import { ClipLoader } from "react-spinners";
 import styles from "./FullTest.module.scss";
 
-import { ReactComponent as RemoveIcon } from "../../img/remove.svg";
-import { ReactComponent as EditIcon } from "../../img/edit.svg";
+import { RemoveIcon, EditIcon } from "@images";
 
-import axios from "../../axios";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import {
-  fetchTest,
-  setAnswerQuestion,
-  setShowScore,
-} from "../../redux/slices/quiz/quiz";
+import axios from "@axios";
+
+import { useAppDispatch, useAppSelector } from "@redux/hooks";
+import { fetchTest, setAnswerQuestion, setShowScore } from "@redux/slices";
 
 interface FullTestProps {}
 
@@ -95,18 +91,28 @@ export const FullTest = ({}: FullTestProps) => {
             ) : (
               <>
                 <div className={styles.questions}>
-                  <div className={styles.questions__title}>
-                    <span>{currentQuesIndex + 1}.</span> {quiz!.title}
+                  <div className={styles.questions__image}>
+                    <img
+                      src="https://www.looper.com/img/gallery/20-most-powerful-attack-on-titan-characters-ranked/intro-1647387047.jpg"
+                      alt=""
+                    />
                   </div>
-                  <div className={styles.answers}>
-                    {quiz!.ques[currentQuesIndex].answers.map((item, index) => (
-                      <AnswerBlock
-                        {...item}
-                        id={index}
-                        key={index}
-                        setAnswer={getCurrentAnswer}
-                      />
-                    ))}
+                  <div className={styles.questions__info}>
+                    <div className={styles.questions__title}>
+                      <span>{currentQuesIndex + 1}.</span> {quiz!.title}
+                    </div>
+                    <div className={styles.answers}>
+                      {quiz!.ques[currentQuesIndex].answers.map(
+                        (item, index) => (
+                          <AnswerBlock
+                            {...item}
+                            id={index}
+                            key={index}
+                            setAnswer={getCurrentAnswer}
+                          />
+                        )
+                      )}
+                    </div>
                   </div>
                 </div>
                 <div className={styles.questions__buttons}>

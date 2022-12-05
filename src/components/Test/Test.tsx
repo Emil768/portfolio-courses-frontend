@@ -1,9 +1,8 @@
 import { Link } from "react-router-dom";
-import { TestProps } from "../../propTypes";
+import { TestProps } from "@proptypes";
 import styles from "./Test.module.scss";
 
-import { ReactComponent as DisLikeIcon } from "../../img/like.svg";
-import { ReactComponent as LikeIcon } from "../../img/dislike.svg";
+import { DislikeIcon, LikeIcon } from "@images";
 
 export const Test = ({
   _id,
@@ -49,7 +48,7 @@ export const Test = ({
               <span className={styles.note__reactionLike}>999</span>
             </div>
             <div className={styles.note__reactionBlock}>
-              <DisLikeIcon className={styles.note__disIcon} />
+              <DislikeIcon className={styles.note__disIcon} />
               <span className={styles.note__reactionDisLike}>999</span>
             </div>
           </div>

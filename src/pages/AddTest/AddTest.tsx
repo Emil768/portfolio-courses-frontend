@@ -1,63 +1,105 @@
-import { useState, useEffect } from "react";
+import { useState, createContext, useEffect } from "react";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import styles from "./AddTest.module.scss";
 
-import { ReactComponent as PlusIcon } from "../../img/plus.svg";
-import { AnswersProps, QuesProps } from "../../propTypes";
-import { AnswerInfo } from "../../components/AnswerInfo";
-import { useAppSelector } from "../../redux/hooks";
-import { QuestionBlock } from "../../components/QuestionBlock";
+import { PlusIcon } from "@images";
+import {
+  AddTestContextType,
+  AnswersProps,
+  MainAddTestProps,
+  QuesProps,
+} from "@proptypes";
 
-import axios from "../../axios";
+import { useAppSelector } from "@redux/hooks";
+import {
+  QuestionBlock,
+  AnswerBlock,
+  AddTestMain,
+  AddTestQuestion,
+} from "@components";
+
+import axios from "@axios";
+
+export const TestContext = createContext<AddTestContextType | null>(null);
 
 interface AddTestProps {}
 
 export const AddTest = ({}: AddTestProps) => {
-  const isAuth = useAppSelector((state) => Boolean(state.auth.data));
-
-  const [data, setData] = useState({
-    titleQues: "",
-    category: "",
-    bgImage: "",
-    textQues: "",
-    questions: [
-      {
-        title: "",
-        answers: [
-          { answer: "", correct: false },
-          { answer: "", correct: false },
-          { answer: "", correct: false },
-        ],
-      },
-    ],
-  });
-
   const { id } = useParams();
   const navigate = useNavigate();
 
   const isEditable = Boolean(id);
+  const isAuth = useAppSelector((state) => Boolean(state.auth.data));
 
-  useEffect(() => {
-    if (id) {
-      axios.get(`/tests/${id}`).then(({ data }) => {
-        setData({
-          titleQues: data.title,
-          textQues: data.text,
-          category: data.category,
-          bgImage: data.backgroundImage,
-          questions: data.ques,
-        });
-      });
-    }
-  }, []);
+  const [isToggleNav, setIsToggleNav] = useState(true);
+
+  const [data, setData] = useState({
+    title: "",
+    category: "",
+    bgImage: "",
+    text: "",
+    questions: [
+      {
+        title: "",
+        answers: [{ answer: "", correct: false }],
+      },
+    ],
+  });
+
+  // useEffect(() => {
+  //   if (id) {
+  //     axios.get(`/tests/${id}`).then(({ data }) => {
+  //       setData({
+  //         titleQues: data.title,
+  //         textQues: data.text,
+  //         category: data.category,
+  //         bgImage: data.backgroundImage,
+  //         questions: data.ques,
+  //       });
+  //     });
+  //   }
+  // }, []);
+
+  // const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+
+  //   const fields = {
+  //     title: data.titleQues,
+  //     text: data.textQues,
+  //     category: data.category,
+  //     backgroundImage: data.bgImage,
+  //     ques: data.questions,
+  //   };
+
+  //   try {
+  //     const { data } = isEditable
+  //       ? await axios.patch(`/tests/${id}`, fields)
+  //       : await axios.post("/tests", fields);
+
+  //     const _id = isEditable ? id : data._id;
+
+  //     navigate(`/tests/${_id}`);
+  //   } catch (err) {
+  //     alert("Не удалось создать тест");
+  //   }
+  // };
+
+  // const handlerAddQuestion = () => {
+  //   setData({
+  //     ...data,
+  //     questions: [
+  //       ...data.questions,
+  //       { title: "", answers: [{ answer: "", correct: false }] },
+  //     ],
+  //   });
+  // };
 
   const handlerAddAnswer = (index: number) => {
-    const newAnswerObj: AnswersProps = { answer: "", correct: false };
     const nextState = data.questions.map((item, i) => {
       if (i == index) {
         return {
           title: item.title,
-          answers: [...item.answers, newAnswerObj],
+          answers: [...item.answers, { answer: "", correct: false }],
         };
       } else {
         return item;
@@ -67,29 +109,18 @@ export const AddTest = ({}: AddTestProps) => {
     setData({ ...data, questions: nextState });
   };
 
-  const handlerAddQuestion = () => {
-    setData({
-      ...data,
-      questions: [
-        ...data.questions,
-        { title: "", answers: [{ answer: "", correct: false }] },
-      ],
-    });
-  };
-
   const handlerGetAnswers = (
-    indexQues: number,
-    titleAnswer: string,
-    indexAnswer: number,
+    id: number,
+    title: string,
+    idAnswer: number,
     { answer, correct }: AnswersProps
   ) => {
-    const nextState: QuesProps[] = data.questions.map((item: QuesProps, i) => {
-      if (i == indexQues) {
-        if (item.answers[indexAnswer]) {
-          const newAnswerObj: AnswersProps = { answer, correct };
-          item.answers[indexAnswer] = newAnswerObj;
+    const nextState = data.questions.map((item, index) => {
+      if (index == id) {
+        if (item.answers[idAnswer]) {
+          item.answers[idAnswer] = { answer, correct };
           return {
-            title: titleAnswer,
+            title: title,
             answers: [...item.answers],
           };
         }
@@ -100,11 +131,11 @@ export const AddTest = ({}: AddTestProps) => {
     setData({ ...data, questions: nextState });
   };
 
-  const handlerRemoveAnswer = (indexQues: number, indexAnswer: number) => {
-    const nextState: QuesProps[] = data.questions.map((item: QuesProps, i) => {
-      if (i == indexQues) {
+  const handlerRemoveAnswer = (id: number, idAnswer: number) => {
+    const nextState = data.questions.map((item, index) => {
+      if (index == id) {
         if (item.answers.length !== 1) {
-          item.answers.splice(indexAnswer, 1);
+          item.answers.splice(idAnswer, 1);
           return {
             title: item.title,
             answers: [...item.answers],
@@ -118,29 +149,19 @@ export const AddTest = ({}: AddTestProps) => {
     setData({ ...data, questions: nextState });
   };
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const fields = {
-      title: data.titleQues,
-      text: data.textQues,
-      category: data.category,
-      backgroundImage: data.bgImage,
-      ques: data.questions,
-    };
-
-    try {
-      const { data } = isEditable
-        ? await axios.patch(`/tests/${id}`, fields)
-        : await axios.post("/tests", fields);
-
-      const _id = isEditable ? id : data._id;
-
-      navigate(`/tests/${_id}`);
-    } catch (err) {
-      alert("Не удалось создать тест");
-    }
-  };
+  const onGetMainProps = ({
+    title,
+    text,
+    category,
+    bgImage,
+  }: MainAddTestProps) =>
+    setData({
+      title,
+      text,
+      category,
+      bgImage,
+      questions: [...data.questions],
+    });
 
   if (!window.localStorage.getItem("token") && !isAuth) {
     return <Navigate to={"/"} />;
@@ -149,69 +170,46 @@ export const AddTest = ({}: AddTestProps) => {
   console.log(data);
 
   return (
-    <form className={styles.addNote} onSubmit={onSubmit}>
+    <form className={styles.addNote}>
       <div className={styles.addNote__content}>
-        <input
-          type="text"
-          className={styles.addNote__title}
-          placeholder="Название"
-          onChange={(e) => setData({ ...data, titleQues: e.target.value })}
-          defaultValue={data?.titleQues}
-          required
-        />
-
-        <input
-          type="text"
-          className={styles.addNote__category}
-          placeholder="Категория"
-          onChange={(e) => setData({ ...data, category: e.target.value })}
-          defaultValue={data?.category}
-          required
-        />
-        <input
-          type="text"
-          className={styles.addNote__category}
-          placeholder="Ссылка на превью"
-          onChange={(e) => setData({ ...data, bgImage: e.target.value })}
-          defaultValue={data?.bgImage}
-          required
-        />
-
-        <textarea
-          className={styles.addNote__text}
-          placeholder="Краткое описание"
-          name="message"
-          cols={30}
-          rows={4}
-          required
-          onChange={(e) => setData({ ...data, textQues: e.target.value })}
-          defaultValue={data?.textQues}
-        ></textarea>
-
-        <div className={styles.addNote__tests}>
-          {data?.questions.map((item, index) => {
-            return (
-              <div className={styles.addNote__questionBlock} key={index}>
-                <QuestionBlock
-                  {...item}
-                  id={index}
-                  getQuesData={handlerGetAnswers}
-                  removeQuesData={handlerRemoveAnswer}
-                />
-                <span
-                  className={styles.addNote__answersAdd}
-                  onClick={() => handlerAddAnswer(index)}
-                >
-                  Добавить ответ
-                </span>
-              </div>
-            );
-          })}
+        <div className={styles.addNote__top}>
+          <ul className={styles.addNote__list}>
+            <li
+              className={
+                isToggleNav
+                  ? [styles.addNote__item, styles.addNote__itemActive].join(" ")
+                  : styles.addNote__item
+              }
+              onClick={() => setIsToggleNav(true)}
+            >
+              Основное
+            </li>
+            <li
+              className={
+                isToggleNav
+                  ? styles.addNote__item
+                  : [styles.addNote__item, styles.addNote__itemActive].join(" ")
+              }
+              onClick={() => setIsToggleNav(false)}
+            >
+              Вопросы
+            </li>
+          </ul>
         </div>
+
+        <TestContext.Provider
+          value={{
+            data,
+            onGetMainProps,
+            handlerAddAnswer,
+            handlerGetAnswers,
+            handlerRemoveAnswer,
+          }}
+        >
+          {isToggleNav ? <AddTestMain /> : <AddTestQuestion />}
+        </TestContext.Provider>
+
         <div className={styles.addNote__buttons}>
-          <div className={styles.addNote__confirm} onClick={handlerAddQuestion}>
-            Добавить вопрос
-          </div>
           <button className={styles.addNote__confirm} type="submit">
             {isEditable ? "Сохранить" : "Опубликовать"}
           </button>

@@ -6,6 +6,10 @@
     margin-bottom: 20px;
     transition: all ease 0.2s;
 
+    &:last-child {
+      margin-bottom: 0;
+    }
+
     input:checked + label {
       color: #fff;
       background-image: linear-gradient(to bottom, #79b3f8, #4999f8);

@@ -1,4 +1,4 @@
-import { AnswersProps, CurrentAnswerProps } from "../../propTypes";
+import { AnswersProps, CurrentAnswerProps } from "@proptypes";
 import styles from "./AnswerBlock.module.scss";
 
 interface AnswerBlockProps extends AnswersProps {

@@ -1,5 +1,4 @@
 import styles from "./ResultList.module.scss";
-import { ReactComponent as ResultIcon } from "../../img/result.svg";
 interface ResultListProps {
   score: number;
   fullScore: number;

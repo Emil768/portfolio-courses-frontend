@@ -1,17 +1,16 @@
 import styles from "./Registration.module.scss";
-import { ReactComponent as EmailIcon } from "../../img/email.svg";
-import { ReactComponent as PasswordIcon } from "../../img/folder.svg";
-import { ReactComponent as UserIcon } from "../../img/user.svg";
-import { ReactComponent as ImageIcon } from "../../img/image.svg";
 
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { UserProps } from "../../propTypes";
-import { fethAuthRegister } from "../../redux/slices/auth/auth";
+import { useAppDispatch, useAppSelector } from "@redux/hooks";
+import { UserProps } from "@proptypes";
+import { fethAuthRegister } from "@redux/slices";
 import { ClipLoader } from "react-spinners";
-import axios from "../../axios";
+
+import { EmailIcon, FolderIcon, UserIcon, ImageIcon } from "@images";
+
+import axios from "@axios";
 
 interface RegistrationProps {}
 
@@ -174,7 +173,7 @@ export const Registration = ({}: RegistrationProps) => {
                   )
                 }
               />
-              <PasswordIcon className={styles.form__password} />
+              <FolderIcon className={styles.form__password} />
             </div>
             <div className={styles.form__input}>
               <input

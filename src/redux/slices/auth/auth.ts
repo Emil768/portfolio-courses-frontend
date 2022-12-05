@@ -14,7 +14,6 @@ export const fetchAuth = createAsyncThunk<
   { rejectValue: UserProps }
 >("auth/fetchAuth", async (params) => {
   const { data } = await axios.post("/auth/login", params);
-
   return data;
 });
 
@@ -25,11 +24,15 @@ export const fethAuthRegister = createAsyncThunk<
   { rejectValue: UserProps }
 >("auth/fetchAuthRegister", async (params) => {
   const { data } = await axios.post("/auth/register", params);
-  return data as UserProps;
+  return data;
 });
 
 //Получение пользователя
-export const fethAuthMe = createAsyncThunk("auth/fethAuthMe", async () => {
+export const fethAuthMe = createAsyncThunk<
+  UserProps,
+  void,
+  { rejectValue: UserProps }
+>("auth/fethAuthMe", async () => {
   const { data } = await axios.get("/auth/me");
   return data;
 });

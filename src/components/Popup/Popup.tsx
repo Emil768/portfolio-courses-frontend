@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { PopupProps } from "../../propTypes/popupProps";
+import { PopupProps } from "@proptypes";
 import styles from "./Popup.module.scss";
 
 export const Popup = ({ active, items }: PopupProps) => (

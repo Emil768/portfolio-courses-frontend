@@ -1,15 +1,13 @@
 import { Link, NavLink, useParams } from "react-router-dom";
-import { Test } from "../../components/Test";
 import styles from "./Tests.module.scss";
 
-import { Popup } from "../../components/Popup";
-import axios from "../../axios";
+import { Test, Popup } from "@components";
 
 import { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { fetchCategory, fetchTests } from "../../redux/slices/tests/tests";
+import { useAppDispatch, useAppSelector } from "@redux/hooks";
+import { fetchCategory, fetchTests } from "@redux/slices";
 import { ClipLoader } from "react-spinners";
-import { PopupItems } from "../../propTypes/popupProps";
+import { PopupItems } from "@proptypes";
 
 interface TestsProps {}
 
