@@ -13,11 +13,12 @@ interface QuestionBlockProps extends QuesProps {
 
 export const QuestionBlock = ({ id, title, answers }: QuestionBlockProps) => {
   const [titleAnswer, setTitleAnswer] = useState("");
-  const { handlerGetAnswers, handlerRemoveAnswer } = useContext(
+  const { data, handlerGetAnswers, handlerRemoveAnswer } = useContext(
     TestContext
   ) as AddTestContextType;
 
   const onGetAnswer = (idAnswer: number, { answer, correct }: AnswersProps) => {
+    console.log(id, titleAnswer);
     handlerGetAnswers(id, titleAnswer, idAnswer, { answer, correct });
   };
 
@@ -35,7 +36,7 @@ export const QuestionBlock = ({ id, title, answers }: QuestionBlockProps) => {
       />
 
       <input
-        type="file"
+        type="text"
         className={styles.addNote__questionsTitle}
         placeholder="Изображение"
         required

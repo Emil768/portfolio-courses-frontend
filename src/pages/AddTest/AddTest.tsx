@@ -31,7 +31,7 @@ export const AddTest = ({}: AddTestProps) => {
   const isEditable = Boolean(id);
   const isAuth = useAppSelector((state) => Boolean(state.auth.data));
 
-  const [isToggleNav, setIsToggleNav] = useState(true);
+  const [isToggleNav, setIsToggleNav] = useState(false);
 
   const [data, setData] = useState({
     title: "",
@@ -41,10 +41,16 @@ export const AddTest = ({}: AddTestProps) => {
     questions: [
       {
         title: "",
-        answers: [{ answer: "", correct: false }],
+        answers: [
+          { answer: "", correct: false },
+          { answer: "", correct: false },
+          { answer: "", correct: false },
+        ],
       },
     ],
   });
+
+  const [currentQuestion, setCurrentQuestion] = useState(1);
 
   // useEffect(() => {
   //   if (id) {
@@ -60,39 +66,49 @@ export const AddTest = ({}: AddTestProps) => {
   //   }
   // }, []);
 
-  // const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-  //   const fields = {
-  //     title: data.titleQues,
-  //     text: data.textQues,
-  //     category: data.category,
-  //     backgroundImage: data.bgImage,
-  //     ques: data.questions,
-  //   };
+    const fields = {
+      title: data.title,
+      text: data.text,
+      category: data.category,
+      backgroundImage: data.bgImage,
+      ques: data.questions,
+    };
 
-  //   try {
-  //     const { data } = isEditable
-  //       ? await axios.patch(`/tests/${id}`, fields)
-  //       : await axios.post("/tests", fields);
+    try {
+      const { data } = isEditable
+        ? await axios.patch(`/tests/${id}`, fields)
+        : await axios.post("/tests", fields);
 
-  //     const _id = isEditable ? id : data._id;
+      const _id = isEditable ? id : data._id;
 
-  //     navigate(`/tests/${_id}`);
-  //   } catch (err) {
-  //     alert("Не удалось создать тест");
-  //   }
-  // };
+      navigate(`/tests/${_id}`);
+    } catch (err) {
+      alert("Не удалось создать тест");
+    }
+  };
 
-  // const handlerAddQuestion = () => {
-  //   setData({
-  //     ...data,
-  //     questions: [
-  //       ...data.questions,
-  //       { title: "", answers: [{ answer: "", correct: false }] },
-  //     ],
-  //   });
-  // };
+  const handlerAddQuestion = () => {
+    setData({
+      ...data,
+      questions: [
+        ...data.questions,
+        { title: "", answers: [{ answer: "", correct: false }] },
+      ],
+    });
+    setCurrentQuestion(currentQuestion + 1);
+  };
+
+  const handlerNextQuestion = () => {
+    if (currentQuestion !== data.questions.length)
+      setCurrentQuestion(currentQuestion + 1);
+  };
+
+  const handlerPrevQuestion = () => {
+    if (currentQuestion !== 1) setCurrentQuestion(currentQuestion - 1);
+  };
 
   const handlerAddAnswer = (index: number) => {
     const nextState = data.questions.map((item, i) => {
@@ -166,11 +182,9 @@ export const AddTest = ({}: AddTestProps) => {
   if (!window.localStorage.getItem("token") && !isAuth) {
     return <Navigate to={"/"} />;
   }
-
   console.log(data);
-
   return (
-    <form className={styles.addNote}>
+    <form className={styles.addNote} onSubmit={onSubmit}>
       <div className={styles.addNote__content}>
         <div className={styles.addNote__top}>
           <ul className={styles.addNote__list}>
@@ -200,10 +214,13 @@ export const AddTest = ({}: AddTestProps) => {
         <TestContext.Provider
           value={{
             data,
+            currentQuestion,
             onGetMainProps,
             handlerAddAnswer,
             handlerGetAnswers,
             handlerRemoveAnswer,
+            handlerNextQuestion,
+            handlerPrevQuestion,
           }}
         >
           {isToggleNav ? <AddTestMain /> : <AddTestQuestion />}
@@ -213,6 +230,15 @@ export const AddTest = ({}: AddTestProps) => {
           <button className={styles.addNote__confirm} type="submit">
             {isEditable ? "Сохранить" : "Опубликовать"}
           </button>
+          {!isToggleNav ? (
+            <button
+              type="button"
+              className={styles.addNote__confirm}
+              onClick={handlerAddQuestion}
+            >
+              Добавить вопрос
+            </button>
+          ) : null}
           <Link
             to={isEditable ? `/tests/${id}` : "/"}
             className={styles.addNote__cancel}

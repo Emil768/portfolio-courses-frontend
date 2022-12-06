@@ -1,15 +1,49 @@
 .addNote {
   &__tests {
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 40px;
+    justify-content: center;
+    position: relative;
+    margin: 0 0 80px;
   }
 
   &__questionBlock {
-    flex: 0 0 49%;
-    &:last-child {
-      flex: 0 0 40%;
+    display: none;
+  }
+  &__questionActive {
+    display: block;
+  }
+
+  &__questionTitle {
+    font-size: 30px;
+    margin-bottom: 40px;
+  }
+
+  &__arrow {
+    position: absolute;
+    top: 150px;
+    cursor: pointer;
+    transition: all ease 0.3s;
+    background-color: transparent;
+    border-radius: 50%;
+    padding: 12px;
+
+    svg {
+      display: block;
     }
+
+    &:hover {
+      background-color: rgba(183, 206, 216, 0.6);
+    }
+  }
+
+  &__left {
+    left: 0;
+    transform: rotate(90deg);
+  }
+  &__right {
+    right: 0;
+
+    transform: rotate(-90deg);
   }
 
   &__question {

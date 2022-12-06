@@ -21,6 +21,7 @@ export const AddTestMain = ({}: AddTestMainProps) => {
           className={styles.inputField__field}
           placeholder="Введите название"
           onChange={(e) => onGetMainProps({ ...data, title: e.target.value })}
+          defaultValue={data.title}
           required
         />
       </div>
@@ -34,6 +35,7 @@ export const AddTestMain = ({}: AddTestMainProps) => {
           onChange={(e) =>
             onGetMainProps({ ...data, category: e.target.value })
           }
+          defaultValue={data.category}
           required
         />
       </div>
@@ -46,6 +48,7 @@ export const AddTestMain = ({}: AddTestMainProps) => {
           className={styles.inputField__field}
           placeholder="Введите ссылку"
           onChange={(e) => onGetMainProps({ ...data, bgImage: e.target.value })}
+          defaultValue={data.bgImage}
           required
         />
       </div>
@@ -57,6 +60,7 @@ export const AddTestMain = ({}: AddTestMainProps) => {
         name="message"
         cols={30}
         rows={3}
+        defaultValue={data.text}
         required
       ></textarea>
     </div>

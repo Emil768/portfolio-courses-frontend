@@ -50,4 +50,7 @@ export type AddTestContextType = {
     { answer, correct }: AnswersProps
   ) => void;
   handlerRemoveAnswer: (id: number, idAnswer: number) => void;
+  currentQuestion: number;
+  handlerNextQuestion: () => void;
+  handlerPrevQuestion: () => void;
 };
