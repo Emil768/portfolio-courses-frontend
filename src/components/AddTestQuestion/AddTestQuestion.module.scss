@@ -11,11 +11,7 @@
   }
   &__questionActive {
     display: block;
-  }
-
-  &__questionTitle {
-    font-size: 30px;
-    margin-bottom: 40px;
+    flex: 0 0 55%;
   }
 
   &__arrow {

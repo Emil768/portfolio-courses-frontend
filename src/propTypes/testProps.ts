@@ -42,15 +42,6 @@ export type AddTestContextType = {
     text,
     bgImage,
   }: MainAddTestProps) => void;
-  handlerAddAnswer: (id: number) => void;
-  handlerGetAnswers: (
-    id: number,
-    title: string,
-    idAnswer: number,
-    { answer, correct }: AnswersProps
-  ) => void;
-  handlerRemoveAnswer: (id: number, idAnswer: number) => void;
   currentQuestion: number;
-  handlerNextQuestion: () => void;
-  handlerPrevQuestion: () => void;
+  setCurrentQuestion: React.Dispatch<React.SetStateAction<number>>;
 };

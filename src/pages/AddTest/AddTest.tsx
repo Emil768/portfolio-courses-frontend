@@ -52,19 +52,19 @@ export const AddTest = ({}: AddTestProps) => {
 
   const [currentQuestion, setCurrentQuestion] = useState(1);
 
-  // useEffect(() => {
-  //   if (id) {
-  //     axios.get(`/tests/${id}`).then(({ data }) => {
-  //       setData({
-  //         titleQues: data.title,
-  //         textQues: data.text,
-  //         category: data.category,
-  //         bgImage: data.backgroundImage,
-  //         questions: data.ques,
-  //       });
-  //     });
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (id) {
+      axios.get(`/tests/${id}`).then(({ data }: any) => {
+        setData({
+          title: data.title,
+          text: data.text,
+          category: data.category,
+          bgImage: data.backgroundImage,
+          questions: data.ques,
+        });
+      });
+    }
+  }, []);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -101,88 +101,25 @@ export const AddTest = ({}: AddTestProps) => {
     setCurrentQuestion(currentQuestion + 1);
   };
 
-  const handlerNextQuestion = () => {
-    if (currentQuestion !== data.questions.length)
-      setCurrentQuestion(currentQuestion + 1);
-  };
-
-  const handlerPrevQuestion = () => {
-    if (currentQuestion !== 1) setCurrentQuestion(currentQuestion - 1);
-  };
-
-  const handlerAddAnswer = (index: number) => {
-    const nextState = data.questions.map((item, i) => {
-      if (i == index) {
-        return {
-          title: item.title,
-          answers: [...item.answers, { answer: "", correct: false }],
-        };
-      } else {
-        return item;
-      }
-    });
-
-    setData({ ...data, questions: nextState });
-  };
-
-  const handlerGetAnswers = (
-    id: number,
-    title: string,
-    idAnswer: number,
-    { answer, correct }: AnswersProps
-  ) => {
-    const nextState = data.questions.map((item, index) => {
-      if (index == id) {
-        if (item.answers[idAnswer]) {
-          item.answers[idAnswer] = { answer, correct };
-          return {
-            title: title,
-            answers: [...item.answers],
-          };
-        }
-      }
-      return item;
-    });
-
-    setData({ ...data, questions: nextState });
-  };
-
-  const handlerRemoveAnswer = (id: number, idAnswer: number) => {
-    const nextState = data.questions.map((item, index) => {
-      if (index == id) {
-        if (item.answers.length !== 1) {
-          item.answers.splice(idAnswer, 1);
-          return {
-            title: item.title,
-            answers: [...item.answers],
-          };
-        }
-      }
-
-      return item;
-    });
-
-    setData({ ...data, questions: nextState });
-  };
-
   const onGetMainProps = ({
     title,
     text,
     category,
     bgImage,
+    questions,
   }: MainAddTestProps) =>
     setData({
       title,
       text,
       category,
       bgImage,
-      questions: [...data.questions],
+      questions,
     });
 
   if (!window.localStorage.getItem("token") && !isAuth) {
     return <Navigate to={"/"} />;
   }
-  console.log(data);
+
   return (
     <form className={styles.addNote} onSubmit={onSubmit}>
       <div className={styles.addNote__content}>
@@ -215,12 +152,8 @@ export const AddTest = ({}: AddTestProps) => {
           value={{
             data,
             currentQuestion,
+            setCurrentQuestion,
             onGetMainProps,
-            handlerAddAnswer,
-            handlerGetAnswers,
-            handlerRemoveAnswer,
-            handlerNextQuestion,
-            handlerPrevQuestion,
           }}
         >
           {isToggleNav ? <AddTestMain /> : <AddTestQuestion />}

@@ -1,28 +1,81 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useContext } from "react";
 import styles from "./AnswerInfo.module.scss";
 import ReactSwitch from "react-switch";
 import { CloseIcon } from "@images";
-import { AnswersProps, AvatarProps } from "@proptypes";
+import { AddTestContextType, AnswersProps, AvatarProps } from "@proptypes";
+import { TestContext } from "@pages";
 
 interface AnswerInfoProps extends AnswersProps {
   id: number;
-  onGetAnswer: (idAnswer: number, { answer, correct }: AnswersProps) => void;
-  onRemoveAnswer: (idAnswer: number) => void;
+  idQuestion: number;
 }
 
-export const AnswerInfo = ({
-  id,
-  answer,
-  correct,
-  onGetAnswer,
-  onRemoveAnswer,
-}: AnswerInfoProps) => {
-  const [answerTitle, setAnswerTitle] = useState("");
-  const [switchTrue, setSwithTrue] = useState(false);
+export const AnswerInfo = ({ id, idQuestion }: AnswerInfoProps) => {
+  const { data, onGetMainProps } = useContext(
+    TestContext
+  ) as AddTestContextType;
 
-  useEffect(() => {
-    onGetAnswer(id, { answer: answerTitle, correct: switchTrue });
-  }, [answerTitle, switchTrue]);
+  const currentAnswer = data.questions[idQuestion].answers[id];
+
+  console.log(currentAnswer);
+
+  const onChangeAnswer = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const nextState = data.questions.map((item, index) => {
+      if (index == idQuestion) {
+        if (item.answers[id]) {
+          item.answers[id] = {
+            answer: e.target.value,
+            correct: item.answers[id].correct,
+          };
+          return {
+            title: item.title,
+            answers: [...item.answers],
+          };
+        }
+      }
+      return item;
+    });
+
+    onGetMainProps({ ...data, questions: nextState });
+  };
+
+  const onChangeCorrect = () => {
+    const nextState = data.questions.map((item, index) => {
+      if (index == idQuestion) {
+        if (item.answers[id]) {
+          item.answers[id] = {
+            answer: item.answers[id].answer,
+            correct: !item.answers[id].correct,
+          };
+          return {
+            title: item.title,
+            answers: [...item.answers],
+          };
+        }
+      }
+      return item;
+    });
+
+    onGetMainProps({ ...data, questions: nextState });
+  };
+
+  const onRemoveAnswer = () => {
+    const nextState = data.questions.map((item, index) => {
+      if (index == idQuestion) {
+        if (item.answers.length !== 1) {
+          item.answers.splice(id, 1);
+          return {
+            title: item.title,
+            answers: [...item.answers],
+          };
+        }
+      }
+
+      return item;
+    });
+
+    onGetMainProps({ ...data, questions: nextState });
+  };
 
   return (
     <div className={styles.addNote__answers}>
@@ -30,15 +83,15 @@ export const AnswerInfo = ({
         type="text"
         className={styles.addNote__questionsAnswer}
         placeholder="Введите ответ"
-        onChange={(e) => setAnswerTitle(e.target.value)}
-        defaultValue={answer}
+        onChange={onChangeAnswer}
+        defaultValue={currentAnswer.answer}
         required
       />
-      <ReactSwitch onChange={setSwithTrue} checked={switchTrue} />
+      <ReactSwitch onChange={onChangeCorrect} checked={currentAnswer.correct} />
       <CloseIcon
         width={40}
         className={styles.addNote__remove}
-        onClick={() => onRemoveAnswer(id)}
+        onClick={onRemoveAnswer}
       />
     </div>
   );

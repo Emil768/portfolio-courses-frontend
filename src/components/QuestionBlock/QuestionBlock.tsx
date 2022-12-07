@@ -6,32 +6,56 @@ import { AnswerInfo } from "@components";
 import { TestContext } from "@pages";
 
 import styles from "./QuestionBlock.module.scss";
+import { RemoveIcon } from "@images";
 
 interface QuestionBlockProps extends QuesProps {
   id: number;
 }
 
-export const QuestionBlock = ({ id, title, answers }: QuestionBlockProps) => {
-  const [titleAnswer, setTitleAnswer] = useState("");
-  const { data, handlerGetAnswers, handlerRemoveAnswer } = useContext(
-    TestContext
-  ) as AddTestContextType;
+export const QuestionBlock = ({ id, answers }: QuestionBlockProps) => {
+  const { data, currentQuestion, setCurrentQuestion, onGetMainProps } =
+    useContext(TestContext) as AddTestContextType;
 
-  const onGetAnswer = (idAnswer: number, { answer, correct }: AnswersProps) => {
-    console.log(id, titleAnswer);
-    handlerGetAnswers(id, titleAnswer, idAnswer, { answer, correct });
+  const currentQuestionTitle = data.questions[id].title;
+
+  const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onGetMainProps({
+      ...data,
+      questions: data.questions.map((item, index) =>
+        index === id
+          ? { title: e.target.value, answers: [...item.answers] }
+          : item
+      ),
+    });
   };
 
-  const onRemoveAnswer = (idAnswer: number) =>
-    handlerRemoveAnswer(id, idAnswer);
+  const onRemoveCurrentQuestion = () => {
+    const nextState = data.questions.filter((item, index) => {
+      if (id !== 0) {
+        setCurrentQuestion(currentQuestion - 1);
+        return index !== id;
+      }
+      return item;
+    });
+
+    onGetMainProps({
+      ...data,
+      questions: nextState,
+    });
+  };
 
   return (
     <div className={styles.addNote__questions}>
+      <div className={styles.addNote__questionTitle}>
+        Вопрос #{id + 1}
+        <RemoveIcon width={25} onClick={onRemoveCurrentQuestion} />
+      </div>
       <input
         type="text"
         className={styles.addNote__questionsTitle}
         placeholder="Введите название вопроса"
-        onChange={(e) => setTitleAnswer(e.target.value)}
+        onChange={onChangeTitle}
+        defaultValue={currentQuestionTitle}
         required
       />
 
@@ -39,17 +63,10 @@ export const QuestionBlock = ({ id, title, answers }: QuestionBlockProps) => {
         type="text"
         className={styles.addNote__questionsTitle}
         placeholder="Изображение"
-        required
       />
 
       {answers.map((item, index) => (
-        <AnswerInfo
-          {...item}
-          id={index}
-          key={index}
-          onGetAnswer={onGetAnswer}
-          onRemoveAnswer={onRemoveAnswer}
-        />
+        <AnswerInfo {...item} id={index} key={index} idQuestion={id} />
       ))}
     </div>
   );

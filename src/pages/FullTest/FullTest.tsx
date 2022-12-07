@@ -91,12 +91,12 @@ export const FullTest = ({}: FullTestProps) => {
             ) : (
               <>
                 <div className={styles.questions}>
-                  <div className={styles.questions__image}>
+                  {/* <div className={styles.questions__image}>
                     <img
                       src="https://www.looper.com/img/gallery/20-most-powerful-attack-on-titan-characters-ranked/intro-1647387047.jpg"
                       alt=""
                     />
-                  </div>
+                  </div> */}
                   <div className={styles.questions__info}>
                     <div className={styles.questions__title}>
                       <span>{currentQuesIndex + 1}.</span> {quiz!.title}
