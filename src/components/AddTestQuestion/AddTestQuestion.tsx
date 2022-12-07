@@ -37,7 +37,11 @@ export const AddTestQuestion = ({}: AddTestQuestionProps) => {
   return (
     <div className={styles.addNote__tests} data-testid="AddTestQuestion">
       <div
-        className={[styles.addNote__arrow, styles.addNote__left].join(" ")}
+        className={
+          data.questions.length > 1
+            ? [styles.addNote__arrow, styles.addNote__left].join(" ")
+            : styles.addNote__arrowHide
+        }
         onClick={handlerPrevQuestion}
       >
         <ArrowIcon />
@@ -63,7 +67,11 @@ export const AddTestQuestion = ({}: AddTestQuestionProps) => {
         );
       })}
       <div
-        className={[styles.addNote__arrow, styles.addNote__right].join(" ")}
+        className={
+          data.questions.length > 1
+            ? [styles.addNote__arrow, styles.addNote__right].join(" ")
+            : styles.addNote__arrowHide
+        }
         onClick={handlerNextQuestion}
       >
         <ArrowIcon />

@@ -30,6 +30,7 @@ export const FullTest = ({}: FullTestProps) => {
     answer: "",
     correct: false,
   });
+  const currentQuestion = quiz?.ques[currentQuesIndex];
 
   const isLoading = Boolean(status === "loading");
   const isEditable = data && data._id === quiz?.user._id;
@@ -62,11 +63,6 @@ export const FullTest = ({}: FullTestProps) => {
 
   return (
     <main className={styles.fullTest} data-testid="FullTest">
-      {/* <img
-          src={testObj[0].backgroundImage}
-          className={styles.fullTest__bgIcon}
-          alt=""
-        /> */}
       <div className={styles.fullTest__content}>
         {isLoading ? (
           <ClipLoader
@@ -99,19 +95,18 @@ export const FullTest = ({}: FullTestProps) => {
                   </div> */}
                   <div className={styles.questions__info}>
                     <div className={styles.questions__title}>
-                      <span>{currentQuesIndex + 1}.</span> {quiz!.title}
+                      <span>{currentQuesIndex + 1}.</span>{" "}
+                      {currentQuestion?.title}
                     </div>
                     <div className={styles.answers}>
-                      {quiz!.ques[currentQuesIndex].answers.map(
-                        (item, index) => (
-                          <AnswerBlock
-                            {...item}
-                            id={index}
-                            key={index}
-                            setAnswer={getCurrentAnswer}
-                          />
-                        )
-                      )}
+                      {currentQuestion?.answers.map((item, index) => (
+                        <AnswerBlock
+                          {...item}
+                          id={index}
+                          key={index}
+                          setAnswer={getCurrentAnswer}
+                        />
+                      ))}
                     </div>
                   </div>
                 </div>

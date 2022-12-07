@@ -2,6 +2,7 @@ import { UserProps } from "./userProps";
 
 export type QuesProps = {
   title: string;
+  linkImage?: string;
   answers: AnswersProps[];
 };
 

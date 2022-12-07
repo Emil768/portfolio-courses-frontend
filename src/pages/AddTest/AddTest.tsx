@@ -2,21 +2,10 @@ import { useState, createContext, useEffect } from "react";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import styles from "./AddTest.module.scss";
 
-import { PlusIcon } from "@images";
-import {
-  AddTestContextType,
-  AnswersProps,
-  MainAddTestProps,
-  QuesProps,
-} from "@proptypes";
+import { AddTestContextType, MainAddTestProps } from "@proptypes";
 
 import { useAppSelector } from "@redux/hooks";
-import {
-  QuestionBlock,
-  AnswerBlock,
-  AddTestMain,
-  AddTestQuestion,
-} from "@components";
+import { AddTestMain, AddTestQuestion } from "@components";
 
 import axios from "@axios";
 

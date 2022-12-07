@@ -15,8 +15,8 @@ export const UserInfo = ({}: UserInfoProps) => {
   const { id } = useParams();
 
   useEffect(() => {
-    axios.get(`/auth/me/${id}`).then((res: UserProps) => setUser({ ...res }));
-  }, [id]);
+    axios.get(`/auth/me/${id}`).then((res: any) => setUser(res.data));
+  }, []);
 
   return (
     <div className={styles.user} data-testid="UserInfo">

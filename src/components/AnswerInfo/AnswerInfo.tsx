@@ -17,8 +17,6 @@ export const AnswerInfo = ({ id, idQuestion }: AnswerInfoProps) => {
 
   const currentAnswer = data.questions[idQuestion].answers[id];
 
-  console.log(currentAnswer);
-
   const onChangeAnswer = (e: React.ChangeEvent<HTMLInputElement>) => {
     const nextState = data.questions.map((item, index) => {
       if (index == idQuestion) {

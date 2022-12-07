@@ -12,7 +12,7 @@ interface ShowScoreProps {}
 export const ShowScore = () => {
   const { score, quiz } = useAppSelector((state) => state.quiz);
 
-  const resultScore = (score / quiz!.ques.length) * 100;
+  const resultScore = Math.round((score / quiz!.ques.length) * 100);
   const testResult = quiz!.ques.reduce(
     (acc, { answers }) => acc + answers.filter(({ correct }) => correct).length,
     0
@@ -22,8 +22,6 @@ export const ShowScore = () => {
 
   return (
     <div className={styles.score}>
-      {/* <span className={styles.score__title}>{score} 👏</span> */}
-
       <div className={styles.score__statistics}>
         <div className={styles.score__progressbar}>
           <ProgressProvider valueStart={0} valueEnd={resultScore}>
