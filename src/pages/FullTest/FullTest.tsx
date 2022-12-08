@@ -3,7 +3,6 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { AnswerBlock, InfoPanel, ShowScore } from "@components";
 
-import { CurrentAnswerProps } from "@proptypes";
 import { ClipLoader } from "react-spinners";
 import styles from "./FullTest.module.scss";
 
@@ -12,7 +11,13 @@ import { RemoveIcon, EditIcon } from "@images";
 import axios from "@axios";
 
 import { useAppDispatch, useAppSelector } from "@redux/hooks";
-import { fetchTest, setAnswerQuestion, setShowScore } from "@redux/slices";
+import {
+  fetchTest,
+  setAnswerQuestion,
+  onNextQuestion,
+  onPrevQuestion,
+  setShowScore,
+} from "@redux/slices";
 
 interface FullTestProps {}
 
@@ -25,11 +30,8 @@ export const FullTest = ({}: FullTestProps) => {
     (state) => state.quiz
   );
 
-  const [currentAnswer, setCurrentAnswer] = useState({
-    id: 0,
-    answer: "",
-    correct: false,
-  });
+  const [currentAnswer, setCurrentAnswer] = useState<number | null>(null);
+  const isCurrentAnswer = currentAnswer !== null;
   const currentQuestion = quiz?.ques[currentQuesIndex];
 
   const isLoading = Boolean(status === "loading");
@@ -46,17 +48,19 @@ export const FullTest = ({}: FullTestProps) => {
     }
   };
 
-  const getCurrentAnswer = ({ id, answer, correct }: CurrentAnswerProps) =>
-    setCurrentAnswer({ id, answer, correct });
+  const getCurrentAnswer = (index: number) => {
+    setCurrentAnswer(index);
+  };
 
   const handlerNextQuiestion = () => {
-    if (currentAnswer.answer !== "") {
+    if (isCurrentAnswer) {
       const nextQuestion = currentQuesIndex + 1;
-
-      if (nextQuestion < quiz!.ques.length) {
+      if (nextQuestion <= quiz!.ques.length) {
         dispatch(setAnswerQuestion(currentAnswer));
-      } else {
-        dispatch(setShowScore());
+        setCurrentAnswer(null);
+        if (nextQuestion === quiz?.ques.length) {
+          dispatch(setShowScore());
+        }
       }
     }
   };
@@ -104,13 +108,25 @@ export const FullTest = ({}: FullTestProps) => {
                           {...item}
                           id={index}
                           key={index}
+                          currentIndex={currentAnswer}
                           setAnswer={getCurrentAnswer}
                         />
                       ))}
                     </div>
                   </div>
                 </div>
+
                 <div className={styles.questions__buttons}>
+                  {/* <div
+                    className={
+                      currentQuesIndex !== 0
+                        ? styles.fullTest__button
+                        : styles.fullTest__buttonHide
+                    }
+                    onClick={handlerPrevQuestion}
+                  >
+                    Вернуться
+                  </div> */}
                   <div
                     className={styles.fullTest__button}
                     onClick={handlerNextQuiestion}

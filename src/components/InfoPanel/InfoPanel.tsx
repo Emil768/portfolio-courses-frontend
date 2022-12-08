@@ -4,7 +4,17 @@ import styles from "./InfoPanel.module.scss";
 
 export const InfoPanel = () => {
   const { quiz } = useAppSelector((state) => state.quiz);
-  const date: Date = new Date();
+
+  const date = new Date(quiz?.createdAt!);
+
+  const options = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour24: true,
+  } as const;
 
   return (
     <div className={styles.fullTest__info}>
@@ -29,8 +39,7 @@ export const InfoPanel = () => {
         {quiz?.viewsCount}
       </span>
       <span className={styles.fullTest__date}>
-        {/* {date.toLocaleDateString("ru-RU", options )} */}
-        {String(date.toLocaleString("ru-RU"))}
+        {date.toLocaleDateString("ru-RU", options)}
       </span>
       <Link to={`/user/${quiz?.user._id}`} className={styles.author}>
         <img

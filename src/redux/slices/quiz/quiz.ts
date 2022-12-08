@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import axios from "../../../axios";
-import { QuesProps, TestProps } from "../../../propTypes";
+import axios from "@axios";
+import { QuesProps, TestProps } from "@proptypes";
 import { NextQuestionProps, QuizProps } from "./types";
 
 //Получение одного теста
@@ -26,9 +26,23 @@ const quizSlice = createSlice({
   initialState,
   reducers: {
     setAnswerQuestion: (state, action) => {
-      state.score += action.payload.correct ? 1 : 0;
+      state.score += state.quiz?.ques[state.currentQuesIndex].answers[
+        action.payload
+      ].correct
+        ? 1
+        : 0;
+
       state.currentQuesIndex += 1;
     },
+
+    onNextQuestion: (state) => {
+      state.currentQuesIndex += 1;
+    },
+
+    onPrevQuestion: (state) => {
+      state.currentQuesIndex -= 1;
+    },
+
     setShowScore: (state) => {
       state.showScore = true;
     },
@@ -55,4 +69,9 @@ const quizSlice = createSlice({
 
 export const quizReducer = quizSlice.reducer;
 
-export const { setAnswerQuestion, setShowScore } = quizSlice.actions;
+export const {
+  setAnswerQuestion,
+  setShowScore,
+  onNextQuestion,
+  onPrevQuestion,
+} = quizSlice.actions;

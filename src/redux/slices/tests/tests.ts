@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
-import { TestProps } from "../../../propTypes";
+import { TestProps } from "@proptypes";
 import { TestState } from "./types";
 
-import axios from "../../../axios";
+import axios from "@axios";
 
 //Получить тесты
 export const fetchTests = createAsyncThunk<

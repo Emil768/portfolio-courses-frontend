@@ -11,7 +11,6 @@ interface ShowScoreProps {}
 
 export const ShowScore = () => {
   const { score, quiz } = useAppSelector((state) => state.quiz);
-
   const resultScore = Math.round((score / quiz!.ques.length) * 100);
   const testResult = quiz!.ques.reduce(
     (acc, { answers }) => acc + answers.filter(({ correct }) => correct).length,
