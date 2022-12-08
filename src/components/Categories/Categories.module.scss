@@ -1,0 +1,29 @@
+.categories {
+  &__list {
+    display: flex;
+  }
+  &__item {
+    margin-right: 20px;
+    cursor: pointer;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+  &__link {
+    display: inline-block;
+    background-color: #fff;
+    padding: 15px 30px;
+    border-radius: 30px;
+    transition: all ease 0.2s;
+    box-shadow: 0 4px 17px 0px rgb(0 0 0 / 17%);
+    &:hover {
+      background-color: #000;
+      color: #fff;
+    }
+  }
+  &__linkActive {
+    background-color: #000;
+    color: #fff;
+  }
+}

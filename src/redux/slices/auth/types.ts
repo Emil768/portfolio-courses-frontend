@@ -1,4 +1,4 @@
-import { UserProps } from "../../../propTypes";
+import { UserProps } from "@proptypes";
 
 export type AuthState = {
   data: UserProps | null;

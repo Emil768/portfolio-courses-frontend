@@ -1,13 +1,10 @@
-import { useState, useContext } from "react";
-import { InputField } from "@components";
+import { useContext } from "react";
 import styles from "./AddTestMain.module.scss";
 
 import { TestContext } from "@pages";
 import { AddTestContextType } from "@proptypes";
 
-interface AddTestMainProps {}
-
-export const AddTestMain = ({}: AddTestMainProps) => {
+export const AddTestMain = () => {
   const { data, onGetMainProps } = useContext(
     TestContext
   ) as AddTestContextType;

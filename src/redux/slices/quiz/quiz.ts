@@ -1,7 +1,7 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "@axios";
-import { QuesProps, TestProps } from "@proptypes";
-import { NextQuestionProps, QuizProps } from "./types";
+import { TestProps } from "@proptypes";
+import { QuizProps } from "./types";
 
 //Получение одного теста
 export const fetchTest = createAsyncThunk<

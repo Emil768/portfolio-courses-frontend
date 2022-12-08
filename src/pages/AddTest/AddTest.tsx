@@ -11,16 +11,14 @@ import axios from "@axios";
 
 export const TestContext = createContext<AddTestContextType | null>(null);
 
-interface AddTestProps {}
-
-export const AddTest = ({}: AddTestProps) => {
+export const AddTest = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const isEditable = Boolean(id);
   const isAuth = useAppSelector((state) => Boolean(state.auth.data));
 
-  const [isToggleNav, setIsToggleNav] = useState(false);
+  const [isToggleNav, setIsToggleNav] = useState(true);
 
   const [data, setData] = useState({
     title: "",
@@ -53,7 +51,7 @@ export const AddTest = ({}: AddTestProps) => {
         });
       });
     }
-  }, []);
+  }, [id]);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

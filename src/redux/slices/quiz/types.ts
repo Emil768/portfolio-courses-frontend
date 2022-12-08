@@ -1,4 +1,4 @@
-import { AnswersProps, QuesProps, TestProps } from "../../../propTypes";
+import { TestProps } from "@proptypes";
 
 export type QuizProps = {
   quiz: TestProps | null;

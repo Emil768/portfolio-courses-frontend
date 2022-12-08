@@ -1,32 +1,22 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-
-import { AnswerBlock, InfoPanel, ShowScore } from "@components";
-
-import { ClipLoader } from "react-spinners";
 import styles from "./FullTest.module.scss";
 
+import { AnswerBlock, InfoPanel, ShowScore } from "@components";
+import { ClipLoader } from "react-spinners";
 import { RemoveIcon, EditIcon } from "@images";
 
 import axios from "@axios";
 
 import { useAppDispatch, useAppSelector } from "@redux/hooks";
-import {
-  fetchTest,
-  setAnswerQuestion,
-  onNextQuestion,
-  onPrevQuestion,
-  setShowScore,
-} from "@redux/slices";
+import { fetchTest, setAnswerQuestion, setShowScore } from "@redux/slices";
 
-interface FullTestProps {}
-
-export const FullTest = ({}: FullTestProps) => {
+export const FullTest = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { data } = useAppSelector((state) => state.auth);
-  const { quiz, status, currentQuesIndex, showScore, score } = useAppSelector(
+  const { quiz, status, currentQuesIndex, showScore } = useAppSelector(
     (state) => state.quiz
   );
 

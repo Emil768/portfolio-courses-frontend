@@ -8,9 +8,7 @@ import { Popup } from "@components";
 
 import { ArrowIcon } from "@images";
 
-interface UserPanelProps {}
-
-export const UserPanel = ({}: UserPanelProps) => {
+export const UserPanel = () => {
   const [userState, setUserState] = useState(false);
   const dispath = useAppDispatch();
 

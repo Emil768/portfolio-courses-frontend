@@ -1,7 +1,7 @@
 import { Link, Navigate } from "react-router-dom";
 import styles from "./Login.module.scss";
-import { EmailIcon, FolderIcon } from "@images";
 
+import { EmailIcon, FolderIcon } from "@images";
 import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import { fetchAuth } from "@redux/slices";
@@ -12,12 +12,7 @@ export const Login = () => {
 
   const isAuth = useAppSelector((state) => Boolean(state.auth.data));
 
-  const {
-    register,
-    handleSubmit,
-
-    formState: { errors, isValid },
-  } = useForm({
+  const { register, handleSubmit } = useForm({
     defaultValues: {
       email: "test@massl.ru",
       password: "123123",

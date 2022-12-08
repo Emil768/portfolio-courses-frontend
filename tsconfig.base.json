@@ -18,6 +18,8 @@
     "baseUrl": "src",
     "paths": {
       "@components": ["components"],
+      "@internals": ["internals"],
+      "@utils": ["utils"],
       "@pages": ["pages"],
       "@proptypes": ["propTypes"],
       "@images": ["img"],

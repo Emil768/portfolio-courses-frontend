@@ -13,4 +13,4 @@ export * from "./ScoreBlock/ScoreBlock";
 export * from "./ShowScore/ShowScore";
 export * from "./Test/Test";
 export * from "./UserPanel/UserPanel";
-export * from "./InputField/InputField";
+export * from "./Categories/Categories";

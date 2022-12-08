@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import { AvatarProps, UserProps } from "@proptypes";
+import { UserProps } from "@proptypes";
 
 import axios from "@axios";
 import { AuthState } from "./types";

@@ -1,10 +1,5 @@
-import React, { ReactNode, useEffect } from "react";
-
-interface ProgressProviderProps {
-  valueStart: number;
-  valueEnd: number;
-  children: (value: number) => JSX.Element;
-}
+import { ProgressProviderProps } from "propTypes/libsProps";
+import React, { useEffect } from "react";
 
 export const ProgressProvider = ({
   valueStart,

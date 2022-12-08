@@ -5,9 +5,7 @@ import { useAppSelector } from "@redux/hooks";
 
 import LogoIcon from "../../img/logo.png";
 
-interface HeaderProps {}
-
-export const Header = ({}: HeaderProps) => {
+export const Header = () => {
   const isAuth = useAppSelector((state) => Boolean(state.auth.data));
   return (
     <header className={styles.header}>

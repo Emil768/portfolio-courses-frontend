@@ -1,5 +1,4 @@
 import styles from "./Registration.module.scss";
-
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
@@ -12,9 +11,7 @@ import { EmailIcon, FolderIcon, UserIcon, ImageIcon } from "@images";
 
 import axios from "@axios";
 
-interface RegistrationProps {}
-
-export const Registration = ({}: RegistrationProps) => {
+export const Registration = () => {
   const dispatch = useAppDispatch();
   const { data, status } = useAppSelector((state) => state.auth);
 
@@ -26,7 +23,7 @@ export const Registration = ({}: RegistrationProps) => {
     register,
     handleSubmit,
 
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm({
     defaultValues: {
       email: "test@massl.ru",

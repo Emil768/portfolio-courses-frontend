@@ -1,4 +1,4 @@
-import { TestProps } from "../../../propTypes";
+import { TestProps } from "@proptypes";
 
 export type TestState = {
   tests: TestProps[];

@@ -1,6 +1,6 @@
-import { useState, useContext, useMemo, useEffect } from "react";
+import { useContext } from "react";
 
-import { AddTestContextType, AnswersProps, QuesProps } from "@proptypes";
+import { AddTestContextType, QuesProps } from "@proptypes";
 import { AnswerInfo } from "@components";
 
 import { TestContext } from "@pages";

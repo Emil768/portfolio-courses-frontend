@@ -1,8 +1,8 @@
-import { useState, useMemo, useEffect, useContext } from "react";
+import { useContext } from "react";
 import styles from "./AnswerInfo.module.scss";
 import ReactSwitch from "react-switch";
 import { CloseIcon } from "@images";
-import { AddTestContextType, AnswersProps, AvatarProps } from "@proptypes";
+import { AddTestContextType, AnswersProps } from "@proptypes";
 import { TestContext } from "@pages";
 
 interface AnswerInfoProps extends AnswersProps {
@@ -19,7 +19,7 @@ export const AnswerInfo = ({ id, idQuestion }: AnswerInfoProps) => {
 
   const onChangeAnswer = (e: React.ChangeEvent<HTMLInputElement>) => {
     const nextState = data.questions.map((item, index) => {
-      if (index == idQuestion) {
+      if (index === idQuestion) {
         if (item.answers[id]) {
           item.answers[id] = {
             answer: e.target.value,
@@ -39,7 +39,7 @@ export const AnswerInfo = ({ id, idQuestion }: AnswerInfoProps) => {
 
   const onChangeCorrect = () => {
     const nextState = data.questions.map((item, index) => {
-      if (index == idQuestion) {
+      if (index === idQuestion) {
         if (item.answers[id]) {
           item.answers[id] = {
             answer: item.answers[id].answer,
@@ -59,7 +59,7 @@ export const AnswerInfo = ({ id, idQuestion }: AnswerInfoProps) => {
 
   const onRemoveAnswer = () => {
     const nextState = data.questions.map((item, index) => {
-      if (index == idQuestion) {
+      if (index === idQuestion) {
         if (item.answers.length !== 1) {
           item.answers.splice(id, 1);
           return {

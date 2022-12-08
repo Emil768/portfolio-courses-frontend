@@ -1,22 +1,23 @@
 import { UserProps } from "@proptypes";
 import styles from "./UserInfo.module.scss";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import { DateIcon, ChartIcon, EmailIcon } from "@images";
 
 import axios from "@axios";
+import { options } from "@internals";
 
-interface UserInfoProps {}
-
-export const UserInfo = ({}: UserInfoProps) => {
+export const UserInfo = () => {
   const [user, setUser] = useState<UserProps>();
 
   const { id } = useParams();
 
+  const date = new Date(user?.createdAt!);
+
   useEffect(() => {
     axios.get(`/auth/me/${id}`).then((res: any) => setUser(res.data));
-  }, []);
+  }, [id]);
 
   return (
     <div className={styles.user} data-testid="UserInfo">
@@ -30,7 +31,7 @@ export const UserInfo = ({}: UserInfoProps) => {
           </div>
           <div className={styles.user__date}>
             <DateIcon width={16} />
-            {user?.createdAt}
+            {date.toLocaleDateString("ru-RU", options)}
           </div>
         </div>
         <div className={styles.user__statistics}>

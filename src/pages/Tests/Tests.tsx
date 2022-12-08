@@ -1,55 +1,37 @@
-import { Link, NavLink, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styles from "./Tests.module.scss";
 
-import { Test, Popup } from "@components";
+import { Test, Popup, Categories } from "@components";
 
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import { fetchCategory, fetchTests } from "@redux/slices";
 import { ClipLoader } from "react-spinners";
-import { PopupItems } from "@proptypes";
+import { sortNames } from "@internals";
 
-interface TestsProps {}
-
-export const Tests = ({}: TestsProps) => {
+export const Tests = () => {
   const [activePopup, setActivePopup] = useState(false);
+  const { tests, status } = useAppSelector((state) => state.tests);
 
   const { title } = useParams();
 
   const dispatch = useAppDispatch();
-  const { tests, status } = useAppSelector((state) => state.tests);
 
   const isTestsLoading = status === "loading";
   const isTestsError = status === "error";
 
-  const sortNames: PopupItems[] = [
-    { name: "Дате добавления", link: "date" },
-    { name: "По лайкам", link: "like" },
-    { name: "По дизлайкам", link: "dislike" },
-  ];
-
   useEffect(() => {
     if (title) {
       dispatch(fetchCategory(title));
+    } else {
+      dispatch(fetchTests());
     }
-
-    dispatch(fetchTests());
   }, [title]);
-
-  const getCategory = (title: string) => dispatch(fetchCategory(title));
 
   return (
     <main className={styles.notes}>
       <div className={styles.notes__top}>
-        <div className={styles.notes__categories}>
-          <span
-            className={styles.notes__link}
-            onClick={() => getCategory("Тесты")}
-          >
-            Тесты
-          </span>
-          {/* <span className={styles.notes__link}>Подставновка слов</span> */}
-        </div>
+        <Categories />
         <div className={styles.notes__sorted}>
           Сортировка по:{" "}
           <span

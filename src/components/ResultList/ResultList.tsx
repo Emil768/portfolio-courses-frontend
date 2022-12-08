@@ -1,15 +1,13 @@
+import { useAppSelector } from "@redux/hooks";
+import { testResult } from "@utils";
 import styles from "./ResultList.module.scss";
-interface ResultListProps {
-  score: number;
-  fullScore: number;
-  resultEmoji: string;
-}
 
-export const ResultList = ({
-  score,
-  fullScore,
-  resultEmoji,
-}: ResultListProps) => {
+export const ResultList = () => {
+  const { quiz, score } = useAppSelector((state) => state.quiz);
+
+  const totalResult = testResult(quiz!);
+  const resultEmoji = score === totalResult ? "👏" : " 🤞";
+
   return (
     <div className={styles.score__result}>
       <h2 className={styles.score__resultTitle}>Результат {resultEmoji}</h2>
@@ -26,7 +24,7 @@ export const ResultList = ({
         <ul className={styles.score__resultList}>
           <li className={styles.score__resultItem}>Значение</li>
           <li className={styles.score__resultItem}>{score}</li>
-          <li className={styles.score__resultItem}>{fullScore}</li>
+          <li className={styles.score__resultItem}>{totalResult}</li>
         </ul>
       </div>
     </div>

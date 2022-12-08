@@ -1,14 +1,12 @@
-import { useState, createContext, useContext } from "react";
-import { AddTestContextType, AnswersProps, QuesProps } from "@proptypes";
+import { useContext } from "react";
+import { AddTestContextType } from "@proptypes";
 import { QuestionBlock } from "@components";
 import styles from "./AddTestQuestion.module.scss";
 
-import { ArrowIcon, CloseIcon, RemoveIcon } from "@images";
+import { ArrowIcon } from "@images";
 import { TestContext } from "@pages";
 
-interface AddTestQuestionProps {}
-
-export const AddTestQuestion = ({}: AddTestQuestionProps) => {
+export const AddTestQuestion = () => {
   const { data, onGetMainProps, setCurrentQuestion, currentQuestion } =
     useContext(TestContext) as AddTestContextType;
 

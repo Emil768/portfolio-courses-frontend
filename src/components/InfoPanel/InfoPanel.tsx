@@ -2,19 +2,12 @@ import { Link } from "react-router-dom";
 import { useAppSelector } from "@redux/hooks";
 import styles from "./InfoPanel.module.scss";
 
+import { options } from "@internals";
+
 export const InfoPanel = () => {
   const { quiz } = useAppSelector((state) => state.quiz);
 
   const date = new Date(quiz?.createdAt!);
-
-  const options = {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour24: true,
-  } as const;
 
   return (
     <div className={styles.fullTest__info}>
