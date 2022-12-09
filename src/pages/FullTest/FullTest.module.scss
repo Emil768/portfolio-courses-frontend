@@ -1,9 +1,9 @@
 .fullTest {
-  flex: 1 0 auto;
+  display: flex;
+  justify-content: space-between;
 
-  width: 80%;
-  margin: 0 auto;
   &__content {
+    flex: 0 0 65%;
     padding: 40px 50px;
     border-radius: 20px;
     box-shadow: rgba(102, 102, 102, 0.05) 0px 60px 30px;
