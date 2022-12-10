@@ -8,6 +8,11 @@ export type QuizProps = {
   status: "loading" | "loaded" | "error";
 };
 
+export type CommentPropsQuery = {
+  testId: string;
+  text: string;
+};
+
 export type NextQuestionProps = {
   id: number;
   correct: boolean;

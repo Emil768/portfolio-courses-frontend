@@ -55,6 +55,8 @@ export const FullTest = () => {
     }
   };
 
+  console.log(quiz);
+
   return (
     <main className={styles.fullTest} data-testid="FullTest">
       <div className={styles.fullTest__content}>
@@ -129,7 +131,7 @@ export const FullTest = () => {
           </>
         )}
       </div>
-      <Comments />
+      <Comments {...quiz!} />
     </main>
   );
 };

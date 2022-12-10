@@ -1,6 +1,7 @@
 .fullTest {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
 
   &__content {
     flex: 0 0 65%;

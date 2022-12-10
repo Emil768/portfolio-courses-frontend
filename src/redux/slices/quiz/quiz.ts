@@ -1,15 +1,25 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "@axios";
-import { TestProps } from "@proptypes";
-import { QuizProps } from "./types";
+import { CommentProps, TestProps } from "@proptypes";
+import { CommentPropsQuery, QuizProps } from "./types";
 
 //Получение одного теста
 export const fetchTest = createAsyncThunk<
   TestProps,
   string,
   { rejectValue: TestProps }
->("tests/fetchTest", async (id) => {
+>("quiz/fetchTest", async (id) => {
   const { data } = await axios.get(`/tests/${id}`);
+  return data;
+});
+
+//Создание комментария
+export const fetchAddComment = createAsyncThunk<
+  CommentPropsQuery,
+  CommentPropsQuery,
+  { rejectValue: CommentPropsQuery }
+>("quiz/fetchAddComment", async ({ text, testId }) => {
+  const { data } = await axios.post(`/comments`, { text, testId });
   return data;
 });
 
@@ -46,6 +56,9 @@ const quizSlice = createSlice({
     setShowScore: (state) => {
       state.showScore = true;
     },
+    getAllComments: (state) => {
+      state.quiz?.comments.filter((item) => item);
+    },
   },
   extraReducers: (builder) => {
     //Один тест
@@ -63,6 +76,20 @@ const quizSlice = createSlice({
       .addCase(fetchTest.rejected, (state) => {
         state.quiz = null;
         state.status = "error";
+      })
+
+      //Add comment
+
+      .addCase(fetchAddComment.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchAddComment.fulfilled, (state, action) => {
+        state.quiz?.comments.push(action.payload);
+        state.status = "loaded";
+      })
+      .addCase(fetchAddComment.rejected, (state) => {
+        state.quiz = null;
+        state.status = "error";
       });
   },
 });
@@ -74,4 +101,5 @@ export const {
   setShowScore,
   onNextQuestion,
   onPrevQuestion,
+  getAllComments,
 } = quizSlice.actions;

@@ -15,6 +15,12 @@ export type CurrentAnswerProps = {
   id: number;
 } & AnswersProps;
 
+export type CommentProps = {
+  text: string;
+  postedBy?: UserProps;
+  testId: string;
+};
+
 export interface TestProps {
   _id: string;
   title: string;
@@ -22,9 +28,11 @@ export interface TestProps {
   category: string;
   backgroundImage: string;
   viewsCount: number;
-  createdAt?: string;
+  createdAt: string;
   ques: QuesProps[];
   user: UserProps;
+  likes: [];
+  comments: CommentProps[];
 }
 
 export type MainAddTestProps = {

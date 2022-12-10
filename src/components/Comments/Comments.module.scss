@@ -18,15 +18,16 @@
   }
   &__block {
     display: flex;
-    justify-content: space-between;
     margin-bottom: 30px;
   }
   &__avatar {
-    max-width: 40px;
+    max-width: 50px;
+    max-height: 50px;
     margin-right: 20px;
     img {
       border-radius: 50%;
       max-width: 100%;
+      height: 100%;
     }
   }
   &__info {
@@ -63,6 +64,45 @@
       svg {
         fill: #4d4d4d;
       }
+    }
+  }
+  &__form {
+    width: 100%;
+  }
+  &__field {
+    width: 100%;
+    font-family: inherit;
+    outline: none;
+    resize: none;
+    border: none;
+    border: 1px solid #bebebe;
+    border-radius: 5px;
+    padding: 10px;
+    &:focus {
+      border-color: #77808c;
+    }
+  }
+  &__buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+  }
+  &__button {
+    border: none;
+    outline: none;
+    background-color: #007bfe;
+    border-radius: 30px;
+    padding: 10px 25px;
+    font-size: 12px;
+    font-family: inherit;
+    color: #fff;
+    margin-right: 15px;
+    &:last-child {
+      margin-right: 0;
+    }
+    &:hover {
+      cursor: pointer;
+      background-color: #4178b1;
     }
   }
 }
