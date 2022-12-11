@@ -17,8 +17,9 @@ export type CurrentAnswerProps = {
 
 export type CommentProps = {
   text: string;
-  postedBy?: UserProps;
+  postedBy: UserProps;
   testId: string;
+  _id: string;
 };
 
 export interface TestProps {

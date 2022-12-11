@@ -7,17 +7,17 @@ import { options } from "@internals";
 export const InfoPanel = () => {
   const { quiz } = useAppSelector((state) => state.quiz);
 
-  const date = new Date(quiz?.createdAt!);
+  const date = new Date(quiz.createdAt!);
 
   return (
     <div className={styles.fullTest__info}>
       <span>
         <i className={styles.circle}></i>{" "}
         <Link
-          to={`/category/${quiz?.category}`}
+          to={`/category/${quiz.category}`}
           className={styles.fullTest__category}
         >
-          {quiz?.category}
+          {quiz.category}
         </Link>
       </span>
       <span className={styles.fullTest__icon}>
@@ -29,18 +29,18 @@ export const InfoPanel = () => {
         >
           <path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z" />
         </svg>
-        {quiz?.viewsCount}
+        {quiz.viewsCount}
       </span>
       <span className={styles.fullTest__date}>
         {date.toLocaleDateString("ru-RU", options)}
       </span>
-      <Link to={`/user/${quiz?.user._id}`} className={styles.author}>
+      <Link to={`/user/${quiz.user._id}`} className={styles.author}>
         <img
-          src={`${quiz?.user.avatarUrl.url}`}
+          src={`${quiz.user.avatarUrl.url}`}
           alt=""
           className={styles.author__avatar}
         />
-        <span className={styles.author__name}>{quiz?.user.fullName}</span>
+        <span className={styles.author__name}>{quiz.user.fullName}</span>
       </Link>
     </div>
   );

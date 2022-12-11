@@ -21,11 +21,13 @@ export const FullTest = () => {
   );
 
   const [currentAnswer, setCurrentAnswer] = useState<number | null>(null);
+
+  const checkQuiz = Object.keys(quiz).length !== 0;
   const isCurrentAnswer = currentAnswer !== null;
-  const currentQuestion = quiz?.ques[currentQuesIndex];
+  const currentQuestion = checkQuiz && quiz.ques[currentQuesIndex];
 
   const isLoading = Boolean(status === "loading");
-  const isEditable = data && data._id === quiz?.user._id;
+  const isEditable = data?._id === quiz._id;
 
   useEffect(() => {
     dispatch(fetchTest(id!));
@@ -45,17 +47,15 @@ export const FullTest = () => {
   const handlerNextQuiestion = () => {
     if (isCurrentAnswer) {
       const nextQuestion = currentQuesIndex + 1;
-      if (nextQuestion <= quiz!.ques.length) {
+      if (nextQuestion <= quiz.ques.length) {
         dispatch(setAnswerQuestion(currentAnswer));
         setCurrentAnswer(null);
-        if (nextQuestion === quiz?.ques.length) {
+        if (nextQuestion === quiz.ques.length) {
           dispatch(setShowScore());
         }
       }
     }
   };
-
-  console.log(quiz);
 
   return (
     <main className={styles.fullTest} data-testid="FullTest">
@@ -68,15 +68,15 @@ export const FullTest = () => {
           />
         ) : (
           <>
-            <h1 className={styles.fullTest__title}>{quiz!.title}</h1>
-            {isEditable ? (
+            <h1 className={styles.fullTest__title}>{quiz.title}</h1>
+            {isEditable && (
               <div className={styles.fullTest__editable}>
                 <Link to={`/edit/${id}`}>
                   <EditIcon width={20} />
                 </Link>
                 <RemoveIcon width={20} onClick={onRemoveTest} />
               </div>
-            ) : null}
+            )}
             <InfoPanel />
             {showScore ? (
               <ShowScore />
@@ -92,18 +92,19 @@ export const FullTest = () => {
                   <div className={styles.questions__info}>
                     <div className={styles.questions__title}>
                       <span>{currentQuesIndex + 1}.</span>{" "}
-                      {currentQuestion?.title}
+                      {currentQuestion && currentQuestion.title}
                     </div>
                     <div className={styles.answers}>
-                      {currentQuestion?.answers.map((item, index) => (
-                        <AnswerBlock
-                          {...item}
-                          id={index}
-                          key={index}
-                          currentIndex={currentAnswer}
-                          setAnswer={getCurrentAnswer}
-                        />
-                      ))}
+                      {currentQuestion &&
+                        currentQuestion.answers.map((item, index) => (
+                          <AnswerBlock
+                            {...item}
+                            id={index}
+                            key={index}
+                            currentIndex={currentAnswer}
+                            setAnswer={getCurrentAnswer}
+                          />
+                        ))}
                     </div>
                   </div>
                 </div>
@@ -131,7 +132,7 @@ export const FullTest = () => {
           </>
         )}
       </div>
-      <Comments {...quiz!} />
+      <Comments {...quiz} auth={data!} />
     </main>
   );
 };

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "@axios";
 import { CommentProps, TestProps } from "@proptypes";
-import { CommentPropsQuery, QuizProps } from "./types";
+import { CommentPropsCreate, CommentPropsRemove, QuizProps } from "./types";
 
 //Получение одного теста
 export const fetchTest = createAsyncThunk<
@@ -15,16 +15,26 @@ export const fetchTest = createAsyncThunk<
 
 //Создание комментария
 export const fetchAddComment = createAsyncThunk<
-  CommentPropsQuery,
-  CommentPropsQuery,
-  { rejectValue: CommentPropsQuery }
+  CommentProps,
+  CommentPropsCreate,
+  { rejectValue: CommentProps }
 >("quiz/fetchAddComment", async ({ text, testId }) => {
   const { data } = await axios.post(`/comments`, { text, testId });
   return data;
 });
 
+//Удаление комментария
+export const fetchRemoveComment = createAsyncThunk<
+  CommentProps[],
+  CommentPropsRemove,
+  { rejectValue: CommentProps[] }
+>("quiz/fetchRemoveComment", async ({ testId, id }) => {
+  const { data } = await axios.post(`/comments/${id}`, { testId });
+  return data;
+});
+
 const initialState: QuizProps = {
-  quiz: null,
+  quiz: {} as TestProps,
   currentQuesIndex: 0,
   score: 0,
   showScore: false,
@@ -57,7 +67,7 @@ const quizSlice = createSlice({
       state.showScore = true;
     },
     getAllComments: (state) => {
-      state.quiz?.comments.filter((item) => item);
+      state.quiz.comments.filter((item) => item);
     },
   },
   extraReducers: (builder) => {
@@ -74,7 +84,7 @@ const quizSlice = createSlice({
         state.status = "loaded";
       })
       .addCase(fetchTest.rejected, (state) => {
-        state.quiz = null;
+        state.quiz = {} as TestProps;
         state.status = "error";
       })
 
@@ -84,11 +94,25 @@ const quizSlice = createSlice({
         state.status = "loading";
       })
       .addCase(fetchAddComment.fulfilled, (state, action) => {
-        state.quiz?.comments.push(action.payload);
+        state.quiz.comments.push(action.payload);
         state.status = "loaded";
       })
       .addCase(fetchAddComment.rejected, (state) => {
-        state.quiz = null;
+        state.quiz = {} as TestProps;
+        state.status = "error";
+      })
+
+      //Remove comment
+
+      .addCase(fetchRemoveComment.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchRemoveComment.fulfilled, (state, action) => {
+        state.quiz.comments = action.payload;
+        state.status = "loaded";
+      })
+      .addCase(fetchRemoveComment.rejected, (state) => {
+        state.quiz = {} as TestProps;
         state.status = "error";
       });
   },

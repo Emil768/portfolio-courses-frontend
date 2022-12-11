@@ -1,16 +1,21 @@
 import { TestProps } from "@proptypes";
 
 export type QuizProps = {
-  quiz: TestProps | null;
+  quiz: TestProps;
   currentQuesIndex: number;
   score: number;
   showScore: boolean;
   status: "loading" | "loaded" | "error";
 };
 
-export type CommentPropsQuery = {
+export type CommentPropsCreate = {
   testId: string;
   text: string;
+};
+
+export type CommentPropsRemove = {
+  testId: string;
+  id: string;
 };
 
 export type NextQuestionProps = {
