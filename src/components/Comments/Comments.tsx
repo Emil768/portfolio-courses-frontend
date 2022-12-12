@@ -1,18 +1,18 @@
 import { useState } from "react";
-import { EditIcon, RemoveIcon, ReplyIcon } from "@images";
+
 import styles from "./Comments.module.scss";
 
 import { CommentProps, TestProps, UserProps } from "@proptypes";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import { fetchAddComment, fetchRemoveComment } from "@redux/slices";
+import { CommentsBlock } from "@components";
 
-interface CommentsProps extends TestProps {
-  auth: UserProps;
-}
+interface CommentsProps extends TestProps {}
 
-export const Comments = ({ _id, comments, auth }: CommentsProps) => {
+export const Comments = ({ _id, comments }: CommentsProps) => {
   const dispatch = useAppDispatch();
+  const { data } = useAppSelector((state) => state.auth);
   const [text, setText] = useState("");
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -24,10 +24,11 @@ export const Comments = ({ _id, comments, auth }: CommentsProps) => {
     };
 
     dispatch(fetchAddComment(comment));
+    setText("");
   };
 
-  const handlerOnRemoveComment = async (item: CommentProps) => {
-    dispatch(fetchRemoveComment({ id: item._id, testId: _id }));
+  const handlerOnReplyComment = (name: string) => {
+    setText(`@${name},`);
   };
 
   const commentsCompleted = comments ? comments : [];
@@ -35,55 +36,24 @@ export const Comments = ({ _id, comments, auth }: CommentsProps) => {
   return (
     <div className={styles.comments} data-testid="Comments">
       <div className={styles.comments__title}>
-        Все комментарии{" "}
+        Все комментарии
         <span className={styles.comments__length}>
           {commentsCompleted.length}
         </span>
       </div>
 
       <div className={styles.comments__content}>
-        {commentsCompleted.map((item, index) => (
-          <div className={styles.comments__block} key={index}>
-            <div className={styles.comments__avatar}>
-              <img src={item.postedBy.avatarUrl.url} alt="avatar" />
-            </div>
-            <div className={styles.comments__info}>
-              <div className={styles.comments__infoTop}>
-                <div className={styles.comments__name}>
-                  <Link to={`/user/${item.postedBy._id}`}>
-                    {item.postedBy.fullName}
-                  </Link>
-                </div>
-                <div className={styles.comments__date}>
-                  {item.postedBy.createdAt}
-                </div>
-              </div>
-              <div className={styles.comments__text}>{item.text}</div>
-              <div className={styles.comments__communication}></div>
-              <div className={styles.comments__reply}>
-                <ReplyIcon width={15} />
-                Ответить
-              </div>
-            </div>
-
-            {item.postedBy._id === (auth && auth._id) && (
-              <div className={styles.comments__panel}>
-                <div className={styles.comments__edit}>
-                  <EditIcon width={20} />
-                </div>
-                <div
-                  className={styles.comments__remove}
-                  onClick={() => handlerOnRemoveComment(item)}
-                >
-                  <RemoveIcon width={20} />
-                </div>
-              </div>
-            )}
-          </div>
+        {commentsCompleted.map((item) => (
+          <CommentsBlock
+            {...item}
+            key={item._id}
+            testId={_id}
+            onReplyComment={handlerOnReplyComment}
+          />
         ))}
       </div>
 
-      {auth ? (
+      {data ? (
         <form className={styles.comments__form} onSubmit={onSubmit}>
           <textarea
             className={styles.comments__field}
@@ -92,6 +62,7 @@ export const Comments = ({ _id, comments, auth }: CommentsProps) => {
             name="comment"
             cols={30}
             rows={2}
+            value={text}
             required
           ></textarea>
           <div className={styles.comments__buttons}>

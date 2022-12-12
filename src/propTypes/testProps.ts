@@ -1,26 +1,31 @@
 import { UserProps } from "./userProps";
 
-export type QuesProps = {
-  title: string;
-  linkImage?: string;
-  answers: AnswersProps[];
-};
+export type ImageUrlProps = { public_id: string; url: string };
 
-export type AnswersProps = {
+export interface QuesProps {
+  _id: string;
+  title: string;
+  imageURL?: ImageUrlProps;
+  answers: AnswersProps[];
+}
+
+export interface AnswersProps {
+  _id: string;
   answer: string;
   correct: boolean;
-};
+}
 
 export type CurrentAnswerProps = {
   id: number;
 } & AnswersProps;
 
-export type CommentProps = {
+export interface CommentProps {
   text: string;
   postedBy: UserProps;
+  createdAt: string;
   testId: string;
   _id: string;
-};
+}
 
 export interface TestProps {
   _id: string;
@@ -36,12 +41,27 @@ export interface TestProps {
   comments: CommentProps[];
 }
 
+export interface AnswerBlockProps extends AnswersProps {
+  setAnswer: (index: number) => void;
+  keyIndex: number;
+}
+
+//Add test props
+
+export type AnswerLessProps = Omit<AnswersProps, "_id">;
+
+export interface QuesLessProps {
+  title: string;
+  imageURL?: ImageUrlProps;
+  answers: AnswerLessProps[];
+}
+
 export type MainAddTestProps = {
   title: string;
   category: string;
   text: string;
   bgImage: string;
-  questions: QuesProps[];
+  questions: QuesLessProps[];
 };
 
 export type AddTestContextType = {

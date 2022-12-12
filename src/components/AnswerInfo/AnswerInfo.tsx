@@ -2,10 +2,10 @@ import { useContext } from "react";
 import styles from "./AnswerInfo.module.scss";
 import ReactSwitch from "react-switch";
 import { CloseIcon } from "@images";
-import { AddTestContextType, AnswersProps } from "@proptypes";
+import { AddTestContextType, AnswerLessProps } from "@proptypes";
 import { TestContext } from "@pages";
 
-interface AnswerInfoProps extends AnswersProps {
+interface AnswerInfoProps extends AnswerLessProps {
   id: number;
   idQuestion: number;
 }
@@ -27,6 +27,7 @@ export const AnswerInfo = ({ id, idQuestion }: AnswerInfoProps) => {
           };
           return {
             title: item.title,
+            imageURL: item.imageURL,
             answers: [...item.answers],
           };
         }
@@ -47,6 +48,7 @@ export const AnswerInfo = ({ id, idQuestion }: AnswerInfoProps) => {
           };
           return {
             title: item.title,
+            imageURL: item.imageURL,
             answers: [...item.answers],
           };
         }
@@ -64,6 +66,7 @@ export const AnswerInfo = ({ id, idQuestion }: AnswerInfoProps) => {
           item.answers.splice(id, 1);
           return {
             title: item.title,
+            imageURL: item.imageURL,
             answers: [...item.answers],
           };
         }

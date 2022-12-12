@@ -11,19 +11,21 @@
   }
   &__questionActive {
     display: block;
-    flex: 0 0 55%;
+    flex: 0 0 70%;
   }
 
   &__arrow {
     opacity: 1;
     position: absolute;
-    top: 150px;
-    cursor: pointer;
+    top: 50%;
+    -webkit-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+    background: red;
     transition: all ease 0.3s;
     background-color: transparent;
     border-radius: 50%;
     padding: 12px;
-
+    cursor: pointer;
     svg {
       display: block;
     }

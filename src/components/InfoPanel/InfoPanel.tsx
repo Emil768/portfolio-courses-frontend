@@ -1,23 +1,26 @@
 import { Link } from "react-router-dom";
-import { useAppSelector } from "@redux/hooks";
 import styles from "./InfoPanel.module.scss";
 
 import { options } from "@internals";
+import { TestProps } from "@proptypes";
 
-export const InfoPanel = () => {
-  const { quiz } = useAppSelector((state) => state.quiz);
-
-  const date = new Date(quiz.createdAt!);
+export const InfoPanel = ({
+  createdAt,
+  category,
+  viewsCount,
+  user,
+}: TestProps) => {
+  const date = new Date(createdAt!);
 
   return (
     <div className={styles.fullTest__info}>
       <span>
         <i className={styles.circle}></i>{" "}
         <Link
-          to={`/category/${quiz.category}`}
+          to={`/category/${category}`}
           className={styles.fullTest__category}
         >
-          {quiz.category}
+          {category}
         </Link>
       </span>
       <span className={styles.fullTest__icon}>
@@ -29,18 +32,18 @@ export const InfoPanel = () => {
         >
           <path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z" />
         </svg>
-        {quiz.viewsCount}
+        {viewsCount}
       </span>
       <span className={styles.fullTest__date}>
         {date.toLocaleDateString("ru-RU", options)}
       </span>
-      <Link to={`/user/${quiz.user._id}`} className={styles.author}>
+      <Link to={`/user/${user._id}`} className={styles.author}>
         <img
-          src={`${quiz.user.avatarUrl.url}`}
+          src={`${user.avatarUrl.url}`}
           alt=""
           className={styles.author__avatar}
         />
-        <span className={styles.author__name}>{quiz.user.fullName}</span>
+        <span className={styles.author__name}>{user.fullName}</span>
       </Link>
     </div>
   );

@@ -5,10 +5,14 @@ import { useAppSelector } from "@redux/hooks";
 import { ResultList, ProgressProvider, ScoreBlock } from "@components";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import { TestProps } from "@proptypes";
 
-export const ShowScore = () => {
-  const { score, quiz } = useAppSelector((state) => state.quiz);
-  const resultScore = Math.round((score / quiz!.ques.length) * 100);
+interface ShowScoreProps extends TestProps {
+  score: number;
+}
+
+export const ShowScore = ({ ques, score }: ShowScoreProps) => {
+  const resultScore = Math.round((score / ques.length) * 100);
 
   return (
     <div className={styles.score}>
@@ -22,7 +26,7 @@ export const ShowScore = () => {
         </div>
         <ResultList />
       </div>
-      {quiz!.ques.map((item, index) => (
+      {ques.map((item, index) => (
         <ScoreBlock {...item} key={index} id={index} />
       ))}
     </div>

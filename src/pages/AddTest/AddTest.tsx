@@ -18,9 +18,9 @@ export const AddTest = () => {
   const isEditable = Boolean(id);
   const isAuth = useAppSelector((state) => Boolean(state.auth.data));
 
-  const [isToggleNav, setIsToggleNav] = useState(true);
+  const [isToggleNav, setIsToggleNav] = useState(false);
 
-  const [data, setData] = useState({
+  const [data, setData] = useState<MainAddTestProps>({
     title: "",
     category: "",
     bgImage: "",
@@ -28,6 +28,7 @@ export const AddTest = () => {
     questions: [
       {
         title: "",
+        imageURL: { public_id: "", url: "" },
         answers: [
           { answer: "", correct: false },
           { answer: "", correct: false },
@@ -82,7 +83,11 @@ export const AddTest = () => {
       ...data,
       questions: [
         ...data.questions,
-        { title: "", answers: [{ answer: "", correct: false }] },
+        {
+          title: "",
+          imageURL: { public_id: "", url: "" },
+          answers: [{ answer: "", correct: false }],
+        },
       ],
     });
     setCurrentQuestion(currentQuestion + 1);

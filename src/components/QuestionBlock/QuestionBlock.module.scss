@@ -6,6 +6,18 @@
     }
   }
 
+  &__button {
+    width: 100%;
+    outline: none;
+    border: none;
+    border: 1px solid #007bfe;
+    background-color: transparent;
+    margin-bottom: 20px;
+    padding: 10px 0;
+    color: #007bfe;
+    cursor: pointer;
+  }
+
   &__questionTitle {
     display: flex;
     align-items: center;
@@ -26,5 +38,13 @@
     &:focus {
       border-color: #ad9e9ecc;
     }
+  }
+  &__imageBlock {
+    max-width: 100%;
+    margin-bottom: 40px;
+  }
+  &__image {
+    height: 365px;
+    width: 100%;
   }
 }

@@ -16,7 +16,7 @@ export const FullTest = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { data } = useAppSelector((state) => state.auth);
-  const { quiz, status, currentQuesIndex, showScore } = useAppSelector(
+  const { quiz, status, currentQuesIndex, showScore, score } = useAppSelector(
     (state) => state.quiz
   );
 
@@ -27,7 +27,7 @@ export const FullTest = () => {
   const currentQuestion = checkQuiz && quiz.ques[currentQuesIndex];
 
   const isLoading = Boolean(status === "loading");
-  const isEditable = data?._id === quiz._id;
+  const isEditable = data?._id === quiz.user?._id;
 
   useEffect(() => {
     dispatch(fetchTest(id!));
@@ -77,19 +77,24 @@ export const FullTest = () => {
                 <RemoveIcon width={20} onClick={onRemoveTest} />
               </div>
             )}
-            <InfoPanel />
+            <InfoPanel {...quiz} />
             {showScore ? (
-              <ShowScore />
+              <ShowScore {...quiz} score={score} />
             ) : (
               <>
                 <div className={styles.questions}>
-                  {/* <div className={styles.questions__image}>
-                    <img
-                      src="https://www.looper.com/img/gallery/20-most-powerful-attack-on-titan-characters-ranked/intro-1647387047.jpg"
-                      alt=""
-                    />
-                  </div> */}
-                  <div className={styles.questions__info}>
+                  {currentQuestion && currentQuestion.imageURL?.url ? (
+                    <div className={styles.questions__image}>
+                      <img src={currentQuestion.imageURL?.url} alt="" />
+                    </div>
+                  ) : null}
+                  <div
+                    className={
+                      currentQuestion && currentQuestion.imageURL?.url
+                        ? styles.questions__info
+                        : styles.questions__infoFull
+                    }
+                  >
                     <div className={styles.questions__title}>
                       <span>{currentQuesIndex + 1}.</span>{" "}
                       {currentQuestion && currentQuestion.title}
@@ -99,9 +104,8 @@ export const FullTest = () => {
                         currentQuestion.answers.map((item, index) => (
                           <AnswerBlock
                             {...item}
-                            id={index}
-                            key={index}
-                            currentIndex={currentAnswer}
+                            key={item._id}
+                            keyIndex={index}
                             setAnswer={getCurrentAnswer}
                           />
                         ))}
@@ -132,7 +136,7 @@ export const FullTest = () => {
           </>
         )}
       </div>
-      <Comments {...quiz} auth={data!} />
+      <Comments {...quiz} />
     </main>
   );
 };

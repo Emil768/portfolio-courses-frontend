@@ -1,31 +1,24 @@
-import { AnswersProps } from "@proptypes";
+import { AnswerBlockProps } from "@proptypes";
 import styles from "./AnswerBlock.module.scss";
-
-interface AnswerBlockProps extends AnswersProps {
-  setAnswer: (index: number) => void;
-  currentIndex: number | null;
-  id: number;
-}
 
 export const AnswerBlock = ({
   answer,
-  id,
+  _id,
   setAnswer,
-  currentIndex,
+  keyIndex,
 }: AnswerBlockProps) => {
-  const checkTest = () => setAnswer(id);
+  const checkTest = () => setAnswer(keyIndex);
 
   return (
     <div className={styles.answers__block}>
       <input
         type="radio"
         name="answer"
-        id={`q${id}-option`}
+        id={`q${_id}-option`}
         onChange={checkTest}
-        key={id}
-        checked={currentIndex === id ? true : false}
+        key={_id}
       />
-      <label htmlFor={`q${id}-option`}>{answer}</label>
+      <label htmlFor={`q${_id}-option`}>{answer}</label>
     </div>
   );
 };

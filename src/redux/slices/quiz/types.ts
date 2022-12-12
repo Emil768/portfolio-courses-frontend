@@ -13,6 +13,12 @@ export type CommentPropsCreate = {
   text: string;
 };
 
+export type CommentPropsEdit = {
+  text: string;
+  testId: string;
+  id: string;
+};
+
 export type CommentPropsRemove = {
   testId: string;
   id: string;

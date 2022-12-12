@@ -25,6 +25,7 @@ export const AddTestQuestion = () => {
         index === id
           ? {
               title: item.title,
+              imageURL: item.imageURL,
               answers: [...item.answers, { answer: "", correct: false }],
             }
           : item

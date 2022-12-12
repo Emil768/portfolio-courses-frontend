@@ -14,3 +14,4 @@ export { ReactComponent as RemoveIcon } from "./remove.svg";
 export { ReactComponent as ResultIcon } from "./result.svg";
 export { ReactComponent as UserIcon } from "./user.svg";
 export { ReactComponent as ReplyIcon } from "./reply.svg";
+export { ReactComponent as SuccessIcon } from "./success.svg";
