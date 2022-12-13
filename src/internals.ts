@@ -9,12 +9,6 @@ export const options = {
   hour24: true,
 } as const;
 
-export const sortNames: PopupItems[] = [
-  { name: "Дате добавления", link: "date" },
-  { name: "По лайкам", link: "like" },
-  { name: "По дизлайкам", link: "dislike" },
-];
-
 export const categoryNames = [
   {
     title: "Тесты",

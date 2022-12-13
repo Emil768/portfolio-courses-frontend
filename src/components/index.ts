@@ -16,3 +16,4 @@ export * from "./UserPanel/UserPanel";
 export * from "./Categories/Categories";
 export * from "./Comments/Comments";
 export * from "./CommentsBlock/CommentsBlock";
+export * from "./SortPopup/SortPopup";

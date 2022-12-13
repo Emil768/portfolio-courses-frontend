@@ -3,7 +3,7 @@ export { ReactComponent as ChartIcon } from "./chart.svg";
 export { ReactComponent as CloseIcon } from "./close.svg";
 export { ReactComponent as CrownIcon } from "./crown.svg";
 export { ReactComponent as DateIcon } from "./date.svg";
-export { ReactComponent as DislikeIcon } from "./dislike.svg";
+export { ReactComponent as UnlikeIcon } from "./unlike.svg";
 export { ReactComponent as EditIcon } from "./edit.svg";
 export { ReactComponent as EmailIcon } from "./email.svg";
 export { ReactComponent as FolderIcon } from "./folder.svg";

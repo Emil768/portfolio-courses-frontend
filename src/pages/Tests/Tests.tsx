@@ -1,16 +1,14 @@
 import { useParams } from "react-router-dom";
 import styles from "./Tests.module.scss";
 
-import { Test, Popup, Categories } from "@components";
+import { Test, Categories, SortPopup } from "@components";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import { fetchCategory, fetchTests } from "@redux/slices";
 import { ClipLoader } from "react-spinners";
-import { sortNames } from "@internals";
 
 export const Tests = () => {
-  const [activePopup, setActivePopup] = useState(false);
   const { tests, status } = useAppSelector((state) => state.tests);
 
   const { title } = useParams();
@@ -32,17 +30,7 @@ export const Tests = () => {
     <main className={styles.notes}>
       <div className={styles.notes__top}>
         <Categories />
-        <div className={styles.notes__sorted}>
-          Сортировка по:{" "}
-          <span
-            onClick={() => setActivePopup(!activePopup)}
-            className={styles.notes__pick}
-          >
-            {" "}
-            по лайкам
-          </span>
-          <Popup active={activePopup} items={sortNames} />
-        </div>
+        <SortPopup />
       </div>
       <div
         className={

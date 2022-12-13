@@ -105,9 +105,7 @@ const quizSlice = createSlice({
 
       //Add comment
 
-      .addCase(fetchAddComment.pending, (state) => {
-        state.status = "loading";
-      })
+      .addCase(fetchAddComment.pending, (state) => {})
       .addCase(fetchAddComment.fulfilled, (state, action) => {
         state.quiz.comments.push(action.payload);
         state.status = "loaded";
@@ -119,9 +117,7 @@ const quizSlice = createSlice({
 
       //Update comment
 
-      .addCase(fetchUpdateComment.pending, (state) => {
-        state.status = "loading";
-      })
+      .addCase(fetchUpdateComment.pending, (state) => {})
       .addCase(fetchUpdateComment.fulfilled, (state, action) => {
         state.quiz.comments = action.payload;
         state.status = "loaded";
@@ -133,9 +129,7 @@ const quizSlice = createSlice({
 
       //Remove comment
 
-      .addCase(fetchRemoveComment.pending, (state) => {
-        state.status = "loading";
-      })
+      .addCase(fetchRemoveComment.pending, (state) => {})
       .addCase(fetchRemoveComment.fulfilled, (state, action) => {
         state.quiz.comments = action.payload;
         state.status = "loaded";

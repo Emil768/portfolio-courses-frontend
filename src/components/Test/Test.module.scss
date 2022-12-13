@@ -37,31 +37,65 @@
     align-items: center;
   }
 
-  &__reaction {
+  &__reactions {
     display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex: 0 0 50%;
+    position: relative;
   }
 
   &__reactionBlock {
-    margin-left: 15px;
     display: flex;
     align-items: center;
-    &:first-child {
-      margin-left: 0;
+
+    cursor: pointer;
+  }
+
+  &__reaction {
+    margin-left: 8px;
+  }
+
+  &__reactionUsers {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__likeUser {
+    display: block;
+    width: 30px;
+    height: 30px;
+    top: -2px;
+
+    position: absolute;
+    z-index: 1;
+
+    &:first-of-type {
+      right: 70px;
+      z-index: 3;
+    }
+
+    &:nth-last-of-type(2) {
+      right: 50px;
+      z-index: 2;
+    }
+    &:last-of-type {
+      right: 30px;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
     }
   }
 
-  &__likeIcon,
-  &__disIcon {
-    width: 40px;
-    cursor: pointer;
-    transition: all ease 0.2s;
+  &__likeIcon {
+    fill: #d83535;
   }
 
-  &__likeIcon:hover {
-    fill: #39dd46;
-  }
-  &__disIcon:hover {
-    fill: #d83535;
+  &__unlikeIcon {
+    fill: #000;
   }
 
   &__link {

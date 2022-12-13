@@ -29,4 +29,8 @@
       cursor: pointer;
     }
   }
+  &__itemActive {
+    background: #40b0ee26;
+    color: #40b0ee;
+  }
 }

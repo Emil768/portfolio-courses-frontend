@@ -17,10 +17,12 @@ export const UserPanel = () => {
   const userSettings: PopupItems[] = [
     {
       name: "Профиль",
+
       link: `/user/${data?._id}`,
     },
     {
       name: "Добавить тест",
+
       link: "/add-test",
     },
     {

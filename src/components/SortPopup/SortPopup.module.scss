@@ -1,0 +1,14 @@
+.notes {
+  &__sorted {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    position: relative;
+  }
+
+  &__pick {
+    border-bottom: 1px dashed #fe5f1e;
+    color: #d64a4a;
+    cursor: pointer;
+  }
+}

@@ -37,7 +37,7 @@ export interface TestProps {
   createdAt: string;
   ques: QuesProps[];
   user: UserProps;
-  likes: [];
+  likes: [{ likeBy: UserProps; _id: string }];
   comments: CommentProps[];
 }
 

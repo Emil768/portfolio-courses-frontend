@@ -2,7 +2,10 @@ import { Link } from "react-router-dom";
 import { TestProps } from "@proptypes";
 import styles from "./Test.module.scss";
 
-import { DislikeIcon, LikeIcon } from "@images";
+import { LikeIcon, UnlikeIcon } from "@images";
+
+import { useAppDispatch, useAppSelector } from "@redux/hooks";
+import { fetchAddLike, fetchRemoveLike } from "@redux/slices";
 
 export const Test = ({
   _id,
@@ -10,8 +13,17 @@ export const Test = ({
   text,
   category,
   user,
+  likes,
   backgroundImage,
 }: TestProps) => {
+  const dispatch = useAppDispatch();
+  const { data } = useAppSelector((state) => state.auth);
+
+  const checkTestId = likes.find((item) => item.likeBy._id === data?._id);
+
+  const onLikeTest = async () => dispatch(fetchAddLike(_id));
+  const onUnlikeTest = async () => dispatch(fetchRemoveLike(_id));
+
   return (
     <div className={styles.note}>
       <img
@@ -42,16 +54,38 @@ export const Test = ({
           <Link to={`/tests/${_id}`} className={styles.note__link}>
             Пройти тест
           </Link>
-          <div className={styles.note__reaction}>
-            <div className={styles.note__reactionBlock}>
-              <LikeIcon className={styles.note__likeIcon} />
-              <span className={styles.note__reactionLike}>999</span>
+
+          {data ? (
+            <div className={styles.note__reactions}>
+              <div className={styles.note__reactionUsers}>
+                {likes.slice(-3).map((item) => (
+                  <div className={styles.note__likeUser} key={item._id}>
+                    <img src={item.likeBy.avatarUrl.url} alt="" />
+                  </div>
+                ))}
+              </div>
+
+              {checkTestId ? (
+                <div className={styles.note__reactionBlock}>
+                  <LikeIcon
+                    className={styles.note__likeIcon}
+                    onClick={onUnlikeTest}
+                    width={25}
+                  />
+                  {/* <span className={styles.note__reaction}>{likes.length}</span> */}
+                </div>
+              ) : (
+                <div className={styles.note__reactionBlock}>
+                  <UnlikeIcon
+                    className={styles.note__unlikeIcon}
+                    onClick={onLikeTest}
+                    width={25}
+                  />
+                  {/* <span className={styles.note__reaction}>{likes.length}</span> */}
+                </div>
+              )}
             </div>
-            <div className={styles.note__reactionBlock}>
-              <DislikeIcon className={styles.note__disIcon} />
-              <span className={styles.note__reactionDisLike}>999</span>
-            </div>
-          </div>
+          ) : null}
         </div>
       </div>
     </div>
