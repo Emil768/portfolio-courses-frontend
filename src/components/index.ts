@@ -17,3 +17,7 @@ export * from "./Categories/Categories";
 export * from "./Comments/Comments";
 export * from "./CommentsBlock/CommentsBlock";
 export * from "./SortPopup/SortPopup";
+export * from "./TestSwitch/TestSwitch";
+export * from "./PublishSwitch/PublishSwitch";
+export * from "./LikesSwitch/LikesSwitch";
+export * from "./CommentSwitch/CommentSwitch";

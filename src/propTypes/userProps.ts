@@ -12,3 +12,9 @@ export interface UserProps {
   avatarUrl: AvatarProps;
   createdAt?: string;
 }
+
+export type SwithProps = {
+  title: string;
+  type: string;
+  component: JSX.Element;
+};
