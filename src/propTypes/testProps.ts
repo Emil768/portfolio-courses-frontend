@@ -41,6 +41,13 @@ export interface TestProps {
   comments: CommentProps[];
 }
 
+export interface AllUserActionProps {
+  allComments: TestProps[];
+  allLikes: TestProps[];
+  allPublish: TestProps[];
+  allScore: TestProps[];
+}
+
 export interface AnswerBlockProps extends AnswersProps {
   setAnswer: (index: number) => void;
   keyIndex: number;

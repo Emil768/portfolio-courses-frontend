@@ -2,7 +2,7 @@ import { useState, createContext, useEffect } from "react";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import styles from "./AddTest.module.scss";
 
-import { AddTestContextType, MainAddTestProps } from "@proptypes";
+import { AddTestContextType, MainAddTestProps, TestProps } from "@proptypes";
 
 import { useAppSelector } from "@redux/hooks";
 import { AddTestMain, AddTestQuestion } from "@components";
@@ -42,7 +42,7 @@ export const AddTest = () => {
 
   useEffect(() => {
     if (id) {
-      axios.get(`/tests/${id}`).then(({ data }: any) => {
+      axios.get(`/tests/${id}`).then(({ data }: { data: TestProps }) => {
         setData({
           title: data.title,
           text: data.text,

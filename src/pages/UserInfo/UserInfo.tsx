@@ -1,9 +1,16 @@
-import { SwithProps, UserProps } from "@proptypes";
+import {
+  AllUserActionProps,
+  SwithProps,
+  TestProps,
+  UserProps,
+} from "@proptypes";
 import styles from "./UserInfo.module.scss";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import { DateIcon, ChartIcon, EmailIcon } from "@images";
+
+// import axios from "@axios";
 
 import axios from "@axios";
 import { options } from "@internals";
@@ -13,90 +20,171 @@ import {
   PublishSwitch,
   TestSwitch,
 } from "@components";
+import { useAppSelector } from "@redux/hooks";
+import { ClipLoader } from "react-spinners";
 
 export const UserInfo = () => {
-  const [user, setUser] = useState<UserProps>();
-  const [activeSwitch, setActiveSwitch] = useState<SwithProps>({
-    title: "Прохождение тестов",
-    type: "tests",
-    component: <TestSwitch />,
-  });
-
   const { id } = useParams();
 
-  const date = new Date(user?.createdAt!);
+  const [userInfo, setUserInfo] = useState({
+    user: {} as UserProps,
+    data: {} as AllUserActionProps,
+  });
+  const [categoryType, setCategoryType] = useState("tests");
+  const [isLoading, setIsLoading] = useState(true);
+
+  const getUserData = (): UserProps =>
+    axios.get(`/auth/me/${id}`).then(({ data }: { data: UserProps }) => data);
+  const getUserCategory = (): TestProps[] =>
+    axios
+      .get(`/getActionsUser/${id}`)
+      .then(({ data }: { data: TestProps[] }) => data);
+
+  const handlerFetchData = () => {
+    Promise.all([getUserData(), getUserCategory()]).then(function (results) {
+      setUserInfo({
+        user: results[0],
+        data: { ...userInfo.data, ...results[1] },
+      });
+      setIsLoading(false);
+    });
+  };
 
   useEffect(() => {
-    axios.get(`/auth/me/${id}`).then(({ data }: any) => setUser(data));
+    handlerFetchData();
   }, [id]);
 
-  console.log(user);
+  const handlerSwitchCategory = (title: string) => setCategoryType(title);
 
-  const switchData = [
-    {
-      title: "Прохождение тестов",
-      type: "tests",
-      component: <TestSwitch />,
-    },
-    {
-      title: "Публикации",
-      type: "tests",
-      component: <PublishSwitch />,
-    },
-    {
-      title: "Лайки",
-      type: "tests",
-      component: <LikesSwitch />,
-    },
-    {
-      title: "Комментарии",
-      type: "tests",
-      component: <CommentSwitch />,
-    },
-  ];
+  console.log(userInfo.data);
 
-  console.log(activeSwitch);
   return (
     <div className={styles.user} data-testid="UserInfo">
-      <div className={styles.user__content}>
-        <div className={styles.user__avatar}>
-          <img src={user?.avatarUrl.url} alt="avatar icon" />
-          <div className={styles.user__contact}>
-            <div className={styles.user__email}>
-              <EmailIcon width={16} />
-              {user?.email}
+      {isLoading ? (
+        <ClipLoader loading={isLoading} color="#39ca81" />
+      ) : (
+        <div className={styles.user__content}>
+          <div className={styles.user__avatar}>
+            <div className={styles.questions__image}>
+              <img src={userInfo.user.avatarUrl.url} alt="avatar icon" />
             </div>
-            <h2 className={styles.user__name}>@{user?.fullName}</h2>
-            <div className={styles.user__date}>
-              <DateIcon width={16} />
-              {date.toLocaleDateString("ru-RU", options)}
-            </div>
-          </div>
-        </div>
 
-        <div className={styles.user__statistics}>
-          <div className={styles.user__categories}>
-            {switchData.map((item, index) => (
-              <>
-                <div
-                  className={styles.user__category}
-                  onClick={() =>
-                    setActiveSwitch({
-                      title: item.title,
-                      type: item.type,
-                      component: item.component,
-                    })
-                  }
-                  key={index}
-                >
-                  {item.title}
-                </div>
-                {/* <item.component/> */}
-              </>
-            ))}
+            <div className={styles.user__contact}>
+              <div className={styles.user__email}>
+                <EmailIcon width={16} />
+                {userInfo.user.email}
+              </div>
+              <h2 className={styles.user__name}>@{userInfo.user.fullName}</h2>
+              <div className={styles.user__date}>
+                <DateIcon width={16} />
+                {new Date(userInfo.user.createdAt!).toLocaleDateString(
+                  "ru-RU",
+                  options
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.user__statistics}>
+            <div className={styles.user__categories}>
+              <div
+                className={
+                  categoryType === "tests"
+                    ? [styles.user__category, styles.user__categoryActive].join(
+                        " "
+                      )
+                    : styles.user__category
+                }
+                onClick={() => handlerSwitchCategory("tests")}
+              >
+                Прохождение тестов{" "}
+                <span className={styles.user__circle}>
+                  {userInfo.data.allScore.length}
+                </span>
+              </div>
+              <div
+                className={
+                  categoryType === "publish"
+                    ? [styles.user__category, styles.user__categoryActive].join(
+                        " "
+                      )
+                    : styles.user__category
+                }
+                onClick={() => handlerSwitchCategory("publish")}
+              >
+                Публикации{" "}
+                <span className={styles.user__circle}>
+                  {userInfo.data.allPublish.length}
+                </span>
+              </div>
+              <div
+                className={
+                  categoryType === "likes"
+                    ? [styles.user__category, styles.user__categoryActive].join(
+                        " "
+                      )
+                    : styles.user__category
+                }
+                onClick={() => handlerSwitchCategory("likes")}
+              >
+                Лайки{" "}
+                <span className={styles.user__circle}>
+                  {userInfo.data.allLikes.length}
+                </span>
+              </div>
+              <div
+                className={
+                  categoryType === "comments"
+                    ? [styles.user__category, styles.user__categoryActive].join(
+                        " "
+                      )
+                    : styles.user__category
+                }
+                onClick={() => handlerSwitchCategory("comments")}
+              >
+                Комментарии{" "}
+                <span className={styles.user__circle}>
+                  {userInfo.data.allComments.length}
+                </span>
+              </div>
+            </div>
+            {(() => {
+              switch (categoryType) {
+                case "tests":
+                  return (
+                    <TestSwitch
+                      user={userInfo.user}
+                      data={userInfo.data.allScore}
+                    />
+                  );
+                case "publish":
+                  return (
+                    <PublishSwitch
+                      user={userInfo.user}
+                      data={userInfo.data.allPublish}
+                    />
+                  );
+                case "likes":
+                  return (
+                    <LikesSwitch
+                      user={userInfo.user}
+                      data={userInfo.data.allLikes}
+                    />
+                  );
+                case "comments":
+                  return (
+                    <CommentSwitch
+                      user={userInfo.user}
+                      data={userInfo.data.allComments}
+                    />
+                  );
+                default:
+                  return null;
+              }
+            })()}
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
