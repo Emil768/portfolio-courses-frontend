@@ -1,10 +1,7 @@
-import { useEffect, useState } from "react";
 import styles from "./LikesSwitch.module.scss";
-
-import axios from "@axios";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { TestProps, UserProps } from "@proptypes";
-import { ClipLoader } from "react-spinners";
+
 import { options } from "@internals";
 
 interface LikesSwitchProps {
@@ -32,7 +29,10 @@ export const LikesSwitch = ({ user, data }: LikesSwitchProps) => (
               <b> {item.user.fullName}</b>
             </Link>
             <span className={styles.user__date}>
-              {new Date(item.createdAt).toLocaleDateString("ru-RU", options)}
+              {new Date(item.likes[0].createdAt).toLocaleDateString(
+                "ru-RU",
+                options
+              )}
             </span>
           </div>
         </div>

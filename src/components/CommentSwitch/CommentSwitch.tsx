@@ -28,7 +28,10 @@ export const CommentSwitch = ({ user, data }: CommentSwitchProps) => (
               <b> {item.user.fullName}</b>
             </Link>
             <span className={styles.user__date}>
-              {new Date(item.createdAt).toLocaleDateString("ru-RU", options)}
+              {new Date(item.comments[0].createdAt).toLocaleDateString(
+                "ru-RU",
+                options
+              )}
             </span>
           </div>
         </div>

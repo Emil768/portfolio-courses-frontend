@@ -11,15 +11,18 @@ import axios from "@axios";
 import { useParams } from "react-router-dom";
 
 interface ShowScoreProps extends TestProps {
-  score: number;
+  totalScore: number;
 }
 
-export const ShowScore = ({ ques, score }: ShowScoreProps) => {
+export const ShowScore = ({ ques, totalScore }: ShowScoreProps) => {
   const { id } = useParams();
-  const resultScore = Math.round((score / ques.length) * 100);
+  const { data } = useAppSelector((state) => state.auth);
+  const resultScore = Math.round((totalScore / ques.length) * 100);
 
   useEffect(() => {
-    axios.post(`/getScore/${id}`, { totalScore: resultScore });
+    if (data) {
+      axios.post(`/getScore/${id}`, { totalScore: resultScore });
+    }
   }, []);
 
   return (

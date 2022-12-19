@@ -10,7 +10,6 @@ import { ClipLoader } from "react-spinners";
 
 export const Tests = () => {
   const { tests, status } = useAppSelector((state) => state.tests);
-
   const { title } = useParams();
 
   const dispatch = useAppDispatch();

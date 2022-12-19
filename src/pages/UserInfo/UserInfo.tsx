@@ -1,16 +1,9 @@
-import {
-  AllUserActionProps,
-  SwithProps,
-  TestProps,
-  UserProps,
-} from "@proptypes";
+import { AllUserActionProps, TestProps, UserProps } from "@proptypes";
 import styles from "./UserInfo.module.scss";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import { DateIcon, ChartIcon, EmailIcon } from "@images";
-
-// import axios from "@axios";
+import { DateIcon, EmailIcon } from "@images";
 
 import axios from "@axios";
 import { options } from "@internals";
@@ -20,7 +13,7 @@ import {
   PublishSwitch,
   TestSwitch,
 } from "@components";
-import { useAppSelector } from "@redux/hooks";
+
 import { ClipLoader } from "react-spinners";
 
 export const UserInfo = () => {
@@ -55,8 +48,6 @@ export const UserInfo = () => {
   }, [id]);
 
   const handlerSwitchCategory = (title: string) => setCategoryType(title);
-
-  console.log(userInfo.data);
 
   return (
     <div className={styles.user} data-testid="UserInfo">
@@ -148,40 +139,44 @@ export const UserInfo = () => {
                 </span>
               </div>
             </div>
-            {(() => {
-              switch (categoryType) {
-                case "tests":
-                  return (
-                    <TestSwitch
-                      user={userInfo.user}
-                      data={userInfo.data.allScore}
-                    />
-                  );
-                case "publish":
-                  return (
-                    <PublishSwitch
-                      user={userInfo.user}
-                      data={userInfo.data.allPublish}
-                    />
-                  );
-                case "likes":
-                  return (
-                    <LikesSwitch
-                      user={userInfo.user}
-                      data={userInfo.data.allLikes}
-                    />
-                  );
-                case "comments":
-                  return (
-                    <CommentSwitch
-                      user={userInfo.user}
-                      data={userInfo.data.allComments}
-                    />
-                  );
-                default:
-                  return null;
-              }
-            })()}
+
+            <div>
+              {" "}
+              {(() => {
+                switch (categoryType) {
+                  case "tests":
+                    return (
+                      <TestSwitch
+                        user={userInfo.user}
+                        data={userInfo.data.allScore}
+                      />
+                    );
+                  case "publish":
+                    return (
+                      <PublishSwitch
+                        user={userInfo.user}
+                        data={userInfo.data.allPublish}
+                      />
+                    );
+                  case "likes":
+                    return (
+                      <LikesSwitch
+                        user={userInfo.user}
+                        data={userInfo.data.allLikes}
+                      />
+                    );
+                  case "comments":
+                    return (
+                      <CommentSwitch
+                        user={userInfo.user}
+                        data={userInfo.data.allComments}
+                      />
+                    );
+                  default:
+                    return null;
+                }
+              })()}
+            </div>
           </div>
         </div>
       )}

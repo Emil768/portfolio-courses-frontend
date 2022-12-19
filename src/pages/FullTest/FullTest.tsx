@@ -79,7 +79,7 @@ export const FullTest = () => {
             )}
             <InfoPanel {...quiz} />
             {showScore ? (
-              <ShowScore {...quiz} score={score} />
+              <ShowScore {...quiz} totalScore={score} />
             ) : (
               <>
                 <div className={styles.questions}>

@@ -37,8 +37,9 @@ export interface TestProps {
   createdAt: string;
   ques: QuesProps[];
   user: UserProps;
-  likes: [{ likeBy: UserProps; _id: string }];
+  likes: [{ likeBy: UserProps; _id: string; createdAt: string }];
   comments: CommentProps[];
+  score: [{ scoreBy: UserProps; totalScore: number; createdAt: string }];
 }
 
 export interface AllUserActionProps {
