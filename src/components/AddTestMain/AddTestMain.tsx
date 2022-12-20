@@ -2,12 +2,17 @@ import { useContext } from "react";
 import styles from "./AddTestMain.module.scss";
 
 import { TestContext } from "@pages";
-import { AddTestContextType } from "@proptypes";
+import { AddTestContextType, CategoryOption } from "@proptypes";
+import Select from "react-select";
+
+import { categoryOptions } from "@internals";
 
 export const AddTestMain = () => {
   const { data, onGetMainProps } = useContext(
     TestContext
   ) as AddTestContextType;
+
+  const isEmpty = Object.values(data.category).every((value) => Boolean(value));
 
   return (
     <div className={styles.AddTestMain} data-testid="AddTestMain">
@@ -25,17 +30,20 @@ export const AddTestMain = () => {
 
       <div className={styles.inputField} data-testid="InputField">
         <label className={styles.inputField__title}>Категория</label>
-        <input
-          type="text"
-          className={styles.inputField__field}
-          placeholder="Введите категорию"
-          onChange={(e) =>
-            onGetMainProps({ ...data, category: e.target.value })
+        <Select
+          closeMenuOnSelect={false}
+          options={categoryOptions}
+          onChange={(option: CategoryOption | null) =>
+            onGetMainProps({ ...data, category: option! })
           }
-          defaultValue={data.category}
+          value={isEmpty ? data.category : null}
+          placeholder={"Выберите категорию"}
           required
+          isClearable
+          isSearchable
         />
       </div>
+
       <div className={styles.inputField} data-testid="InputField">
         <label className={styles.inputField__title}>
           Ссылка на изображение

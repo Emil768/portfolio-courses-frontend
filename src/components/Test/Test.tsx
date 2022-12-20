@@ -34,7 +34,7 @@ export const Test = ({
       <div className={styles.note__content}>
         <span className={styles.note__info}>
           <span className={styles.note__category}>
-            <i className={styles.circle}></i> {category}
+            <i className={styles.circle}></i> {category.label}
           </span>
           <span className={styles.author}>
             <img
@@ -72,7 +72,6 @@ export const Test = ({
                     onClick={onUnlikeTest}
                     width={25}
                   />
-                  {/* <span className={styles.note__reaction}>{likes.length}</span> */}
                 </div>
               ) : (
                 <div className={styles.note__reactionBlock}>
@@ -81,7 +80,6 @@ export const Test = ({
                     onClick={onLikeTest}
                     width={25}
                   />
-                  {/* <span className={styles.note__reaction}>{likes.length}</span> */}
                 </div>
               )}
             </div>

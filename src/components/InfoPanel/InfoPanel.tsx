@@ -13,8 +13,11 @@ export const InfoPanel = ({
   <div className={styles.fullTest__info}>
     <span>
       <i className={styles.circle}></i>{" "}
-      <Link to={`/category/${category}`} className={styles.fullTest__category}>
-        {category}
+      <Link
+        to={`/category/${category.label}`}
+        className={styles.fullTest__category}
+      >
+        {category.label}
       </Link>
     </span>
     <span className={styles.fullTest__icon}>

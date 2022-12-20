@@ -2,7 +2,13 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import styles from "./FullTest.module.scss";
 
-import { AnswerBlock, InfoPanel, ShowScore, Comments } from "@components";
+import {
+  AnswerBlock,
+  InfoPanel,
+  ShowScore,
+  Comments,
+  TopResults,
+} from "@components";
 import { ClipLoader } from "react-spinners";
 import { RemoveIcon, EditIcon } from "@images";
 
@@ -136,7 +142,10 @@ export const FullTest = () => {
           </>
         )}
       </div>
-      <Comments {...quiz} />
+      <div className={styles.fullTest__info}>
+        <TopResults />
+        <Comments {...quiz} />
+      </div>
     </main>
   );
 };

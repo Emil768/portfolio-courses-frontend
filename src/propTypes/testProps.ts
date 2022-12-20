@@ -1,5 +1,10 @@
 import { UserProps } from "./userProps";
 
+export interface CategoryOption {
+  value: string;
+  label: string;
+  isDisabled?: boolean;
+}
 export type ImageUrlProps = { public_id: string; url: string };
 
 export interface QuesProps {
@@ -26,20 +31,31 @@ export interface CommentProps {
   testId: string;
   _id: string;
 }
+export interface ScoreProps {
+  _id: string;
+  scoreBy: UserProps;
+  totalScore: number;
+  createdAt: string;
+}
+export interface LikeProps {
+  likeBy: UserProps;
+  _id: string;
+  createdAt: string;
+}
 
 export interface TestProps {
   _id: string;
   title: string;
   text: string;
-  category: string;
+  category: CategoryOption;
   backgroundImage: string;
   viewsCount: number;
   createdAt: string;
   ques: QuesProps[];
   user: UserProps;
-  likes: [{ likeBy: UserProps; _id: string; createdAt: string }];
+  likes: LikeProps[];
   comments: CommentProps[];
-  score: [{ scoreBy: UserProps; totalScore: number; createdAt: string }];
+  score: ScoreProps[];
 }
 
 export interface AllUserActionProps {
@@ -66,7 +82,7 @@ export interface QuesLessProps {
 
 export type MainAddTestProps = {
   title: string;
-  category: string;
+  category: CategoryOption;
   text: string;
   bgImage: string;
   questions: QuesLessProps[];

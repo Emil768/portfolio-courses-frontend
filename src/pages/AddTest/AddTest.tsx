@@ -18,11 +18,11 @@ export const AddTest = () => {
   const isEditable = Boolean(id);
   const isAuth = useAppSelector((state) => Boolean(state.auth.data));
 
-  const [isToggleNav, setIsToggleNav] = useState(false);
+  const [isToggleNav, setIsToggleNav] = useState(true);
 
   const [data, setData] = useState<MainAddTestProps>({
     title: "",
-    category: "",
+    category: { label: "", value: "" },
     bgImage: "",
     text: "",
     questions: [
