@@ -175,7 +175,7 @@ export const Registration = () => {
             <div className={styles.form__input}>
               <input
                 type="file"
-                accept="image/jpeg,image/png,image/gif"
+                accept="image/jpeg,image/png,image/webp"
                 {...register("avatarUrl", { required: true })}
               />
               <ImageIcon className={styles.form__password} />

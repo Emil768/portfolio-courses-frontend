@@ -6,6 +6,8 @@ import { LikeIcon, UnlikeIcon } from "@images";
 
 import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import { fetchAddLike, fetchRemoveLike } from "@redux/slices";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 export const Test = ({
   _id,
@@ -26,11 +28,19 @@ export const Test = ({
 
   return (
     <div className={styles.note}>
-      <img
+      <LazyLoadImage
+        src={backgroundImage}
+        className={styles.note__backgroundImage}
+        placeholderSrc={backgroundImage}
+        effect="blur"
+        alt={`${title} + image`}
+      />
+      {/* <img
         className={styles.note__backgroundImage}
         src={backgroundImage}
         alt=""
-      />
+      /> */}
+
       <div className={styles.note__content}>
         <span className={styles.note__info}>
           <span className={styles.note__category}>

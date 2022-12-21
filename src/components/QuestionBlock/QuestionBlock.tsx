@@ -56,7 +56,7 @@ export const QuestionBlock = ({ id, answers }: QuestionBlockProps) => {
     try {
       const file = event.target.files;
       const formData = new FormData();
-      formData.append("image", file![0]);
+      formData.append("picture", file![0]);
 
       const newAvatarUrl = await axios.post("/uploads", formData);
       const { secure_url, public_id } = newAvatarUrl.data;
@@ -108,9 +108,10 @@ export const QuestionBlock = ({ id, answers }: QuestionBlockProps) => {
         </button>
         <input
           type="file"
+          name="picture"
           hidden
           ref={inputFileRef}
-          accept="image/jpeg,image/png,image/gif"
+          accept="image/jpeg,image/png,image/gif,image/webp"
           onChange={onUploadImage}
           className={styles.addNote__questionsTitle}
           placeholder="Изображение"

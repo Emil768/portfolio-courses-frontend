@@ -1,34 +1,39 @@
-import { useState } from "react";
+import { useRef } from "react";
 
 import styles from "./Comments.module.scss";
 
-import { CommentProps, TestProps, UserProps } from "@proptypes";
+import { TestProps } from "@proptypes";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@redux/hooks";
-import { fetchAddComment, fetchRemoveComment } from "@redux/slices";
+import { fetchAddComment } from "@redux/slices";
 import { CommentsBlock } from "@components";
 
 interface CommentsProps extends TestProps {}
 
 export const Comments = ({ _id, comments }: CommentsProps) => {
   const dispatch = useAppDispatch();
+  const textRef = useRef<HTMLTextAreaElement | null>(null);
   const { data } = useAppSelector((state) => state.auth);
-  const [text, setText] = useState("");
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const comment = {
-      testId: _id,
-      text,
-    };
+    if (textRef.current?.value) {
+      const comment = {
+        testId: _id,
+        text: textRef.current?.value!,
+      };
 
-    dispatch(fetchAddComment(comment));
-    setText("");
+      dispatch(fetchAddComment(comment));
+
+      textRef.current.value = "";
+    }
   };
 
   const handlerOnReplyComment = (name: string) => {
-    setText(`@${name},`);
+    if (textRef.current?.value !== undefined) {
+      textRef.current.value = `@${name},`;
+    }
   };
 
   const commentsCompleted = comments ? comments : [];
@@ -57,16 +62,14 @@ export const Comments = ({ _id, comments }: CommentsProps) => {
         <form className={styles.comments__form} onSubmit={onSubmit}>
           <textarea
             className={styles.comments__field}
-            onChange={(e) => setText(e.target.value)}
+            ref={textRef}
             placeholder="Комментарий..."
             name="comment"
             cols={30}
             rows={2}
-            value={text}
             required
           ></textarea>
           <div className={styles.comments__buttons}>
-            {/* <button className={styles.comments__button}>Отмена</button> */}
             <button className={styles.comments__button} type="submit">
               Добавить
             </button>

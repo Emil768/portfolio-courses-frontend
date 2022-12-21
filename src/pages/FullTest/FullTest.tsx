@@ -120,16 +120,6 @@ export const FullTest = () => {
                 </div>
 
                 <div className={styles.questions__buttons}>
-                  {/* <div
-                    className={
-                      currentQuesIndex !== 0
-                        ? styles.fullTest__button
-                        : styles.fullTest__buttonHide
-                    }
-                    onClick={handlerPrevQuestion}
-                  >
-                    Вернуться
-                  </div> */}
                   <div
                     className={styles.fullTest__button}
                     onClick={handlerNextQuiestion}
