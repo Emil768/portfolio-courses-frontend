@@ -1,6 +1,8 @@
 .registration {
   display: flex;
   justify-content: center;
+  align-items: center;
+  height: 80vh;
 
   &__submit {
     margin-bottom: 15px;
@@ -25,6 +27,7 @@
 }
 .form {
   width: 350px;
+
   &__content {
     display: flex;
     flex-direction: column;
@@ -34,10 +37,16 @@
     background: #ffffff;
     box-shadow: 5px 15px 40px rgba(30, 35, 66, 0.15);
     border-radius: 15px;
+    position: relative;
   }
 
   &__title {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+  }
+  &__loading {
+    position: absolute;
+    top: 20px;
+    right: 20px;
   }
 
   &__inputs {

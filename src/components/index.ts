@@ -22,3 +22,4 @@ export * from "./PublishSwitch/PublishSwitch";
 export * from "./LikesSwitch/LikesSwitch";
 export * from "./CommentSwitch/CommentSwitch";
 export * from "./TopResults/TopResults";
+export * from "./EmptyBlock/EmptyBlock";

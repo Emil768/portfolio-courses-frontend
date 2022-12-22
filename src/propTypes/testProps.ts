@@ -48,7 +48,7 @@ export interface TestProps {
   title: string;
   text: string;
   category: CategoryOption;
-  backgroundImage: string;
+  backgroundImage: ImageUrlProps;
   viewsCount: number;
   createdAt: string;
   ques: QuesProps[];
@@ -84,7 +84,7 @@ export type MainAddTestProps = {
   title: string;
   category: CategoryOption;
   text: string;
-  bgImage: string;
+  bgImage: ImageUrlProps;
   questions: QuesLessProps[];
 };
 

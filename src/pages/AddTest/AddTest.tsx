@@ -23,7 +23,7 @@ export const AddTest = () => {
   const [data, setData] = useState<MainAddTestProps>({
     title: "",
     category: { label: "", value: "" },
-    bgImage: "",
+    bgImage: { public_id: "", url: "" },
     text: "",
     questions: [
       {
@@ -86,7 +86,11 @@ export const AddTest = () => {
         {
           title: "",
           imageURL: { public_id: "", url: "" },
-          answers: [{ answer: "", correct: false }],
+          answers: [
+            { answer: "", correct: false },
+            { answer: "", correct: false },
+            { answer: "", correct: false },
+          ],
         },
       ],
     });

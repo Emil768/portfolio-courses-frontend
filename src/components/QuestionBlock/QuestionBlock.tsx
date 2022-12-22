@@ -91,6 +91,7 @@ export const QuestionBlock = ({ id, answers }: QuestionBlockProps) => {
       </div>
       <input
         type="text"
+        name="title"
         className={styles.addNote__questionsTitle}
         placeholder="Введите название вопроса"
         onChange={onChangeTitle}

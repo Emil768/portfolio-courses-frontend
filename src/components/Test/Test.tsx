@@ -28,18 +28,18 @@ export const Test = ({
 
   return (
     <div className={styles.note}>
-      <LazyLoadImage
-        src={backgroundImage}
+      {/* <LazyLoadImage
+        src={backgroundImage.url}
         className={styles.note__backgroundImage}
-        placeholderSrc={backgroundImage}
+        placeholderSrc={backgroundImage.url}
         effect="blur"
-        alt={`${title} + image`}
-      />
-      {/* <img
-        className={styles.note__backgroundImage}
-        src={backgroundImage}
-        alt=""
+        alt={`${title} `}
       /> */}
+      <img
+        className={styles.note__backgroundImage}
+        src={backgroundImage.url}
+        alt=""
+      />
 
       <div className={styles.note__content}>
         <span className={styles.note__info}>

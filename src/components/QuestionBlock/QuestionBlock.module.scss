@@ -44,7 +44,8 @@
     margin-bottom: 40px;
   }
   &__image {
-    height: 365px;
+    height: 250px;
     width: 100%;
+    object-fit: cover;
   }
 }

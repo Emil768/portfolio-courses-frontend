@@ -37,7 +37,7 @@ export const Registration = () => {
   const onSubmit = async ({ fullName, email, password, avatarUrl }: any) => {
     try {
       const formData = new FormData();
-      formData.append("image", avatarUrl[0]);
+      formData.append("picture", avatarUrl[0]);
 
       const newAvatarUrl = await axios.post("/uploads", formData);
       const { secure_url, public_id } = newAvatarUrl.data;
@@ -73,10 +73,12 @@ export const Registration = () => {
 
   return (
     <div className={styles.registration} data-testid="Login">
-      <ClipLoader loading={isLoading} color="#39ca81" />
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.form__content}>
           <h2 className={styles.form__title}>Регистрация</h2>
+          <div className={styles.form__loading}>
+            <ClipLoader loading={isLoading} color="#39ca81" />
+          </div>
           <div className={styles.form__inputs}>
             <div className={styles.form__input}>
               <input

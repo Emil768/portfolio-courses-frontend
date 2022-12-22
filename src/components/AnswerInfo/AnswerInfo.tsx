@@ -82,6 +82,7 @@ export const AnswerInfo = ({ id, idQuestion }: AnswerInfoProps) => {
     <div className={styles.addNote__answers}>
       <input
         type="text"
+        name="answer"
         className={styles.addNote__questionsAnswer}
         placeholder="Введите ответ"
         onChange={onChangeAnswer}

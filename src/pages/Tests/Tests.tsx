@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import styles from "./Tests.module.scss";
 
-import { Test, Categories, SortPopup } from "@components";
+import { Test, Categories, SortPopup, EmptyBlock } from "@components";
 
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@redux/hooks";
@@ -39,19 +39,21 @@ export const Tests = () => {
         }
       >
         {!isTestsError ? (
-          (isTestsLoading ? [...Array(1)] : tests).map((item, index) =>
-            isTestsLoading ? (
-              <ClipLoader
-                loading={isTestsLoading}
-                color="#39ca81"
-                key={index}
-              />
-            ) : (
-              <Test {...item} key={item._id} />
-            )
+          isTestsLoading ? (
+            <ClipLoader loading={isTestsLoading} color="#39ca81" />
+          ) : tests.length !== 0 ? (
+            tests.map((item) => <Test {...item} key={item._id} />)
+          ) : (
+            <EmptyBlock
+              title={"Похоже сейчас нету активных тестов"}
+              text={""}
+            />
           )
         ) : (
-          <div>Error</div>
+          <EmptyBlock
+            title={"Кажется что-то пошло не так"}
+            text={"Повторите попытку позже."}
+          />
         )}
       </div>
     </main>

@@ -1,11 +1,11 @@
 .note {
-  flex: 0 0 33%;
+  flex: 0 0 32%;
   display: flex;
   flex-direction: column;
   margin-right: 20px;
   margin-bottom: 20px;
 
-  &:nth-child(even) {
+  &:nth-child(3n) {
     margin-right: 0;
   }
 
@@ -116,7 +116,7 @@
   }
 
   &__backgroundImage {
-    max-width: 100%;
+    width: 100%;
     height: 235px;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
@@ -170,6 +170,7 @@
   border-radius: 30px;
   background-color: #aebdc5;
 }
+
 //Responsive
 
 @media (max-width: 998px) {

@@ -60,8 +60,15 @@
   }
 
   &__file {
-    font-size: 16px;
-    border-bottom: 1px solid #cccc;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    opacity: 0;
+    cursor: pointer;
+    &::-webkit-file-upload-button {
+      cursor: pointer;
+    }
   }
 
   &__category {
@@ -71,5 +78,26 @@
     &:last-of-type {
       margin-bottom: 40px;
     }
+  }
+  &__button {
+    width: 100%;
+    outline: none;
+    border: none;
+    border: 1px solid #007bfe;
+    background-color: transparent;
+    padding: 10px 0;
+    margin-bottom: 10px;
+    color: #007bfe;
+    cursor: pointer;
+  }
+  &__imageBlock {
+    position: relative;
+    max-width: 100%;
+    margin-bottom: 40px;
+  }
+  &__image {
+    height: 250px;
+    width: 100%;
+    object-fit: cover;
   }
 }
