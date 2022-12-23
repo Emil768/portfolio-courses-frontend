@@ -12,3 +12,11 @@
     cursor: pointer;
   }
 }
+
+@media (max-width: 420px) {
+  .notes {
+    &__sorted {
+      width: 100%;
+    }
+  }
+}

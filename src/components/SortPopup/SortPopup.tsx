@@ -10,13 +10,13 @@ export const SortPopup = () => {
   const dispatch = useAppDispatch();
   const [activePopup, setActivePopup] = useState(false);
   const [activeType, setActiveType] = useState({
-    name: "по популярности",
+    name: "популярности",
     type: "views",
   });
 
   const sortNames: PopupItems[] = [
     {
-      name: "по популярности",
+      name: "популярности",
       type: "views",
       onClickPopup({ name, type }: PopupActiveProps) {
         dispatch(fetchSortBy("views"));
@@ -24,7 +24,7 @@ export const SortPopup = () => {
       },
     },
     {
-      name: "по дате ",
+      name: "дате ",
       type: "date",
       onClickPopup({ name, type }: PopupActiveProps) {
         dispatch(fetchSortBy("date"));
@@ -32,7 +32,7 @@ export const SortPopup = () => {
       },
     },
     {
-      name: "по лайкам",
+      name: "лайкам",
       type: "likes",
       onClickPopup({ name, type }: PopupActiveProps) {
         dispatch(fetchSortBy("likes"));

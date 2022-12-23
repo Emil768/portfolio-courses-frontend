@@ -28,3 +28,11 @@
   margin-right: 10px;
   cursor: pointer;
 }
+
+@media (max-width: 500px) {
+  .notes {
+    &__top {
+      flex-direction: column;
+    }
+  }
+}

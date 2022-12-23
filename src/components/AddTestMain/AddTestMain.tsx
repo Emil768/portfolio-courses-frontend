@@ -40,8 +40,6 @@ export const AddTestMain = () => {
     inputFileRef.current!.click();
   };
 
-  console.log(data);
-
   return (
     <div className={styles.AddTestMain} data-testid="AddTestMain">
       <div className={styles.inputField__imageBlock}>

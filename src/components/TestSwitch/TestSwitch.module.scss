@@ -1,11 +1,8 @@
 .user {
-  &__likes {
-  }
   &__likesLoad {
     text-align: right;
   }
-  &__info {
-  }
+
   &__infoBlock {
     display: flex;
     align-items: center;
@@ -22,7 +19,7 @@
     border-radius: 50%;
   }
   &__infoText {
-    line-height: 1.5;
+    line-height: 1.8;
     margin-left: 20px;
   }
 
@@ -34,5 +31,15 @@
   }
   &__empty {
     padding: 20px 0 0;
+  }
+}
+
+@media (max-width: 320px) {
+  .user {
+    &__infoText,
+    &__date,
+    &__empty {
+      font-size: 12px;
+    }
   }
 }

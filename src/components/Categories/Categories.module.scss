@@ -27,3 +27,10 @@
     color: #fff;
   }
 }
+
+@media (max-width: 500px) {
+  .categories {
+    width: 100%;
+    margin-bottom: 30px;
+  }
+}
