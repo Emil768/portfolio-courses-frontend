@@ -1,4 +1,4 @@
-import { CategoryOption, PopupItems } from "@proptypes";
+import { CategoryOption } from "@proptypes";
 
 export const options = {
   year: "numeric",
@@ -12,15 +12,15 @@ export const options = {
 export const categoryOptions: CategoryOption[] = [
   { value: "tests", label: "Тесты" },
   {
-    value: "words",
-    label: "Подстановка слов",
-    isDisabled: true,
+    value: "offers",
+    label: "Тесты / Предложения",
+    // isDisabled: true,
   },
 ];
 
 export const categoryNames = [
   {
     title: "Тесты",
-    link: "Тесты",
+    link: "tests",
   },
 ];

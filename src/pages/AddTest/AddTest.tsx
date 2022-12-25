@@ -18,7 +18,7 @@ export const AddTest = () => {
   const isEditable = Boolean(id);
   const isAuth = useAppSelector((state) => Boolean(state.auth.data));
 
-  const [isToggleNav, setIsToggleNav] = useState(true);
+  const [isToggleNav, setIsToggleNav] = useState(false);
 
   const [data, setData] = useState<MainAddTestProps>({
     title: "",
@@ -34,11 +34,12 @@ export const AddTest = () => {
           { answer: "", correct: false },
           { answer: "", correct: false },
         ],
+        typeQuestion: "test",
       },
     ],
   });
 
-  const [currentQuestion, setCurrentQuestion] = useState(1);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(1);
 
   useEffect(() => {
     if (id) {
@@ -91,10 +92,11 @@ export const AddTest = () => {
             { answer: "", correct: false },
             { answer: "", correct: false },
           ],
+          typeQuestion: "test",
         },
       ],
     });
-    setCurrentQuestion(currentQuestion + 1);
+    setCurrentQuestionIndex(currentQuestionIndex + 1);
   };
 
   const onGetMainProps = ({
@@ -147,8 +149,8 @@ export const AddTest = () => {
         <TestContext.Provider
           value={{
             data,
-            currentQuestion,
-            setCurrentQuestion,
+            currentQuestionIndex,
+            setCurrentQuestionIndex,
             onGetMainProps,
           }}
         >

@@ -11,12 +11,12 @@ export const Categories = () => {
           <NavLink
             className={({ isActive }) =>
               isActive
-                ? [styles.categories__linkActive, styles.categories__link].join(
+                ? [styles.categories__link, styles.categories__linkActive].join(
                     " "
                   )
                 : styles.categories__link
             }
-            to={"/tests"}
+            to={"/"}
           >
             Все
           </NavLink>
@@ -24,15 +24,15 @@ export const Categories = () => {
         {categoryNames.map((item, index) => (
           <li key={index} className={styles.categories__item}>
             <NavLink
+              to={`/category/${item.link}`}
               className={({ isActive }) =>
                 isActive
                   ? [
-                      styles.categories__linkActive,
                       styles.categories__link,
+                      styles.categories__linkActive,
                     ].join(" ")
                   : styles.categories__link
               }
-              to={`/category/${item.link}`}
             >
               {item.title}
             </NavLink>

@@ -39,6 +39,19 @@
       border-color: #ad9e9ecc;
     }
   }
+  &__type {
+    color: #c0c0c0;
+    font-size: 16px;
+  }
+
+  &__remove {
+    cursor: pointer;
+    margin-left: 5px;
+    fill: #9f9e9e;
+    &:hover {
+      fill: #000;
+    }
+  }
   &__imageBlock {
     max-width: 100%;
     margin-bottom: 40px;
@@ -47,5 +60,10 @@
     height: 250px;
     width: 100%;
     object-fit: cover;
+  }
+  &__answersAdd {
+    font-size: 14px;
+    color: #8b8b8b;
+    cursor: pointer;
   }
 }

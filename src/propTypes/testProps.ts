@@ -6,12 +6,14 @@ export interface CategoryOption {
   isDisabled?: boolean;
 }
 export type ImageUrlProps = { public_id: string; url: string };
+export type TypeTest = "test" | "offer";
 
 export interface QuesProps {
   _id: string;
   title: string;
   imageURL?: ImageUrlProps;
   answers: AnswersProps[];
+  typeQuestion: TypeTest;
 }
 
 export interface AnswersProps {
@@ -66,7 +68,6 @@ export interface AllUserActionProps {
 }
 
 export interface AnswerBlockProps extends AnswersProps {
-  setAnswer: (index: number) => void;
   keyIndex: number;
 }
 
@@ -78,6 +79,7 @@ export interface QuesLessProps {
   title: string;
   imageURL?: ImageUrlProps;
   answers: AnswerLessProps[];
+  typeQuestion: TypeTest;
 }
 
 export type MainAddTestProps = {
@@ -96,6 +98,6 @@ export type AddTestContextType = {
     text,
     bgImage,
   }: MainAddTestProps) => void;
-  currentQuestion: number;
-  setCurrentQuestion: React.Dispatch<React.SetStateAction<number>>;
+  currentQuestionIndex: number;
+  setCurrentQuestionIndex: React.Dispatch<React.SetStateAction<number>>;
 };

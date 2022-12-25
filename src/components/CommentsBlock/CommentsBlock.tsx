@@ -8,8 +8,6 @@ import { fetchRemoveComment, fetchUpdateComment } from "@redux/slices";
 import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import ContentEditable from "react-contenteditable";
 
-import axios from "@axios";
-
 interface CommentsBlockProps extends CommentProps {
   onReplyComment: (name: string) => void;
 }

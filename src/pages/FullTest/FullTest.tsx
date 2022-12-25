@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import styles from "./FullTest.module.scss";
 
@@ -8,6 +8,7 @@ import {
   ShowScore,
   Comments,
   TopResults,
+  AnswerBlockOffer,
 } from "@components";
 import { ClipLoader } from "react-spinners";
 import { RemoveIcon, EditIcon } from "@images";
@@ -15,22 +16,26 @@ import { RemoveIcon, EditIcon } from "@images";
 import axios from "@axios";
 
 import { useAppDispatch, useAppSelector } from "@redux/hooks";
-import { fetchTest, setAnswerQuestion, setShowScore } from "@redux/slices";
+import {
+  fetchTest,
+  onGetCurrentAnswer,
+  setAnswerQuestion,
+  setShowScore,
+} from "@redux/slices";
+import { TestProps } from "@proptypes";
 
 export const FullTest = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { data } = useAppSelector((state) => state.auth);
-  const { quiz, status, currentQuesIndex, showScore, score } = useAppSelector(
-    (state) => state.quiz
-  );
+  const { quiz, status, currentQuesIndex, currentAnswer, showScore, score } =
+    useAppSelector((state) => state.quiz);
 
-  const [currentAnswer, setCurrentAnswer] = useState<number | null>(null);
-
-  const checkQuiz = Object.keys(quiz).length !== 0;
-  const isCurrentAnswer = currentAnswer !== null;
-  const currentQuestion = checkQuiz && quiz.ques[currentQuesIndex];
+  const currentQuiz = Object.keys(quiz).length !== 0 ? quiz : ({} as TestProps);
+  const currentQues = currentQuiz.ques && currentQuiz.ques[currentQuesIndex];
+  const isCurrentAnswer =
+    currentAnswer.index !== null && currentAnswer.answer !== "";
 
   const isLoading = Boolean(status === "loading");
   const isEditable = data?._id === quiz.user?._id;
@@ -46,16 +51,12 @@ export const FullTest = () => {
     }
   };
 
-  const getCurrentAnswer = (index: number) => {
-    setCurrentAnswer(index);
-  };
-
   const handlerNextQuiestion = () => {
     if (isCurrentAnswer) {
       const nextQuestion = currentQuesIndex + 1;
       if (nextQuestion <= quiz.ques.length) {
         dispatch(setAnswerQuestion(currentAnswer));
-        setCurrentAnswer(null);
+        dispatch(onGetCurrentAnswer({ index: null }));
         if (nextQuestion === quiz.ques.length) {
           dispatch(setShowScore());
         }
@@ -89,32 +90,33 @@ export const FullTest = () => {
             ) : (
               <>
                 <div className={styles.questions}>
-                  {currentQuestion && currentQuestion.imageURL?.url ? (
+                  {currentQues.imageURL?.url ? (
                     <div className={styles.questions__image}>
-                      <img src={currentQuestion.imageURL?.url} alt="" />
+                      <img src={currentQues.imageURL?.url} alt="" />
                     </div>
                   ) : null}
                   <div
                     className={
-                      currentQuestion && currentQuestion.imageURL?.url
+                      currentQues.imageURL?.url
                         ? styles.questions__info
                         : styles.questions__infoFull
                     }
                   >
                     <div className={styles.questions__title}>
-                      <span>{currentQuesIndex + 1}.</span>{" "}
-                      {currentQuestion && currentQuestion.title}
+                      <span>{currentQuesIndex + 1}.</span> {currentQues.title}
                     </div>
                     <div className={styles.answers}>
-                      {currentQuestion &&
-                        currentQuestion.answers.map((item, index) => (
+                      {currentQues.answers.map((item, index) =>
+                        currentQues.typeQuestion === "test" ? (
                           <AnswerBlock
                             {...item}
                             key={item._id}
                             keyIndex={index}
-                            setAnswer={getCurrentAnswer}
                           />
-                        ))}
+                        ) : (
+                          <AnswerBlockOffer key={item._id} keyIndex={index} />
+                        )
+                      )}
                     </div>
                   </div>
                 </div>

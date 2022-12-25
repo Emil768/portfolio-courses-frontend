@@ -23,3 +23,5 @@ export * from "./LikesSwitch/LikesSwitch";
 export * from "./CommentSwitch/CommentSwitch";
 export * from "./TopResults/TopResults";
 export * from "./EmptyBlock/EmptyBlock";
+export * from "./AnswerOfferInfo/AnswerOfferInfo";
+export * from "./AnswerBlockOffer/AnswerBlockOffer";

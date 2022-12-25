@@ -14,7 +14,6 @@ export const AddTestMain = () => {
   ) as AddTestContextType;
 
   const isEmpty = Object.values(data.category).every((value) => Boolean(value));
-
   const inputFileRef = useRef<HTMLInputElement | null>(null);
 
   const onUploadImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -108,7 +107,7 @@ export const AddTestMain = () => {
         rows={3}
         defaultValue={data.text}
         required
-      ></textarea>
+      />
     </div>
   );
 };

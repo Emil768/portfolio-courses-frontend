@@ -1,7 +1,8 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "@axios";
 import { CommentProps, TestProps } from "@proptypes";
 import {
+  AnswerStateProps,
   CommentPropsCreate,
   CommentPropsEdit,
   CommentPropsRemove,
@@ -51,6 +52,7 @@ export const fetchRemoveComment = createAsyncThunk<
 const initialState: QuizProps = {
   quiz: {} as TestProps,
   currentQuesIndex: 0,
+  currentAnswer: { index: 0, answer: "" },
   score: 0,
   showScore: false,
   status: "loading",
@@ -60,10 +62,16 @@ const quizSlice = createSlice({
   name: "quiz",
   initialState,
   reducers: {
-    setAnswerQuestion: (state, action) => {
-      state.score += state.quiz?.ques[state.currentQuesIndex].answers[
-        action.payload
-      ].correct
+    setAnswerQuestion: (state, action: PayloadAction<AnswerStateProps>) => {
+      const currentAnswerQuestion = state.quiz?.ques[state.currentQuesIndex];
+      state.score += state.currentAnswer.answer
+        ? currentAnswerQuestion.answers[action.payload.index!].answer
+            .replace(/\s/g, "")
+            .toLowerCase() ===
+          state.currentAnswer.answer.replace(/\s/g, "").toLowerCase()
+          ? 1
+          : 0
+        : currentAnswerQuestion.answers[action.payload.index!].correct
         ? 1
         : 0;
 
@@ -74,8 +82,11 @@ const quizSlice = createSlice({
       state.currentQuesIndex += 1;
     },
 
-    onPrevQuestion: (state) => {
-      state.currentQuesIndex -= 1;
+    onGetCurrentAnswer: (state, action: PayloadAction<AnswerStateProps>) => {
+      state.currentAnswer = {
+        index: action.payload.index,
+        answer: action.payload.answer,
+      };
     },
 
     setShowScore: (state) => {
@@ -147,6 +158,6 @@ export const {
   setAnswerQuestion,
   setShowScore,
   onNextQuestion,
-  onPrevQuestion,
+  onGetCurrentAnswer,
   getAllComments,
 } = quizSlice.actions;

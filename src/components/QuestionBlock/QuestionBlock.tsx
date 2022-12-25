@@ -1,7 +1,7 @@
 import { useContext, useRef } from "react";
 
-import { AddTestContextType, QuesLessProps } from "@proptypes";
-import { AnswerInfo } from "@components";
+import { AddTestContextType, AnswerLessProps, QuesLessProps } from "@proptypes";
+import { AnswerInfo, AnswerOfferInfo } from "@components";
 
 import { TestContext } from "@pages";
 
@@ -9,18 +9,24 @@ import styles from "./QuestionBlock.module.scss";
 import { RemoveIcon } from "@images";
 
 import axios from "@axios";
+import ReactSwitch from "react-switch";
 
 interface QuestionBlockProps extends QuesLessProps {
   id: number;
 }
 
 export const QuestionBlock = ({ id, answers }: QuestionBlockProps) => {
-  const { data, currentQuestion, setCurrentQuestion, onGetMainProps } =
-    useContext(TestContext) as AddTestContextType;
+  const {
+    data,
+    currentQuestionIndex,
+    setCurrentQuestionIndex,
+    onGetMainProps,
+  } = useContext(TestContext) as AddTestContextType;
 
   const inputFileRef = useRef<HTMLInputElement | null>(null);
 
-  const currentQuestionTitle = data.questions[id].title;
+  const currentQuestion = data.questions[id];
+  const currentSwitch = currentQuestion.typeQuestion === "test" ? false : true;
 
   const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     onGetMainProps({
@@ -31,16 +37,59 @@ export const QuestionBlock = ({ id, answers }: QuestionBlockProps) => {
               title: e.target.value,
               imageURL: item.imageURL,
               answers: [...item.answers],
+              typeQuestion: item.typeQuestion,
             }
           : item
       ),
     });
   };
 
+  const handlerAddAnswer = (id: number) => {
+    onGetMainProps({
+      ...data,
+      questions: data.questions.map((item, index) =>
+        index === id
+          ? {
+              title: item.title,
+              imageURL: item.imageURL,
+              answers: [
+                ...item.answers,
+                { answer: "", correct: false, typeAnswer: "test" },
+              ],
+              typeQuestion: item.typeQuestion,
+            }
+          : item
+      ),
+    });
+  };
+
+  const onChangeCorrect = () => {
+    const nextState = data.questions.map((item, index): QuesLessProps => {
+      if (index === id) {
+        const newAnswers: AnswerLessProps[] = currentSwitch
+          ? [
+              ...item.answers,
+              { answer: "", correct: false },
+              { answer: "", correct: false },
+            ]
+          : (item.answers = [{ answer: "", correct: false }]);
+        return {
+          title: item.title,
+          imageURL: item.imageURL,
+          answers: newAnswers,
+          typeQuestion: item.typeQuestion === "test" ? "offer" : "test",
+        };
+      }
+      return item;
+    });
+
+    onGetMainProps({ ...data, questions: nextState });
+  };
+
   const onRemoveCurrentQuestion = () => {
     const nextState = data.questions.filter((item, index) => {
       if (id !== 0) {
-        setCurrentQuestion(currentQuestion - 1);
+        setCurrentQuestionIndex(currentQuestionIndex - 1);
         return index !== id;
       }
       return item;
@@ -69,6 +118,7 @@ export const QuestionBlock = ({ id, answers }: QuestionBlockProps) => {
                 title: item.title,
                 imageURL: { public_id, url: secure_url },
                 answers: [...item.answers],
+                typeQuestion: item.typeQuestion,
               }
             : item
         ),
@@ -86,16 +136,29 @@ export const QuestionBlock = ({ id, answers }: QuestionBlockProps) => {
   return (
     <div className={styles.addNote__questions}>
       <div className={styles.addNote__questionTitle}>
-        Вопрос #{id + 1}
-        <RemoveIcon width={25} onClick={onRemoveCurrentQuestion} />
+        <div>
+          Вопрос #{id + 1}
+          <span className={styles.addNote__type}>
+            / {currentSwitch ? "предложения" : "тесты"}
+          </span>
+        </div>
+        <div className={styles.addNote__edit}>
+          <ReactSwitch onChange={onChangeCorrect} checked={currentSwitch} />
+          <RemoveIcon
+            width={30}
+            onClick={onRemoveCurrentQuestion}
+            className={styles.addNote__remove}
+          />
+        </div>
       </div>
+
       <input
         type="text"
         name="title"
         className={styles.addNote__questionsTitle}
         placeholder="Введите название вопроса"
         onChange={onChangeTitle}
-        defaultValue={currentQuestionTitle}
+        defaultValue={currentQuestion.title}
         required
       />
 
@@ -118,18 +181,31 @@ export const QuestionBlock = ({ id, answers }: QuestionBlockProps) => {
           placeholder="Изображение"
         />
 
-        {data.questions[id].imageURL?.url && (
+        {currentQuestion.imageURL?.url && (
           <img
             className={styles.addNote__image}
-            src={`${data.questions[id].imageURL?.url}`}
+            src={`${currentQuestion.imageURL?.url}`}
             alt=""
           />
         )}
       </div>
 
-      {answers.map((item, index) => (
-        <AnswerInfo {...item} id={index} key={index} idQuestion={id} />
-      ))}
+      {answers.map((item, index) =>
+        currentSwitch ? (
+          <AnswerOfferInfo id={index} key={index} idQuestion={id} />
+        ) : (
+          <AnswerInfo id={index} key={index} idQuestion={id} />
+        )
+      )}
+
+      {!currentSwitch && (
+        <span
+          className={styles.addNote__answersAdd}
+          onClick={() => handlerAddAnswer(id)}
+        >
+          Добавить ответ
+        </span>
+      )}
     </div>
   );
 };

@@ -2,10 +2,10 @@ import { useContext } from "react";
 import styles from "./AnswerInfo.module.scss";
 import ReactSwitch from "react-switch";
 import { CloseIcon } from "@images";
-import { AddTestContextType, AnswerLessProps } from "@proptypes";
+import { AddTestContextType, QuesLessProps } from "@proptypes";
 import { TestContext } from "@pages";
 
-interface AnswerInfoProps extends AnswerLessProps {
+interface AnswerInfoProps {
   id: number;
   idQuestion: number;
 }
@@ -18,7 +18,7 @@ export const AnswerInfo = ({ id, idQuestion }: AnswerInfoProps) => {
   const currentAnswer = data.questions[idQuestion].answers[id];
 
   const onChangeAnswer = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const nextState = data.questions.map((item, index) => {
+    const nextState = data.questions.map((item, index): QuesLessProps => {
       if (index === idQuestion) {
         if (item.answers[id]) {
           item.answers[id] = {
@@ -29,6 +29,7 @@ export const AnswerInfo = ({ id, idQuestion }: AnswerInfoProps) => {
             title: item.title,
             imageURL: item.imageURL,
             answers: [...item.answers],
+            typeQuestion: "test",
           };
         }
       }
@@ -39,7 +40,7 @@ export const AnswerInfo = ({ id, idQuestion }: AnswerInfoProps) => {
   };
 
   const onChangeCorrect = () => {
-    const nextState = data.questions.map((item, index) => {
+    const nextState = data.questions.map((item, index): QuesLessProps => {
       if (index === idQuestion) {
         if (item.answers[id]) {
           item.answers[id] = {
@@ -50,6 +51,7 @@ export const AnswerInfo = ({ id, idQuestion }: AnswerInfoProps) => {
             title: item.title,
             imageURL: item.imageURL,
             answers: [...item.answers],
+            typeQuestion: "test",
           };
         }
       }
@@ -60,7 +62,7 @@ export const AnswerInfo = ({ id, idQuestion }: AnswerInfoProps) => {
   };
 
   const onRemoveAnswer = () => {
-    const nextState = data.questions.map((item, index) => {
+    const nextState = data.questions.map((item, index): QuesLessProps => {
       if (index === idQuestion) {
         if (item.answers.length !== 1) {
           item.answers.splice(id, 1);
@@ -68,6 +70,7 @@ export const AnswerInfo = ({ id, idQuestion }: AnswerInfoProps) => {
             title: item.title,
             imageURL: item.imageURL,
             answers: [...item.answers],
+            typeQuestion: "test",
           };
         }
       }

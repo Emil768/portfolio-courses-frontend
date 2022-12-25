@@ -1,8 +1,11 @@
 import { TestProps } from "@proptypes";
 
+export type AnswerStateProps = { index: number | null; answer?: string };
+
 export type QuizProps = {
   quiz: TestProps;
   currentQuesIndex: number;
+  currentAnswer: AnswerStateProps;
   score: number;
   showScore: boolean;
   status: "loading" | "loaded" | "error";

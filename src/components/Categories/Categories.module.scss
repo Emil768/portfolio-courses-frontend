@@ -15,16 +15,17 @@
     background-color: #fff;
     padding: 15px 30px;
     border-radius: 30px;
+    border: 1px solid transparent;
     transition: all ease 0.2s;
     box-shadow: 0 4px 17px 0px rgb(0 0 0 / 17%);
     &:hover {
-      background-color: #000;
-      color: #fff;
+      border-color: #40b0ee;
+      color: #40b0ee;
     }
   }
   &__linkActive {
-    background-color: #000;
-    color: #fff;
+    border-color: #40b0ee;
+    color: #40b0ee;
   }
 }
 
