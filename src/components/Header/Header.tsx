@@ -32,32 +32,30 @@ export const Header = () => {
                 : styles.header__list
             }
           >
-            <li className={styles.header__listItem}>
-              <a className={styles.header__listLink} href="#about">
+            <li className={styles.header__item}>
+              <a className={styles.header__link} href="#about">
                 Обо мне
               </a>
             </li>
-            <li className={styles.header__listItem}>
-              <a className={styles.header__listLink} href="#programs">
+            <li className={styles.header__item}>
+              <a className={styles.header__link} href="#programs">
                 Программа курса
               </a>
             </li>
-            <li className={styles.header__listItem}>
-              <a className={styles.header__listLink} href="#tariffs">
+            <li className={styles.header__item}>
+              <a className={styles.header__link} href="#tariffs">
                 Тарифы
               </a>
             </li>
 
-            <li className={styles.header__listItem}>
+            <li className={styles.header__item}>
               <NavLink
                 className={({ isActive }) =>
                   isActive
-                    ? [styles.header__listLink, styles.header__listActive].join(
-                        " "
-                      )
-                    : styles.header__listLink
+                    ? [styles.header__link, styles.header__linkActive].join(" ")
+                    : styles.header__link
                 }
-                to={"/tests"}
+                to={"/"}
               >
                 Тесты
               </NavLink>

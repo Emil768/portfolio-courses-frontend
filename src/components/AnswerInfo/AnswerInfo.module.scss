@@ -20,3 +20,11 @@
     cursor: pointer;
   }
 }
+
+@media (max-width: 475px) {
+  .addNote {
+    &__questionsAnswer {
+      font-size: 14px;
+    }
+  }
+}

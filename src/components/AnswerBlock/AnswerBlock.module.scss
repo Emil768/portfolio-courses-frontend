@@ -38,3 +38,13 @@
     }
   }
 }
+
+@media (max-width: 400px) {
+  .answers {
+    &__block {
+      label {
+        padding-left: 45px;
+      }
+    }
+  }
+}

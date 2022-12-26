@@ -101,3 +101,25 @@
     object-fit: cover;
   }
 }
+
+@media (max-width: 475px) {
+  .addNote {
+    &__text {
+      line-height: 1.5;
+    }
+  }
+  .inputField {
+    &__title {
+      font-size: 16px;
+    }
+    &__field {
+      font-size: 16px;
+    }
+    &__imageBlock {
+      margin-bottom: 20px;
+    }
+    &__image {
+      height: 200px;
+    }
+  }
+}

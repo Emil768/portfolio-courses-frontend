@@ -13,18 +13,16 @@ export const ResultList = () => {
       <h2 className={styles.score__resultTitle}>Результат {resultEmoji}</h2>
       <div className={styles.score__lists}>
         <ul className={styles.score__resultList}>
-          <li className={styles.score__resultItem}>Показатель</li>
           <li className={styles.score__resultItem}>
-            Количество баллов (правильных ответов)
+            <span className={styles.score__text}>Количество баллов</span>
+            <span className={styles.score__number}>{score}</span>
           </li>
           <li className={styles.score__resultItem}>
-            Максимально возможное количество баллов
+            <span className={styles.score__text}>
+              Максимальное количество баллов
+            </span>
+            <span className={styles.score__number}>{totalResult}</span>
           </li>
-        </ul>
-        <ul className={styles.score__resultList}>
-          <li className={styles.score__resultItem}>Значение</li>
-          <li className={styles.score__resultItem}>{score}</li>
-          <li className={styles.score__resultItem}>{totalResult}</li>
         </ul>
       </div>
     </div>

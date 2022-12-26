@@ -15,7 +15,7 @@ export const ScoreBlock = ({ title, answers, id }: ScoreBlockProps) => {
         className={styles.score__title}
         onClick={() => setShowAnswer(!showAnswer)}
       >
-        <span>
+        <span className={styles.score__text}>
           {id + 1}. {title}
         </span>
         <ArrowIcon

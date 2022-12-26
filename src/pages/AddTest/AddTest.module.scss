@@ -53,8 +53,8 @@
   }
 
   &__buttons {
-    align-self: flex-end;
     display: flex;
+    justify-content: flex-end;
     flex-wrap: wrap;
     align-items: center;
     div,
@@ -71,6 +71,9 @@
       transition: all ease 0.1s;
       color: #ffff;
       cursor: pointer;
+      &:first-child {
+        margin-left: 0;
+      }
     }
   }
 
@@ -89,30 +92,50 @@
   }
 }
 
-@media (max-width: 340px) {
+@media (max-width: 675px) {
   .addNote {
-    &__title {
-      font-size: 30px;
+    &__content {
+      flex: 0 0 100%;
     }
-    &__category {
-      font-size: 14px;
-    }
+  }
+}
 
+@media (max-width: 551px) {
+  .addNote {
     &__buttons {
-      flex-direction: column;
-      align-self: auto;
+      justify-content: flex-end;
+
       button,
       a {
-        margin-left: 0;
-        width: 100%;
-        text-align: center;
-      }
-
-      & > button {
         margin-bottom: 10px;
       }
+    }
+  }
+}
+
+@media (max-width: 475px) {
+  .addNote {
+    &__content {
+      padding: 30px;
+    }
+    &__item {
+      font-size: 16px;
+      padding-bottom: 20px;
+    }
+  }
+}
+
+@media (max-width: 420px) {
+  .addNote {
+    &__buttons {
+      button,
       a {
-        font-size: 14px;
+        width: 100%;
+        text-align: center;
+        margin: 0 auto 10px;
+        &:last-child {
+          margin: 0;
+        }
       }
     }
   }

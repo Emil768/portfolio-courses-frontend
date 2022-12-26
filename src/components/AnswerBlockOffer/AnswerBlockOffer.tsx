@@ -19,7 +19,7 @@ export const AnswerBlockOffer = ({ keyIndex }: { keyIndex: number }) => {
         placeholder="Введите предложение"
         name="message"
         cols={30}
-        rows={2}
+        rows={1}
         autoFocus
         required
       />

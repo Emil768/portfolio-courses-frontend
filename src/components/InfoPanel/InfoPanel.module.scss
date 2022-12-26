@@ -3,6 +3,7 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+    line-height: 1.8;
     margin-bottom: 40px;
     & > span {
       margin-right: 20px;
@@ -51,4 +52,18 @@
   width: 10px;
   border-radius: 30px;
   background-color: #aebdc5;
+}
+
+@media (max-width: 500px) {
+  .fullTest {
+    &__info {
+      font-size: 12px;
+      & > span {
+        margin-right: 15px;
+      }
+      & > span:last-child {
+        margin-right: 0;
+      }
+    }
+  }
 }

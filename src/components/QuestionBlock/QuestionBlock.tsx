@@ -136,7 +136,7 @@ export const QuestionBlock = ({ id, answers }: QuestionBlockProps) => {
   return (
     <div className={styles.addNote__questions}>
       <div className={styles.addNote__questionTitle}>
-        <div>
+        <div className={styles.addNote__questionSubTitle}>
           Вопрос #{id + 1}
           <span className={styles.addNote__type}>
             / {currentSwitch ? "предложения" : "тесты"}

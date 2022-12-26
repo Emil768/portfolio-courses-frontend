@@ -84,3 +84,14 @@
     }
   }
 }
+
+@media (max-width: 1100px) {
+  .comments {
+    flex: 0 0 48%;
+  }
+}
+@media (max-width: 500px) {
+  .comments {
+    padding: 20px;
+  }
+}
