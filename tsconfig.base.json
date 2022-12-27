@@ -22,7 +22,7 @@
       "@utils": ["utils"],
       "@pages": ["pages"],
       "@proptypes": ["propTypes"],
-      "@images": ["img"],
+      "@images/*": ["images/*"],
       "@axios": ["axios"],
       "@redux/*": ["redux/*"]
     }

@@ -6,7 +6,7 @@ import { logout } from "@redux/slices";
 import { PopupItems } from "@proptypes";
 import { Popup } from "@components";
 
-import { ArrowIcon } from "@images";
+import { ArrowIcon } from "@images/icons";
 
 export const UserPanel = () => {
   const [userState, setUserState] = useState(false);

@@ -6,7 +6,7 @@ import { AnswerInfo, AnswerOfferInfo } from "@components";
 import { TestContext } from "@pages";
 
 import styles from "./QuestionBlock.module.scss";
-import { RemoveIcon } from "@images";
+import { RemoveIcon } from "@images/icons";
 
 import axios from "@axios";
 import ReactSwitch from "react-switch";

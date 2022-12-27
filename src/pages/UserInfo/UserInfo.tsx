@@ -3,7 +3,7 @@ import styles from "./UserInfo.module.scss";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import { DateIcon, EmailIcon } from "@images";
+import { DateIcon, EmailIcon } from "@images/icons";
 
 import axios from "@axios";
 import { options } from "@internals";

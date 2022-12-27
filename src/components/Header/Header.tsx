@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { UserPanel } from "@components";
 import { useAppSelector } from "@redux/hooks";
 
-import LogoIcon from "../../img/logo.png";
+import LogoIcon from "@images/gallery/logo.png";
 import { useState } from "react";
 
 export const Header = () => {
@@ -33,19 +33,40 @@ export const Header = () => {
             }
           >
             <li className={styles.header__item}>
-              <a className={styles.header__link} href="#about">
+              <NavLink
+                className={({ isActive }) =>
+                  isActive
+                    ? [styles.header__link, styles.header__linkActive].join(" ")
+                    : styles.header__link
+                }
+                to={"/"}
+              >
                 Обо мне
-              </a>
+              </NavLink>
             </li>
             <li className={styles.header__item}>
-              <a className={styles.header__link} href="#programs">
+              <NavLink
+                className={({ isActive }) =>
+                  isActive
+                    ? [styles.header__link, styles.header__linkActive].join(" ")
+                    : styles.header__link
+                }
+                to={"/programs"}
+              >
                 Программа курса
-              </a>
+              </NavLink>
             </li>
             <li className={styles.header__item}>
-              <a className={styles.header__link} href="#tariffs">
+              <NavLink
+                className={({ isActive }) =>
+                  isActive
+                    ? [styles.header__link, styles.header__linkActive].join(" ")
+                    : styles.header__link
+                }
+                to={"/tariffs"}
+              >
                 Тарифы
-              </a>
+              </NavLink>
             </li>
 
             <li className={styles.header__item}>
@@ -55,7 +76,7 @@ export const Header = () => {
                     ? [styles.header__link, styles.header__linkActive].join(" ")
                     : styles.header__link
                 }
-                to={"/"}
+                to={"/tests"}
               >
                 Тесты
               </NavLink>

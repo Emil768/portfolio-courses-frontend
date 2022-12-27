@@ -1,7 +1,7 @@
 import { Link, Navigate } from "react-router-dom";
 import styles from "./Login.module.scss";
 
-import { EmailIcon, FolderIcon } from "@images";
+import { EmailIcon, FolderIcon } from "@images/icons";
 import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import { fetchAuth } from "@redux/slices";

@@ -16,7 +16,7 @@ export const Categories = () => {
                   )
                 : styles.categories__link
             }
-            to={"/"}
+            to={"/tests"}
           >
             Все
           </NavLink>

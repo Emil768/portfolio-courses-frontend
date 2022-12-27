@@ -3,7 +3,7 @@ import { AddTestContextType } from "@proptypes";
 import { QuestionBlock } from "@components";
 import styles from "./AddTestQuestion.module.scss";
 
-import { ArrowIcon } from "@images";
+import { ArrowIcon } from "@images/icons";
 import { TestContext } from "@pages";
 
 export const AddTestQuestion = () => {

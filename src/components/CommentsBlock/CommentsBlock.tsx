@@ -3,7 +3,7 @@ import { CommentProps } from "@proptypes";
 import { Link } from "react-router-dom";
 import styles from "./CommentsBlock.module.scss";
 
-import { EditIcon, RemoveIcon, ReplyIcon, SuccessIcon } from "@images";
+import { EditIcon, RemoveIcon, ReplyIcon, SuccessIcon } from "@images/icons";
 import { fetchRemoveComment, fetchUpdateComment } from "@redux/slices";
 import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import ContentEditable from "react-contenteditable";

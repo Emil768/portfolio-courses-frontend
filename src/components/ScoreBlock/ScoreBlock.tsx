@@ -1,5 +1,5 @@
 import styles from "./ScoreBlock.module.scss";
-import { ArrowIcon } from "@images";
+import { ArrowIcon } from "@images/icons";
 import { QuesProps } from "@proptypes";
 import { useState } from "react";
 

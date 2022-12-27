@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import styles from "./AnswerInfo.module.scss";
 import ReactSwitch from "react-switch";
-import { CloseIcon } from "@images";
+import { CloseIcon } from "@images/icons";
 import { AddTestContextType, QuesLessProps } from "@proptypes";
 import { TestContext } from "@pages";
 

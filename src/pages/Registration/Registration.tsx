@@ -7,7 +7,7 @@ import { UserProps } from "@proptypes";
 import { fethAuthRegister } from "@redux/slices";
 import { ClipLoader } from "react-spinners";
 
-import { EmailIcon, FolderIcon, UserIcon, ImageIcon } from "@images";
+import { EmailIcon, FolderIcon, UserIcon, ImageIcon } from "@images/icons";
 
 import axios from "@axios";
 

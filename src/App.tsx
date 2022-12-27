@@ -3,11 +3,13 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import { Container, Header } from "./components";
 
 import {
+  About,
   AddTest,
   FullTest,
-  Home,
   Login,
+  Programs,
   Registration,
+  Tariffs,
   Tests,
   UserInfo,
 } from "./pages";
@@ -26,8 +28,10 @@ function App() {
     <Container>
       <Header />
       <Routes>
-        {/* <Route path="/" element={<Home />} /> */}
-        <Route path="/" element={<Tests />} />
+        <Route path="/" element={<About />} />
+        <Route path="/programs" element={<Programs />} />
+        <Route path="/tariffs" element={<Tariffs />} />
+        <Route path="/tests" element={<Tests />} />
         <Route path="/add-test" element={<AddTest />} />
         <Route path="/edit/:id" element={<AddTest />} />
         <Route path="/tests/:id" element={<FullTest />} />

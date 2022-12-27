@@ -8,7 +8,7 @@ module.exports = {
       "@utils": path.join(path.resolve(__dirname, "./src/utils")),
       "@pages": path.join(path.resolve(__dirname, "./src/pages")),
       "@proptypes": path.join(path.resolve(__dirname, "./src/propTypes")),
-      "@images": path.join(path.resolve(__dirname, "./src/img")),
+      "@images": path.join(path.resolve(__dirname, "./src/images")),
       "@axios": path.join(path.resolve(__dirname, "./src/axios")),
       "@redux": path.join(path.resolve(__dirname, "./src/redux")),
     },

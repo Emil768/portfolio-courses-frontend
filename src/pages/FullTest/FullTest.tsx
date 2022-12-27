@@ -11,7 +11,7 @@ import {
   AnswerBlockOffer,
 } from "@components";
 import { ClipLoader } from "react-spinners";
-import { RemoveIcon, EditIcon } from "@images";
+import { RemoveIcon, EditIcon } from "@images/icons";
 
 import axios from "@axios";
 

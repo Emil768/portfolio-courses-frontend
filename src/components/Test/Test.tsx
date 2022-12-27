@@ -2,12 +2,10 @@ import { Link } from "react-router-dom";
 import { TestProps } from "@proptypes";
 import styles from "./Test.module.scss";
 
-import { LikeIcon, UnlikeIcon } from "@images";
+import { LikeIcon, UnlikeIcon } from "@images/icons";
 
 import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import { fetchAddLike, fetchRemoveLike } from "@redux/slices";
-import { LazyLoadImage } from "react-lazy-load-image-component";
-import "react-lazy-load-image-component/src/effects/blur.css";
 
 export const Test = ({
   _id,
@@ -28,13 +26,6 @@ export const Test = ({
 
   return (
     <div className={styles.note}>
-      {/* <LazyLoadImage
-        src={backgroundImage.url}
-        className={styles.note__backgroundImage}
-        placeholderSrc={backgroundImage.url}
-        effect="blur"
-        alt={`${title} `}
-      /> */}
       <img
         className={styles.note__backgroundImage}
         src={backgroundImage.url}

@@ -1,4 +1,4 @@
-import { EmptyIcon } from "@images";
+import { EmptyIcon } from "@images/icons";
 import styles from "./EmptyBlock.module.scss";
 
 interface EmptyBlockProps {

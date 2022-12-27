@@ -1,20 +1,17 @@
-import { CrownIcon } from "@images";
 import axios from "@axios";
 import { useEffect, useState } from "react";
 import styles from "./TopResults.module.scss";
 import { Link, useParams } from "react-router-dom";
 import { ScoreProps } from "@proptypes";
 
-interface TopResultsProps {}
-
-export const TopResults = ({}: TopResultsProps) => {
+export const TopResults = () => {
   const { id } = useParams();
   const [dataScore, setDataScore] = useState<ScoreProps[]>([]);
   useEffect(() => {
     axios
       .get(`/getTopScore/${id}`)
       .then(({ data }: { data: ScoreProps[] }) => setDataScore(data));
-  }, []);
+  }, [id]);
 
   return (
     <div className={styles.topResults} data-testid="TopResults">
