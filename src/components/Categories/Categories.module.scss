@@ -33,5 +33,8 @@
   .categories {
     width: 100%;
     margin-bottom: 30px;
+    &__link {
+      font-size: 14px;
+    }
   }
 }

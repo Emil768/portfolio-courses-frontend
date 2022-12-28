@@ -1,12 +1,14 @@
 import { Home } from "@components";
 import styles from "./About.module.scss";
 
-import SliceIcon from "@images/gallery/slice_1.webp";
-import AuthorIcon from "@images/gallery/author.webp";
-import TourIcon from "@images/gallery/tour.webp";
-import CertificateIcon_1 from "@images/gallery/certificate_1.webp";
-import CertificateIcon_2 from "@images/gallery/certificate_2.webp";
-import CertificateIcon_3 from "@images/gallery/certificate_3.webp";
+import {
+  SliceIcon_1,
+  AuthorIcon,
+  TourIcon,
+  CertificateIcon_1,
+  CertificateIcon_2,
+  CertificateIcon_3,
+} from "@images/gallery";
 
 export const About = () => (
   <section className={styles.about}>
@@ -18,7 +20,7 @@ export const About = () => (
       >
         ОБО МНЕ
       </h1>
-      <img src={SliceIcon} className={styles.slice} alt="slice" />
+      <img src={SliceIcon_1} className={styles.slice} alt="slice" />
     </div>
     <div className={styles.about__content}>
       <div className={styles.about__text} data-aos="zoom-out-right">

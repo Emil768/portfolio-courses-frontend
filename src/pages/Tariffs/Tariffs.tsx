@@ -11,10 +11,12 @@ export const Tariffs = ({}: TariffsProps) => (
       >
         ТАРИФЫ И ЦЕНЫ
       </h1>
+
       <div className={styles.tariffs__contentBlocks}>
         <div className={styles.tariffs__block} data-aos="zoom-in">
           <div className={styles.tariffs__blockContent}>
             <h3 className={styles.tariffs__blockTitle}>Тариф «В группе»</h3>
+            <span className={styles.tariffs__blockPrice}>3400 ₽</span>
             <ul className={styles.tariffs__blockList}>
               <li className={styles.tariffs__blockItem}>2 месяца обучения</li>
               <li className={styles.tariffs__blockItem}>25 учебных модулей</li>
@@ -52,13 +54,15 @@ export const Tariffs = ({}: TariffsProps) => (
                 <s>Длительность уроков — 60 минут</s>
               </li>
             </ul>
-            <span className={styles.tariffs__blockPrice}>3400 ₽</span>
+            <span className={styles.tariffs__blockButton}>Купить</span>
           </div>
-          <span className={styles.tariffs__blockButton}>Купить</span>
         </div>
         <div className={styles.tariffs__block} data-aos="zoom-in">
           <div className={styles.tariffs__blockContent}>
             <h3 className={styles.tariffs__blockTitle}>Тариф «PRO»</h3>
+            <span className={styles.tariffs__blockPrice}>
+              <s className={styles.priceDiscount}>10 000 ₽</s> / 6400 ₽
+            </span>
             <ul className={styles.tariffs__blockList}>
               <li className={styles.tariffs__blockItem}>2 месяца обучения</li>
               <li className={styles.tariffs__blockItem}>25 учебных модулей</li>
@@ -92,11 +96,8 @@ export const Tariffs = ({}: TariffsProps) => (
                 Длительность уроков — 60 минут
               </li>
             </ul>
-            <span className={styles.tariffs__blockPrice}>
-              <s className={styles.priceDiscount}>10 000 ₽</s> / 6400 ₽
-            </span>
+            <span className={styles.tariffs__blockButton}>Купить</span>
           </div>
-          <span className={styles.tariffs__blockButton}>Купить</span>
         </div>
       </div>
     </div>

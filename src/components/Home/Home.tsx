@@ -1,9 +1,6 @@
 import styles from "./Home.module.scss";
 
-import SamoletIcon from "@images/gallery/samolet.webp";
-import JournalIcon from "@images/gallery/journal.webp";
-import MapIcon from "@images/gallery/map.webp";
-
+import { SamoletIcon, JournalIcon, MapIcon } from "@images/gallery";
 import { SquareIcon } from "@images/icons";
 
 export const Home = () => (
