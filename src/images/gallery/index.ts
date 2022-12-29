@@ -13,3 +13,7 @@ export { default as MapIcon } from "./map.webp";
 export { default as SliceIcon_2 } from "./slice_2.webp";
 export { default as SliceIcon_3 } from "./slice_3.webp";
 export { default as SliceIcon_4 } from "./slice_4.webp";
+
+export { default as LogoIcon } from "./logo.png";
+export { default as MapIcon_2 } from "./map_1.png";
+export { default as MapIcon_1 } from "./map.png";

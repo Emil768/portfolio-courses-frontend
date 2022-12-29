@@ -16,49 +16,50 @@ export const AnswerInfo = ({ id, idQuestion }: AnswerInfoProps) => {
   ) as AddTestContextType;
 
   const currentAnswer = data.questions[idQuestion].answers[id];
+  console.log(currentAnswer);
 
   const onChangeAnswer = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const nextState = data.questions.map((item, index): QuesLessProps => {
-      if (index === idQuestion) {
-        if (item.answers[id]) {
-          item.answers[id] = {
-            answer: e.target.value,
-            correct: item.answers[id].correct,
-          };
-          return {
-            title: item.title,
-            imageURL: item.imageURL,
-            answers: [...item.answers],
-            typeQuestion: "test",
-          };
-        }
-      }
-      return item;
+    onGetMainProps({
+      ...data,
+      questions: data.questions.map(
+        (item, index): QuesLessProps =>
+          index === idQuestion
+            ? item.answers[id] &&
+              ((item.answers[id] = {
+                answer: e.target.value,
+                correct: item.answers[id].correct,
+              }),
+              {
+                title: item.title,
+                imageURL: item.imageURL,
+                answers: [...item.answers],
+                typeQuestion: "test",
+              })
+            : item
+      ),
     });
-
-    onGetMainProps({ ...data, questions: nextState });
   };
 
   const onChangeCorrect = () => {
-    const nextState = data.questions.map((item, index): QuesLessProps => {
-      if (index === idQuestion) {
-        if (item.answers[id]) {
-          item.answers[id] = {
-            answer: item.answers[id].answer,
-            correct: !item.answers[id].correct,
-          };
-          return {
-            title: item.title,
-            imageURL: item.imageURL,
-            answers: [...item.answers],
-            typeQuestion: "test",
-          };
-        }
-      }
-      return item;
+    onGetMainProps({
+      ...data,
+      questions: data.questions.map(
+        (item, index): QuesLessProps =>
+          index === idQuestion
+            ? item.answers[id] &&
+              ((item.answers[id] = {
+                answer: item.answers[id].answer,
+                correct: !item.answers[id].correct,
+              }),
+              {
+                title: item.title,
+                imageURL: item.imageURL,
+                answers: [...item.answers],
+                typeQuestion: "test",
+              })
+            : item
+      ),
     });
-
-    onGetMainProps({ ...data, questions: nextState });
   };
 
   const onRemoveAnswer = () => {

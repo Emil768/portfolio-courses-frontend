@@ -5,8 +5,10 @@
   "dependencies": {
     "@hookform/error-message": "^2.0.1",
     "@reduxjs/toolkit": "^1.9.0",
+    "@types/aos": "^3.0.4",
     "@types/lodash.debounce": "^4.0.7",
     "@types/react-lazy-load-image-component": "^1.5.2",
+    "aos": "^2.3.4",
     "axios": "^1.2.1",
     "lodash.debounce": "^4.0.8",
     "react": "^18.2.0",

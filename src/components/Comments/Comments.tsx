@@ -8,9 +8,7 @@ import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import { fetchAddComment } from "@redux/slices";
 import { CommentsBlock } from "@components";
 
-interface CommentsProps extends TestProps {}
-
-export const Comments = ({ _id, comments }: CommentsProps) => {
+export const Comments = ({ _id, comments }: TestProps) => {
   const dispatch = useAppDispatch();
   const textRef = useRef<HTMLTextAreaElement | null>(null);
   const { data } = useAppSelector((state) => state.auth);
@@ -25,7 +23,6 @@ export const Comments = ({ _id, comments }: CommentsProps) => {
       };
 
       dispatch(fetchAddComment(comment));
-
       textRef.current.value = "";
     }
   };

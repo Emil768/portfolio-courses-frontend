@@ -25,7 +25,9 @@
     align-items: center;
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
-    justify-content: space-between;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
   }
 
   &__contentText {
@@ -33,18 +35,18 @@
     z-index: 1;
     -webkit-box-flex: 55%;
     -ms-flex: 55% 0 0px;
-    flex: 55% 0 0;
+    // flex: 55% 0 0;
   }
 
   &__contentImage {
     position: relative;
     -webkit-box-flex: 30%;
     -ms-flex: 30% 0 0px;
-    flex: 30% 0 0;
+    flex: 40% 0 0;
   }
 
   &__title {
-    font-size: 36px;
+    font-size: 45px;
     margin-bottom: 20px;
   }
 
@@ -55,7 +57,7 @@
   }
 
   &__author {
-    width: 460px;
+    width: 100%;
   }
 
   &__button {

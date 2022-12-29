@@ -44,13 +44,6 @@ export const FullTest = () => {
     dispatch(fetchTest(id!));
   }, [id]);
 
-  const onRemoveTest = async () => {
-    if (window.confirm("Вы действительно хотите удалить тест?")) {
-      await axios.delete(`/tests/${id}`);
-      navigate("/");
-    }
-  };
-
   const handlerNextQuiestion = () => {
     if (isCurrentAnswer) {
       const nextQuestion = currentQuesIndex + 1;
@@ -61,6 +54,13 @@ export const FullTest = () => {
           dispatch(setShowScore());
         }
       }
+    }
+  };
+
+  const onRemoveTest = async () => {
+    if (window.confirm("Вы действительно хотите удалить тест?")) {
+      await axios.delete(`/tests/${id}`);
+      navigate("/");
     }
   };
 

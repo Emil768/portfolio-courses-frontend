@@ -64,40 +64,36 @@ export const QuestionBlock = ({ id, answers }: QuestionBlockProps) => {
   };
 
   const onChangeCorrect = () => {
-    const nextState = data.questions.map((item, index): QuesLessProps => {
-      if (index === id) {
-        const newAnswers: AnswerLessProps[] = currentSwitch
-          ? [
-              ...item.answers,
-              { answer: "", correct: false },
-              { answer: "", correct: false },
-            ]
-          : (item.answers = [{ answer: "", correct: false }]);
-        return {
-          title: item.title,
-          imageURL: item.imageURL,
-          answers: newAnswers,
-          typeQuestion: item.typeQuestion === "test" ? "offer" : "test",
-        };
-      }
-      return item;
+    onGetMainProps({
+      ...data,
+      questions: data.questions.map(
+        (item, index): QuesLessProps =>
+          index === id
+            ? {
+                title: item.title,
+                imageURL: item.imageURL,
+                answers: currentSwitch
+                  ? [
+                      ...item.answers,
+                      { answer: "", correct: false },
+                      { answer: "", correct: false },
+                    ]
+                  : (item.answers = [{ answer: "", correct: false }]),
+                typeQuestion: item.typeQuestion === "test" ? "offer" : "test",
+              }
+            : item
+      ),
     });
-
-    onGetMainProps({ ...data, questions: nextState });
   };
 
   const onRemoveCurrentQuestion = () => {
-    const nextState = data.questions.filter((item, index) => {
-      if (id !== 0) {
-        setCurrentQuestionIndex(currentQuestionIndex - 1);
-        return index !== id;
-      }
-      return item;
-    });
-
     onGetMainProps({
       ...data,
-      questions: nextState,
+      questions: data.questions.filter((item, index) =>
+        id !== 0
+          ? (setCurrentQuestionIndex(currentQuestionIndex - 1), index !== id)
+          : item
+      ),
     });
   };
 
@@ -185,7 +181,7 @@ export const QuestionBlock = ({ id, answers }: QuestionBlockProps) => {
           <img
             className={styles.addNote__image}
             src={`${currentQuestion.imageURL?.url}`}
-            alt=""
+            alt="preview"
           />
         )}
       </div>

@@ -57,7 +57,7 @@ export const UserInfo = () => {
         <div className={styles.user__content}>
           <div className={styles.user__avatar}>
             <div className={styles.questions__image}>
-              <img src={userInfo.user.avatarUrl.url} alt="avatar icon" />
+              <img src={userInfo.user.avatarUrl.url} alt="avatar" />
             </div>
 
             <div className={styles.user__contact}>

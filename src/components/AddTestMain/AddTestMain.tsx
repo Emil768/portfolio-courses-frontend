@@ -66,7 +66,7 @@ export const AddTestMain = () => {
           <img
             className={styles.inputField__image}
             src={`${data.bgImage.url}`}
-            alt="preview field"
+            alt="preview"
           />
         )}
       </div>

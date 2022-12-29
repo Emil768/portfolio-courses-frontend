@@ -29,7 +29,7 @@ export const Test = ({
       <img
         className={styles.note__backgroundImage}
         src={backgroundImage.url}
-        alt=""
+        alt="preview"
       />
 
       <div className={styles.note__content}>
@@ -40,7 +40,7 @@ export const Test = ({
           <span className={styles.author}>
             <img
               src={`${user.avatarUrl.url}`}
-              alt=""
+              alt="avatar"
               className={styles.author__avatar}
             />
             <span className={styles.author__name}>{user.fullName}</span>
@@ -61,7 +61,7 @@ export const Test = ({
               <div className={styles.note__reactionUsers}>
                 {likes.slice(-3).map((item) => (
                   <div className={styles.note__likeUser} key={item._id}>
-                    <img src={item.likeBy.avatarUrl.url} alt="" />
+                    <img src={item.likeBy.avatarUrl.url} alt="avatar" />
                   </div>
                 ))}
               </div>

@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { UserPanel } from "@components";
 import { useAppSelector } from "@redux/hooks";
 
-import LogoIcon from "@images/gallery/logo.png";
+import { LogoIcon } from "@images/gallery";
 import { useState } from "react";
 
 export const Header = () => {

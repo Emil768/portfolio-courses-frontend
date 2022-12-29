@@ -19,7 +19,6 @@ export const AddTest = () => {
   const isAuth = useAppSelector((state) => Boolean(state.auth.data));
 
   const [isToggleNav, setIsToggleNav] = useState(true);
-
   const [data, setData] = useState<MainAddTestProps>({
     title: "",
     category: { label: "", value: "" },
@@ -38,7 +37,6 @@ export const AddTest = () => {
       },
     ],
   });
-
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(1);
 
   useEffect(() => {
