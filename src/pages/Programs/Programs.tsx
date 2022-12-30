@@ -30,7 +30,7 @@ export const Programs = () => {
           {programsData.map((item, index) => (
             <div
               className={styles.programs__block}
-              data-aos="fade-left"
+              data-aos="zoom-in"
               key={index}
             >
               <img
@@ -46,7 +46,7 @@ export const Programs = () => {
             </div>
           ))}
         </div>
-        <div data-aos="fade-up-left">
+        <div data-aos="zoom-in" data-aos-anchor=".programs__block">
           <img
             className={[styles.imagePhone, styles.rotate].join(" ")}
             src={HeadphonesIcon}

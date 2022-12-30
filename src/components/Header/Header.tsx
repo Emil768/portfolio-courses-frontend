@@ -28,7 +28,13 @@ export const Header = () => {
           <ul
             className={
               menuActive
-                ? [styles.header__list, styles.header__listActive].join(" ")
+                ? isAuth
+                  ? [
+                      styles.header__list,
+                      styles.header__listAuth,
+                      styles.header__listActive,
+                    ].join(" ")
+                  : [styles.header__list, styles.header__listActive].join(" ")
                 : styles.header__list
             }
           >

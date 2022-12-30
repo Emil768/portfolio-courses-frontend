@@ -30,7 +30,7 @@ export const About = () => {
         <img src={SliceIcon_1} className={styles.slice} alt="slice" />
       </div>
       <div className={styles.about__content}>
-        <div className={styles.about__text} data-aos="zoom-out-right">
+        <div className={styles.about__text} data-aos="zoom-in">
           <p>Меня зовут Эльнара!</p>
           <p>
             Я говорю на <b>английском</b>, <b>турецком</b>, <b>украинском</b> и
@@ -61,7 +61,7 @@ export const About = () => {
           </p>
           <p>Ты с нами? Да? – Тогда WELCOME!</p>
         </div>
-        <div className={styles.about__author} data-aos="zoom-out-left">
+        <div className={styles.about__author} data-aos="zoom-in">
           <img
             className={styles.about__authorImage}
             src={AuthorIcon}
@@ -71,7 +71,7 @@ export const About = () => {
         </div>
       </div>
       <div className={styles.about__certificates}>
-        <div className={styles.about__certificatesLeft} data-aos="fade-right">
+        <div className={styles.about__certificatesLeft} data-aos="zoom-in">
           <img src={CertificateIcon_3} alt="certificate" />
         </div>
         <div
@@ -81,7 +81,7 @@ export const About = () => {
         >
           <img src={CertificateIcon_1} alt="certificate" />
         </div>
-        <div className={styles.about__certificatesRight} data-aos="fade-left">
+        <div className={styles.about__certificatesRight} data-aos="zoom-in">
           <img src={CertificateIcon_2} alt="certificate" />
         </div>
       </div>

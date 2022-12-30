@@ -29,6 +29,10 @@ export const categoryNames = [
     title: "Тесты",
     link: "tests",
   },
+  {
+    title: "Тесты / Предложения",
+    link: "offers",
+  },
 ];
 
 export const programsData = [

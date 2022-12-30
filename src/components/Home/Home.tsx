@@ -1,13 +1,8 @@
 import styles from "./Home.module.scss";
 
-import {
-  SamoletIcon,
-  JournalIcon,
-  MapIcon,
-  MapIcon_1,
-  MapIcon_2,
-} from "@images/gallery";
-import { SquareIcon } from "@images/icons";
+import { SamoletIcon, MapIcon_1 } from "@images/gallery";
+
+import { Link } from "react-router-dom";
 
 export const Home = () => {
   return (
@@ -27,32 +22,15 @@ export const Home = () => {
             учителем-билингвой
           </p>
           <q className={styles.home__quote}>
-            <i>Enjoy English u know, discover English u don't.</i>
+            Enjoy English u know, discover English u don't.
           </q>
-          <a className={styles.home__button} href="#tariffs">
+          <Link className={styles.home__button} to={"/tariffs"}>
             Записаться
-          </a>
+          </Link>
         </div>
-        {/* <div className={styles.home__contentImage}>
-        <div className={styles.imageWrapper} data-aos="fade-down-left">
-          {" "}
-          <img
-            src={JournalIcon}
-            className={[styles.imageJournal, styles.rotate].join(" ")}
-            alt="journale"
-          />
+        <div className={styles.home__contentImage}>
+          <img src={MapIcon_1} className={styles.home__author} alt="world" />
         </div>
-        <img src={MapIcon_1} className={styles.home__author} alt="world" />
-        <div
-          className={styles.home__contentImage}
-          data-aos="fade-up-right"
-          data-aos-anchor=".image-journal"
-        >
-          <SquareIcon
-            className={[styles.imageSquare, styles.rotate].join(" ")}
-          />
-        </div>
-      </div> */}
       </div>
     </div>
   );

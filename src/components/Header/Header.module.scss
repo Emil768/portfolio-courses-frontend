@@ -6,6 +6,7 @@
     justify-content: space-between;
     padding: 15px 0;
     position: relative;
+    z-index: 2;
   }
   &__logo {
     width: 100px;
@@ -112,9 +113,14 @@
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         margin-left: -10px;
-        right: 103px;
+        right: 14px;
         border-bottom: 10px solid #fff;
         top: -10px;
+      }
+    }
+    &__listAuth {
+      &::after {
+        right: 103px;
       }
     }
     &__listActive {

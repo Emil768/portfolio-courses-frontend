@@ -1,7 +1,4 @@
 .tariffs {
-  margin-bottom: 50px;
-
-  overflow: hidden;
   &__title {
     margin-bottom: 50px;
   }
@@ -133,6 +130,9 @@
       flex: 70% 0 0;
       margin-right: 0;
       margin-bottom: 40px;
+      &:last-child {
+        margin-bottom: 0;
+      }
     }
   }
 }

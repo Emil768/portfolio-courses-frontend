@@ -1,8 +1,4 @@
 .programs {
-  margin-bottom: 100px;
-
-  overflow: hidden;
-
   &__title {
     margin-bottom: 50px;
   }
@@ -31,6 +27,7 @@
     align-self: flex-start;
     width: 67%;
     margin-bottom: 40px;
+    z-index: 1;
   }
 
   &__block:nth-child(2n) {
