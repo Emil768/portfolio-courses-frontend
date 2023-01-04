@@ -1,8 +1,9 @@
 import { useEffect } from "react";
-import styles from "./Programs.module.scss";
 
+import { MetaDecorator } from "@components";
 import { HeadphonesIcon, MusicIcon } from "@images/gallery";
-import { programsData } from "@internals";
+import { MetaProgramsProps, programsData } from "@data";
+import styles from "./Programs.module.scss";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -12,6 +13,11 @@ export const Programs = () => {
   }, []);
   return (
     <section className={styles.programs}>
+      <MetaDecorator
+        title={MetaProgramsProps.title}
+        description={MetaProgramsProps.description}
+        type={MetaProgramsProps.type}
+      />
       <div className={styles.programs__content}>
         <h1
           className={[styles.programs__title, styles.title].join(" ")}

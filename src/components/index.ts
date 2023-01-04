@@ -25,4 +25,5 @@ export * from "./TopResults/TopResults";
 export * from "./EmptyBlock/EmptyBlock";
 export * from "./AnswerOfferInfo/AnswerOfferInfo";
 export * from "./AnswerBlockOffer/AnswerBlockOffer";
+export * from "./MetaDecorator/MetaDecorator";
 export * from "./Home/Home";

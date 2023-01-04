@@ -1,9 +1,16 @@
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styles from "./Tests.module.scss";
 
-import { Test, Categories, SortPopup, EmptyBlock } from "@components";
+import {
+  Test,
+  Categories,
+  SortPopup,
+  EmptyBlock,
+  MetaDecorator,
+} from "@components";
 
-import { useEffect } from "react";
+import { MetaTestsProps } from "@data";
 import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import { fetchCategory, fetchTests } from "@redux/slices";
 import { ClipLoader } from "react-spinners";
@@ -26,7 +33,12 @@ export const Tests = () => {
   }, [title]);
 
   return (
-    <main className={styles.notes}>
+    <section className={styles.notes}>
+      <MetaDecorator
+        title={MetaTestsProps.title}
+        description={MetaTestsProps.description}
+        type={MetaTestsProps.type}
+      />
       <div className={styles.notes__top}>
         <Categories />
         <SortPopup />
@@ -56,6 +68,6 @@ export const Tests = () => {
           />
         )}
       </div>
-    </main>
+    </section>
   );
 };

@@ -1,13 +1,21 @@
 import { useEffect } from "react";
+import { MetaDecorator } from "@components";
+import { MetaTariffsProps } from "@data";
 import styles from "./Tariffs.module.scss";
 import AOS from "aos";
 import "aos/dist/aos.css";
+
 export const Tariffs = () => {
   useEffect(() => {
     AOS.init({ disable: "phone" });
   }, []);
   return (
     <section className={styles.tariffs}>
+      <MetaDecorator
+        title={MetaTariffsProps.title}
+        description={MetaTariffsProps.description}
+        type={MetaTariffsProps.type}
+      />
       <div className={styles.tariffs__content}>
         <h1
           className={[styles.tariffs__title, styles.title].join(" ")}

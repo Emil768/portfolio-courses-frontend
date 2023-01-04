@@ -5,7 +5,7 @@ import { TestContext } from "@pages";
 import { AddTestContextType, CategoryOption } from "@proptypes";
 import Select from "react-select";
 
-import { categoryOptions } from "@internals";
+import { categoryOptions } from "@data";
 import axios from "@axios";
 
 export const AddTestMain = () => {

@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import styles from "./Categories.module.scss";
 
-import { categoryNames } from "@internals";
+import { categoryNames } from "@data";
 
 export const Categories = () => {
   return (

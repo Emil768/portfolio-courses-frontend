@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import styles from "./InfoPanel.module.scss";
 
-import { options } from "@internals";
+import { options } from "@data";
 import { TestProps } from "@proptypes";
 
 export const InfoPanel = ({

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { Home } from "@components";
+import { Home, MetaDecorator } from "@components";
+import { MetaAboutProps } from "@data";
 import styles from "./About.module.scss";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -19,14 +20,19 @@ export const About = () => {
   }, []);
   return (
     <section className={styles.about}>
+      <MetaDecorator
+        title={MetaAboutProps.title}
+        description={MetaAboutProps.description}
+        type={MetaAboutProps.type}
+      />
       <Home />
       <div className={styles.about__top}>
-        <h1
+        <h2
           className={[styles.about__title, styles.title].join(" ")}
           data-aos="fade-right"
         >
           ОБО МНЕ
-        </h1>
+        </h2>
         <img src={SliceIcon_1} className={styles.slice} alt="slice" />
       </div>
       <div className={styles.about__content}>
@@ -34,7 +40,7 @@ export const About = () => {
           <p>Меня зовут Эльнара!</p>
           <p>
             Я говорю на <b>английском</b>, <b>турецком</b>, <b>украинском</b> и
-            <b>русском</b>
+            <b> русском </b>
             языках. Уже более <b>10 лет</b> преподаю английский язык в своей
             онлайн школе <b>Extra Engl</b>. Имею десятки благодарных студентов,
             с которыми и по сей день остаюсь на связи.

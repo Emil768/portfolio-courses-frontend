@@ -1,6 +1,6 @@
 import { useContext, useRef } from "react";
 
-import { AddTestContextType, AnswerLessProps, QuesLessProps } from "@proptypes";
+import { AddTestContextType, QuesLessProps } from "@proptypes";
 import { AnswerInfo, AnswerOfferInfo } from "@components";
 
 import { TestContext } from "@pages";

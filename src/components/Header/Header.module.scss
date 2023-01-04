@@ -10,6 +10,7 @@
   }
   &__logo {
     width: 100px;
+    height: 74px;
   }
   &__panel {
     display: flex;
@@ -143,6 +144,7 @@
   .header {
     &__logo {
       width: 75px;
+      height: 54px;
     }
     &__list {
       flex-direction: column;

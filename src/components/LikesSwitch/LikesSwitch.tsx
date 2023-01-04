@@ -2,7 +2,7 @@ import styles from "./LikesSwitch.module.scss";
 import { Link } from "react-router-dom";
 import { TestProps, UserProps } from "@proptypes";
 
-import { options } from "@internals";
+import { options } from "@data";
 
 interface LikesSwitchProps {
   user: UserProps;

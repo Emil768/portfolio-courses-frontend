@@ -1,4 +1,4 @@
-import { options } from "@internals";
+import { options } from "@data";
 import { TestProps, UserProps } from "@proptypes";
 import { Link } from "react-router-dom";
 import styles from "./TestSwitch.module.scss";

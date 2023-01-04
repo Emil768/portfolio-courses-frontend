@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { DateIcon, EmailIcon } from "@images/icons";
 
 import axios from "@axios";
-import { options } from "@internals";
+import { options } from "@data";
 import {
   CommentSwitch,
   LikesSwitch,
