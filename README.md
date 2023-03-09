@@ -1,1 +1,1 @@
-# Future site update https://emilmurahas228.github.io/portfolio-courses/
+# Future site update https://github.com/Emil768/next-porfolio-courses
